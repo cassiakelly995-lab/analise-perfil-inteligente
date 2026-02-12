@@ -3,277 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | API V8 Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Cássia Prompt | Dossiê de Elite V8</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #d4af37;
-            --gold-light: #f1d592;
-            --bg: #050505;
-            --card-bg: rgba(20, 20, 20, 0.7);
-            --border: rgba(212, 175, 55, 0.2);
-        }
-
-        body {
-            background-color: var(--bg);
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            display: flex;
-            height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 20%);
-        }
-
-        /* Sidebar Elegante */
-        .sidebar {
-            width: 420px;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border);
-            padding: 40px;
-            overflow-y: auto;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
-        }
-
-        .sidebar h1 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
-            font-size: 1.4rem;
-            text-align: center;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 20px;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 60px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-
-        /* Inputs Sofisticados */
-        .input-group { margin-bottom: 20px; }
+        :root { --gold: #d4af37; --gold-dark: #aa8a2e; --bg: #050505; --card: #111111; --border: rgba(212, 175, 55, 0.2); }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
         
-        label {
-            display: block;
-            font-size: 0.7rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
+        /* Painel de Comando (Esquerda) */
+        .sidebar { width: 450px; background: #0a0a0a; border-right: 1px solid var(--border); padding: 40px; overflow-y: auto; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
+        .sidebar h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.5rem; text-align: center; letter-spacing: 5px; margin-bottom: 10px; }
+        .version { text-align: center; font-size: 0.6rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 30px; color: #fff; }
+        
+        .q-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 700; }
+        input, textarea { width: 100%; background: #000; border: 1px solid #222; padding: 12px; color: #fff; border-radius: 4px; font-size: 0.9rem; transition: 0.3s; box-sizing: border-box; }
+        input:focus, textarea:focus { border-color: var(--gold); outline: none; background: #0f0f0f; }
 
-        input, textarea, select {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #333;
-            padding: 14px;
-            color: #fff;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
+        .btn-activate { background: linear-gradient(45deg, var(--gold), #f1d592); color: #000; border: none; padding: 20px; width: 100%; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border-radius: 4px; margin-top: 20px; transition: 0.4s; }
+        .btn-activate:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(212,175,55,0.4); }
 
-        input:focus, textarea:focus {
-            border-color: var(--gold);
-            outline: none;
-            background: rgba(20, 20, 20, 0.8);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
-        }
+        /* Área do Relatório (Direita) */
+        .main { flex: 1; padding: 60px; overflow-y: auto; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
+        .report-card { max-width: 800px; margin: auto; animation: slideUp 0.6s ease-out; }
+        
+        .dossie-header { border-bottom: 1px solid var(--gold); padding-bottom: 20px; margin-bottom: 40px; text-align: center; }
+        .dossie-header h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--gold); margin: 0; }
+        
+        .section { background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 30px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid var(--gold); }
+        .section h3 { color: var(--gold); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .metric { background: #000; padding: 15px; border-radius: 4px; border: 1px solid #222; }
+        .metric-label { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 5px; }
+        
+        .bio-box { background: #000; padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; font-style: italic; color: #ccc; margin-top: 10px; line-height: 1.6; }
 
-        .btn-gold {
-            background: linear-gradient(45deg, var(--gold), var(--gold-light));
-            color: #000;
-            border: none;
-            padding: 20px;
-            width: 100%;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 2px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.4s;
-        }
-
-        .btn-gold:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
-            filter: brightness(1.1);
-        }
-
-        /* Cartões de Resultado */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 8px;
-            margin-bottom: 40px;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
-            font-size: 1.8rem;
-            margin-top: 0;
-        }
-
-        .section-title {
-            color: var(--gold);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            display: flex;
-            align-items: center;
-            margin: 30px 0 15px 0;
-        }
-
-        .section-title::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-            margin-left: 20px;
-        }
-
-        .bio-box {
-            background: rgba(0,0,0,0.3);
-            padding: 25px;
-            border-radius: 4px;
-            border-left: 2px solid var(--gold);
-            margin-bottom: 20px;
-            font-size: 1rem;
-            line-height: 1.8;
-            position: relative;
-        }
-
-        .copy-tag {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 0.6rem;
-            color: var(--gold);
-            opacity: 0.6;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: var(--gold); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
     <h1>CÁSSIA PROMPT</h1>
-    <p style="text-align: center; font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5; margin-bottom: 30px;">V8 GOD MODE - ELITE EDITION</p>
+    <div class="version">GOD MODE • ELITE EDITION • 2026</div>
 
-    <div class="input-group">
-        <label>Identificação Profissional</label>
-        <input type="text" id="nome" placeholder="Nome e Área de Atuação">
+    <div class="q-group">
+        <label>1. Identidade Profissional</label>
+        <input type="text" id="p1" placeholder="Nome e sua área principal">
+    </div>
+    <div class="q-group">
+        <label>2. O Objeto do Desejo</label>
+        <input type="text" id="p2" placeholder="O que o cliente ganha (ex: Imóvel Regular)">
+    </div>
+    <div class="q-group">
+        <label>3. O Inimigo Comum (A Dor)</label>
+        <input type="text" id="p3" placeholder="O que tira o sono dele? (ex: Medo de perder tudo)">
+    </div>
+    <div class="q-group">
+        <label>4. A Prova de Poder (Diferencial)</label>
+        <input type="text" id="p4" placeholder="Por que você e não o Google?">
+    </div>
+    <div class="q-group">
+        <label>5. O Perfil do Protegido (Público)</label>
+        <input type="text" id="p5" placeholder="Para quem você é um herói?">
+    </div>
+    <div class="q-group">
+        <label>6. O Grande Obstáculo (Burocracia)</label>
+        <input type="text" id="p6" placeholder="O que trava o processo dele hoje?">
+    </div>
+    <div class="q-group">
+        <label>7. O Valor do Silêncio (Paz)</label>
+        <input type="text" id="p7" placeholder="Como ele se sente após você resolver?">
+    </div>
+    <div class="q-group">
+        <label>8. O Próximo Nível (Legado)</label>
+        <input type="text" id="p8" placeholder="Onde você estará em 5 anos?">
     </div>
 
-    <div class="input-group">
-        <label>A Proposta de Valor (O que entrega?)</label>
-        <textarea id="entrega" rows="2" placeholder="Ex: Segurança patrimonial total"></textarea>
-    </div>
-
-    <div class="input-group">
-        <label>A Dor que você cura</label>
-        <textarea id="dor" rows="2" placeholder="Ex: Medo de perder bens em inventário"></textarea>
-    </div>
-
-    <div class="input-group">
-        <label>O Grande Diferencial</label>
-        <input type="text" id="diferencial" placeholder="Ex: Especialista Exclusiva em Herança">
-    </div>
-
-    <div class="input-group">
-        <label>Público Alvo (Perfil Principal)</label>
-        <input type="text" id="publico" placeholder="Ex: Famílias de alto poder aquisitivo">
-    </div>
-
-    <div class="input-group">
-        <label>O seu maior case de sucesso</label>
-        <textarea id="case" rows="2" placeholder="Resuma uma vitória marcante..."></textarea>
-    </div>
-
-    <div class="input-group">
-        <label>Tom de Posicionamento</label>
-        <select id="tom">
-            <option value="Elite">Autoridade de Elite (Sóbrio)</option>
-            <option value="Inspirador">Inspirador e Moderno</option>
-        </select>
-    </div>
-
-    <button class="btn-gold" onclick="processar()">Ativar Consultoria V8</button>
+    <button class="btn-activate" onclick="gerarDossie()">Gerar Dossiê de Elite</button>
 </div>
 
-<div class="main-content" id="output">
-    <div style="height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0.2;">
-        <div style="text-align: center;">
-            <h2 style="letter-spacing: 10px;">STANDBY</h2>
-            <p>Aguardando comando de análise estratégica...</p>
+<div class="main" id="output">
+    <div style="height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0.2; text-align: center;">
+        <div>
+            <h2 style="font-family: 'Cinzel'; letter-spacing: 15px;">Aguardando Comando</h2>
+            <p>Insira os dados estratégicos para iniciar a autoanálise profunda.</p>
         </div>
     </div>
 </div>
 
 <script>
-    function processar() {
+    function gerarDossie() {
         const d = {
-            nome: document.getElementById('nome').value,
-            entrega: document.getElementById('entrega').value,
-            dor: document.getElementById('dor').value,
-            dif: document.getElementById('diferencial').value,
-            pub: document.getElementById('publico').value,
-            case: document.getElementById('case').value,
-            tom: document.getElementById('tom').value
+            nome: document.getElementById('p1').value,
+            entrega: document.getElementById('p2').value,
+            dor: document.getElementById('p3').value,
+            dif: document.getElementById('p4').value,
+            pub: document.getElementById('p5').value,
+            obs: document.getElementById('p6').value,
+            paz: document.getElementById('p7').value,
+            leg: document.getElementById('p8').value
         };
 
-        const out = document.getElementById('output');
-        out.innerHTML = `
-            <div class="card">
-                <p style="color: var(--gold); font-size: 0.7rem; letter-spacing: 3px;">ANÁLISE ESTRATÉGICA CONCLUÍDA</p>
-                <h2>${d.nome}</h2>
-                
-                <div class="section-title">Posicionamento de Mercado</div>
-                <p>O seu trabalho não é apenas um serviço técnico, é a <strong>blindagem contra o caos</strong>. Enquanto o mercado foca em processos, você foca na <strong>${d.entrega}</strong>.</p>
-                
-                <div class="section-title">Mensagem Central (Gancho de Ouro)</div>
-                <div style="font-size: 1.5rem; font-family: 'Cinzel'; border: 1px solid var(--border); padding: 30px; text-align: center; color: var(--gold);">
-                    "${d.entrega.toUpperCase()} PARA QUEM NÃO ACEITA MENOS QUE A SEGURANÇA TOTAL."
+        document.getElementById('output').innerHTML = `
+            <div class="report-card">
+                <div class="dossie-header">
+                    <p style="color: var(--gold); letter-spacing: 5px; font-size: 0.7rem; margin-bottom: 10px;">RELATÓRIO DE POSICIONAMENTO ESTRATÉGICO</p>
+                    <h2>${d.nome}</h2>
                 </div>
 
-                <div class="section-title">Bios Inteligentes para Redes</div>
-                
-                <div class="bio-box">
-                    <span class="copy-tag">INSTAGRAM</span>
-                    💎 Especialista em ${d.entrega}<br>
-                    🛡️ Transformando ${d.dor} em tranquilidade<br>
-                    ✨ Diferencial: ${d.dif}<br>
-                    👇 Consultoria Exclusiva
+                <div class="section">
+                    <h3>1. O DNA da Autoridade</h3>
+                    <p>Você não opera no mercado de serviços, você opera no mercado de <strong>Soluções Críticas</strong>. Seu posicionamento atual indica que você é a ponte entre o <strong>${d.dor}</strong> e a <strong>${d.paz}</strong>.</p>
+                    <div class="grid-2">
+                        <div class="metric"><span class="metric-label">Proposta de Valor</span><strong>${d.entrega} Inabalável</strong></div>
+                        <div class="metric"><span class="metric-label">Diferencial Competitivo</span><strong>${d.dif}</strong></div>
+                    </div>
                 </div>
 
-                <div class="bio-box">
-                    <span class="copy-tag">LINKEDIN</span>
-                    <strong>${d.nome} | ${d.dif}</strong><br>
-                    Dedicada a servir ${d.pub}, unindo rigor técnico e agilidade para resolver ${d.dor}. 
-                    Minha missão é garantir que ${d.entrega} seja o padrão de cada cliente, como demonstrado em casos de ${d.case}.
+                <div class="section">
+                    <h3>2. Análise de Impacto (O Gancho)</h3>
+                    <p>Para atrair <strong>${d.pub}</strong>, sua comunicação deve parar de vender o processo e focar no fim do <strong>${d.obs}</strong>.</p>
+                    <div class="bio-box">
+                        "Enquanto muitos explicam a lei, eu removo o <strong>${d.obs}</strong> que impede você de ter seu <strong>${d.entrega}</strong>. Minha missão é devolver sua <strong>${d.paz}</strong>."
+                    </div>
                 </div>
 
-                <div class="section-title">Estratégia Criativa V8</div>
-                <p><strong>Marketing Educativo:</strong> Poste sobre "Os 3 riscos invisíveis de ${d.dor}". Isso gera autoridade imediata para quem busca ${d.entrega}.</p>
-                <p><strong>Dica de Ouro:</strong> Use o seu case de "${d.case}" para criar uma narrativa de herói. Pessoas compram histórias de vitória, não apenas leis.</p>
+                <div class="section">
+                    <h3>3. Fábrica de Presença Digital (Bios)</h3>
+                    <p><strong>Instagram (O Imã):</strong> ⚖️ ${d.nome} | Especialista em ${d.entrega} 🛡️ Protegendo ${d.pub} contra ${d.dor} ✨ Diferencial: ${d.dif} 👇 Recupere sua ${d.paz} aqui.</p>
+                    <p><strong>LinkedIn (Autoridade):</strong> Ajudo ${d.pub} a superarem o entrave de ${d.obs} para garantirem seu ${d.entrega}. Com foco em ${d.dif}, transformo incerteza em patrimônio seguro. Focada em um legado de ${d.leg}.</p>
+                </div>
+
+                <div class="section">
+                    <h3>4. Plano de Guerra Profissional</h3>
+                    <ul style="line-height: 2;">
+                        <li><strong>Pare de vender:</strong> Horas técnicas ou burocracia.</li>
+                        <li><strong>Comece a vender:</strong> A sensação de <strong>${d.paz}</strong> e a eliminação do medo de <strong>${d.dor}</strong>.</li>
+                        <li><strong>Estratégia 2026:</strong> Utilize seu domínio em <strong>${d.dif}</strong> para se tornar a única opção viável para <strong>${d.pub}</strong>.</li>
+                    </ul>
+                </div>
+
+                <p style="text-align: center; color: var(--gold); font-size: 0.7rem; opacity: 0.5;">CÁSSIA PROMPT V8 GOD MODE • DOCUMENTO CONFIDENCIAL</p>
             </div>
         `;
     }
@@ -281,4 +152,3 @@
 
 </body>
 </html>
-
