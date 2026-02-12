@@ -3,93 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt - API V8 God Mode</title>
+    <title>API V8 - God Mode Elite</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0a0a0a; color: #e0e0e0; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; background: #1a1a1a; padding: 30px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { color: #d4af37; border-bottom: 2px solid #d4af37; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .section { background: #252525; padding: 20px; border-radius: 8px; border: 1px solid #444; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: #aaa; }
-        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #333; background: #000; color: #fff; box-sizing: border-box; }
-        button { background: #d4af37; color: #000; border: none; padding: 15px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; transition: 0.3s; }
-        button:hover { background: #fff; }
-        #output { margin-top: 30px; display: none; background: #000; padding: 25px; border-left: 5px solid #d4af37; white-space: pre-wrap; }
-        .tag { background: #d4af37; color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(212, 175, 55, 0.3);
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background: rgba(10, 10, 10, 0.8);
+            border-right: 1px solid var(--border);
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+        }
+
+        .main-content {
+            padding: 60px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .input-group { margin-bottom: 25px; }
+        label { display: block; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; opacity: 0.8; }
+        
+        input, textarea, select {
+            width: 100%;
+            background: var(--glass);
+            border: 1px solid #333;
+            padding: 15px;
+            color: #fff;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
+
+        .btn-activate {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 20px;
+            width: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-top: 20px;
+        }
+
+        .btn-activate:hover { background: var(--gold); color: #000; box-shadow: 0 0 30px var(--gold); }
+
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        #radarChart { max-width: 400px; margin: auto; }
+
+        .highlight { color: var(--gold); font-weight: bold; }
+        
+        .result-header { font-size: 2rem; margin-bottom: 10px; }
+        .badge { background: var(--gold); color: #000; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; vertical-align: middle; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Cássia Prompt <span style="font-size: 0.5em; vertical-align: middle;">V8 ELITE EDITION</span></h1>
-    <p><strong>PROJETO 3:</strong> ANÁLISE DE PERFIL INTELIGENTE (API)</p>
-    
-    <div class="grid">
-        <div class="section">
-            <label>Seletor de Mindset</label>
+<div class="dashboard">
+    <div class="sidebar">
+        <h1>Cássia Prompt <br><span style="color: #fff; font-size: 0.8rem;">V8 God Mode</span></h1>
+        
+        <div class="input-group">
+            <label>Nível de Rigor da Análise</label>
             <select id="modo">
-                <option value="elite">MENTORIA DE ELITE (Direto/Crítico)</option>
-                <option value="estrategista">ESTRATEGISTA (Consultivo/Transição)</option>
+                <option value="elite">GOD MODE: MENTORIA DE ELITE</option>
+                <option value="estrategista">MODO: ESTRATEGISTA CLASSE A</option>
             </select>
-
-            <label>Hard Skills (Técnico)</label>
-            <textarea id="hard" placeholder="Ex: Direito Civil, Python, Excel Avançado..."></textarea>
-            
-            <label>Soft Skills (Comportamental)</label>
-            <textarea id="soft" placeholder="Ex: Liderança, Negociação sob pressão..."></textarea>
         </div>
 
-        <div class="section">
-            <label>Prova de Valor (Case de Sucesso)</label>
-            <textarea id="case" style="height: 100px;" placeholder="Descreva um desafio que você resolveu..."></textarea>
-            
-            <label>Mercado Alvo (Target)</label>
-            <input type="text" id="target" placeholder="Ex: Sócia em escritório de elite">
-
-            <label>Seu Nome Profissional</label>
-            <input type="text" id="nome" placeholder="Ex: Cássia Silva">
+        <div class="input-group">
+            <label>Nome do Usuário</label>
+            <input type="text" id="nome" placeholder="Nome Completo">
         </div>
+
+        <div class="input-group">
+            <label>Hard Skills Principais</label>
+            <textarea id="hard" rows="3" placeholder="Suas competências técnicas mais fortes..."></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Soft Skills Dominantes</label>
+            <textarea id="soft" rows="3" placeholder="Seus diferenciais comportamentais..."></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Case de Sucesso</label>
+            <textarea id="case" rows="3" placeholder="A maior vitória da sua carreira..."></textarea>
+        </div>
+
+        <button class="btn-activate" onclick="processarAPI()">Iniciar Escaneamento Profissional</button>
     </div>
 
-    <button onclick="processarAPI()">ATIVAR COMANDO GOD MODE</button>
-
-    <div id="output"></div>
+    <div class="main-content" id="output">
+        <div style="text-align: center; margin-top: 20%;">
+            <h2 style="opacity: 0.3; letter-spacing: 5px;">AGUARDANDO INPUT DE DADOS...</h2>
+            <p style="opacity: 0.2;">Sistema API pronto para análise de mercado 2026.</p>
+        </div>
+    </div>
 </div>
 
 <script>
     function processarAPI() {
+        const nome = document.getElementById('nome').value;
         const modo = document.getElementById('modo').value;
         const hard = document.getElementById('hard').value;
         const soft = document.getElementById('soft').value;
-        const target = document.getElementById('target').value;
-        const nome = document.getElementById('nome').value;
-        const caseSucesso = document.getElementById('case').value;
+        
+        const mainContent = document.getElementById('output');
+        
+        mainContent.innerHTML = `
+            <div class="result-header">Diagnóstico: ${nome} <span class="badge">V8 ELITE EDITION</span></div>
+            <p style="opacity: 0.6; margin-bottom: 40px;">Análise gerada em 2026 com base em algoritmos de mercado de alto impacto.</p>
 
-        const output = document.getElementById('output');
-        output.style.display = 'block';
+            <div class="grid">
+                <div class="glass-card">
+                    <h3 class="highlight">MATRIZ DE COMPETÊNCIAS</h3>
+                    <canvas id="radarChart"></canvas>
+                </div>
 
-        let tomTexto = modo === 'elite' ? "⚠️ ANALISE DE IMPACTO CRÍTICO (MODO ELITE ATIVO)" : "📘 ORIENTAÇÃO ESTRATÉGICA (MODO CONSULTORIA ATIVO)";
+                <div class="stat-grid">
+                    <div class="glass-card">
+                        <h4 class="highlight">O DIFERENCIAL DE OURO</h4>
+                        <p>Sua capacidade técnica em <span class="highlight">${hard.split(',')[0]}</span> quando fundida com seu perfil de <span class="highlight">${soft.split(',')[0]}</span> torna você um ativo escasso no mercado atual.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h4 style="color: #ff4d4d;">PONTO DE RUPTURA (VULNERABILIDADE)</h4>
+                        <p>O mercado exige mais que execução. Sua falha atual reside na escala. Sem automatizar seu conhecimento, você atingirá o teto rapidamente.</p>
+                    </div>
+                </div>
 
-        output.innerHTML = `
-<h2>${tomTexto}</h2>
-<hr border="1">
-<h3>1. DIAGNÓSTICO 360° - PERFIL: ${nome.toUpperCase()}</h3>
-<strong>PONTOS FORTES:</strong> Baseado em suas Hard Skills (${hard}), você possui uma base sólida para dominar o setor de ${target}.
-<strong>SINERGIA DETECTADA:</strong> Sua habilidade em ${soft} potencializa tecnicamente sua entrega em ${hard}, criando um diferencial de mercado único.
-<strong>GAP DE MERCADO:</strong> Para o cenário de 2026, seu perfil exige uma atualização em ferramentas digitais para não ser engolido pela automação.
-
-<h3>2. FÁBRICA DE IDENTIDADE (ATIVOS GERADOS)</h3>
-<strong>[BIO INSTAGRAM/WHATSAPP]</strong>
-🚀 ${nome} | Especialista em ${hard.split(',')[0]} 
-💡 Transformando ${soft.split(',')[0]} em resultados de alto nível para ${target}.
-👇 Fale comigo para soluções estratégicas.
-
-<strong>[SOBRE - LINKEDIN]</strong>
-Com trajetória focada em ${hard}, desenvolvi uma abordagem única que une rigor técnico e ${soft}. Ao longo da minha carreira, como no caso de ${caseSucesso}, provei que resultados consistentes vêm da união entre estratégia e execução. Atualmente focado em gerar valor no mercado de ${target}.
-
-<strong>[BIOGRAFIA PROFISSIONAL - 3ª PESSOA]</strong>
-${nome} é especialista em ${hard}, reconhecido por sua capacidade em ${soft}. Com vasta experiência em desafios complexos, ${nome} atua hoje como peça chave para o desenvolvimento de soluções em ${target}, unindo visão técnica e liderança estratégica.
+                <div class="glass-card">
+                    <h3 class="highlight">ASSET DIGITAL: BIO AUTORIDADE</h3>
+                    <p style="font-style: italic; background: rgba(0,0,0,0.3); padding: 20px; border-left: 3px solid var(--gold);">
+                        "Especialista em ${hard.split(',')[0]}. Transformo ${soft.split(',')[0]} em vantagem competitiva para o setor de elite. Resultados comprovados através de ${nome}."
+                    </p>
+                    <button class="btn-activate" style="padding: 10px; font-size: 0.7rem;">COPIAR PARA O LINKEDIN</button>
+                </div>
+            </div>
         `;
+
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Liderança', 'Técnica', 'Adaptabilidade', 'Métrica', 'Networking', 'Execução'],
+                datasets: [{
+                    label: 'Perfil Atual',
+                    data: [85, 95, 70, 60, 90, 80],
+                    fill: true,
+                    backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                    borderColor: '#d4af37',
+                    pointBackgroundColor: '#d4af37',
+                }]
+            },
+            options: {
+                scales: {
+                    r: { angleLines: { color: '#333' }, grid: { color: '#333' }, pointLabels: { color: '#aaa' }, ticks: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
     }
 </script>
 
