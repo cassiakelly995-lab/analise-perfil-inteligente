@@ -3,148 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | Dossiê de Elite V8</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Cássia Prompt | Autopotencial Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --gold-dark: #aa8a2e; --bg: #050505; --card: #111111; --border: rgba(212, 175, 55, 0.2); }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        :root { --diamond: #e5e5e5; --gold: #c5a059; --bg: #030303; --glass: rgba(255, 255, 255, 0.03); }
+        body { background: var(--bg); color: var(--diamond); font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
         
-        /* Painel de Comando (Esquerda) */
-        .sidebar { width: 450px; background: #0a0a0a; border-right: 1px solid var(--border); padding: 40px; overflow-y: auto; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
-        .sidebar h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.5rem; text-align: center; letter-spacing: 5px; margin-bottom: 10px; }
-        .version { text-align: center; font-size: 0.6rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 30px; color: #fff; }
+        /* Sidebar de Input Profissional */
+        .sidebar { width: 400px; background: #080808; border-right: 1px solid rgba(197, 160, 89, 0.2); padding: 45px; overflow-y: auto; z-index: 10; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; font-style: italic; margin-bottom: 5px; }
+        .subtitle { font-size: 0.6rem; letter-spacing: 4px; opacity: 0.5; text-transform: uppercase; margin-bottom: 40px; }
         
-        .q-group { margin-bottom: 20px; }
-        label { display: block; font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 700; }
-        input, textarea { width: 100%; background: #000; border: 1px solid #222; padding: 12px; color: #fff; border-radius: 4px; font-size: 0.9rem; transition: 0.3s; box-sizing: border-box; }
-        input:focus, textarea:focus { border-color: var(--gold); outline: none; background: #0f0f0f; }
+        .field { margin-bottom: 22px; }
+        label { display: block; font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600; }
+        input, textarea { width: 100%; background: #000; border: 1px solid #1a1a1a; padding: 14px; color: #fff; border-radius: 2px; font-size: 0.85rem; transition: 0.4s; }
+        input:focus, textarea:focus { border-color: var(--gold); outline: none; background: #0c0c0c; }
 
-        .btn-activate { background: linear-gradient(45deg, var(--gold), #f1d592); color: #000; border: none; padding: 20px; width: 100%; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border-radius: 4px; margin-top: 20px; transition: 0.4s; }
-        .btn-activate:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(212,175,55,0.4); }
+        .btn-analisar { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 20px; width: 100%; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; margin-top: 20px; transition: 0.5s; }
+        .btn-analisar:hover { background: var(--gold); color: #000; box-shadow: 0 0 30px rgba(197, 160, 89, 0.2); }
 
-        /* Área do Relatório (Direita) */
-        .main { flex: 1; padding: 60px; overflow-y: auto; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
-        .report-card { max-width: 800px; margin: auto; animation: slideUp 0.6s ease-out; }
+        /* Painel de Resultados (Dossiê) */
+        .display { flex: 1; padding: 60px; overflow-y: auto; background-image: radial-gradient(circle at top right, #111 0%, #030303 100%); position: relative; }
+        .dossie { max-width: 750px; margin: auto; animation: fadeInUp 1s ease; }
         
-        .dossie-header { border-bottom: 1px solid var(--gold); padding-bottom: 20px; margin-bottom: 40px; text-align: center; }
-        .dossie-header h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--gold); margin: 0; }
-        
-        .section { background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 30px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid var(--gold); }
-        .section h3 { color: var(--gold); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; }
-        
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .metric { background: #000; padding: 15px; border-radius: 4px; border: 1px solid #222; }
-        .metric-label { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 5px; }
-        
-        .bio-box { background: #000; padding: 20px; border: 1px dashed var(--gold); border-radius: 4px; font-style: italic; color: #ccc; margin-top: 10px; line-height: 1.6; }
+        .header-dossie { text-align: center; border-bottom: 1px solid var(--gold); padding-bottom: 30px; margin-bottom: 50px; }
+        .header-dossie h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .box { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); padding: 35px; margin-bottom: 30px; backdrop-filter: blur(10px); }
+        .box h3 { color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; margin-top: 0; margin-bottom: 20px; border-left: 3px solid var(--gold); padding-left: 15px; }
+        
+        .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .skill-item { background: rgba(0,0,0,0.4); padding: 15px; border: 1px solid rgba(255,255,255,0.02); }
+        .skill-label { font-size: 0.6rem; color: var(--gold); opacity: 0.8; }
+        
+        .highlight { font-style: italic; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.2rem; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <h1>CÁSSIA PROMPT</h1>
-    <div class="version">GOD MODE • ELITE EDITION • 2026</div>
+    <h1>Cássia Prompt</h1>
+    <div class="subtitle">V8 God Mode • Autoconhecimento</div>
 
-    <div class="q-group">
-        <label>1. Identidade Profissional</label>
-        <input type="text" id="p1" placeholder="Nome e sua área principal">
+    <div class="field">
+        <label>1. Qual o seu maior talento técnico?</label>
+        <input type="text" id="q1" placeholder="Ex: Domínio em Direito Tributário">
     </div>
-    <div class="q-group">
-        <label>2. O Objeto do Desejo</label>
-        <input type="text" id="p2" placeholder="O que o cliente ganha (ex: Imóvel Regular)">
+    <div class="field">
+        <label>2. O que você faz que ninguém mais faz?</label>
+        <input type="text" id="q2" placeholder="Ex: Simplifico o complexo em 5 min">
     </div>
-    <div class="q-group">
-        <label>3. O Inimigo Comum (A Dor)</label>
-        <input type="text" id="p3" placeholder="O que tira o sono dele? (ex: Medo de perder tudo)">
+    <div class="field">
+        <label>3. Qual sua principal força humana?</label>
+        <input type="text" id="q3" placeholder="Ex: Calma sob pressão extrema">
     </div>
-    <div class="q-group">
-        <label>4. A Prova de Poder (Diferencial)</label>
-        <input type="text" id="p4" placeholder="Por que você e não o Google?">
+    <div class="field">
+        <label>4. O que você mais estudou na vida?</label>
+        <input type="text" id="q4" placeholder="Ex: Estratégias processuais">
     </div>
-    <div class="q-group">
-        <label>5. O Perfil do Protegido (Público)</label>
-        <input type="text" id="p5" placeholder="Para quem você é um herói?">
+    <div class="field">
+        <label>5. Qual sua reação diante de um erro?</label>
+        <input type="text" id="q5" placeholder="Ex: Analiso dados e corrijo rápido">
     </div>
-    <div class="q-group">
-        <label>6. O Grande Obstáculo (Burocracia)</label>
-        <input type="text" id="p6" placeholder="O que trava o processo dele hoje?">
+    <div class="field">
+        <label>6. Como você organiza seu raciocínio?</label>
+        <input type="text" id="q6" placeholder="Ex: Mapas mentais e lógica pura">
     </div>
-    <div class="q-group">
-        <label>7. O Valor do Silêncio (Paz)</label>
-        <input type="text" id="p7" placeholder="Como ele se sente após você resolver?">
+    <div class="field">
+        <label>7. Qual o valor que você jamais quebra?</label>
+        <input type="text" id="q7" placeholder="Ex: Lealdade e Ética">
     </div>
-    <div class="q-group">
-        <label>8. O Próximo Nível (Legado)</label>
-        <input type="text" id="p8" placeholder="Onde você estará em 5 anos?">
+    <div class="field">
+        <label>8. Qual o legado que você quer deixar?</label>
+        <input type="text" id="q8" placeholder="Ex: Referência em justiça ética">
     </div>
 
-    <button class="btn-activate" onclick="gerarDossie()">Gerar Dossiê de Elite</button>
+    <button class="btn-analisar" onclick="analisar()">Gerar Análise de Capacidade</button>
 </div>
 
-<div class="main" id="output">
-    <div style="height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0.2; text-align: center;">
-        <div>
-            <h2 style="font-family: 'Cinzel'; letter-spacing: 15px;">Aguardando Comando</h2>
-            <p>Insira os dados estratégicos para iniciar a autoanálise profunda.</p>
+<div class="display" id="output">
+    <div style="height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0.1;">
+        <div style="text-align: center;">
+            <h2 style="font-family: 'Playfair Display'; font-size: 3rem;">Ready for Insight</h2>
+            <p style="letter-spacing: 5px;">SISTEMA V8 AGUARDANDO COMANDO</p>
         </div>
     </div>
 </div>
 
 <script>
-    function gerarDossie() {
+    function analisar() {
         const d = {
-            nome: document.getElementById('p1').value,
-            entrega: document.getElementById('p2').value,
-            dor: document.getElementById('p3').value,
-            dif: document.getElementById('p4').value,
-            pub: document.getElementById('p5').value,
-            obs: document.getElementById('p6').value,
-            paz: document.getElementById('p7').value,
-            leg: document.getElementById('p8').value
+            h1: document.getElementById('q1').value,
+            h2: document.getElementById('q2').value,
+            s1: document.getElementById('q3').value,
+            h3: document.getElementById('q4').value,
+            s2: document.getElementById('q5').value,
+            s3: document.getElementById('q6').value,
+            val: document.getElementById('q7').value,
+            leg: document.getElementById('q8').value
         };
 
         document.getElementById('output').innerHTML = `
-            <div class="report-card">
-                <div class="dossie-header">
-                    <p style="color: var(--gold); letter-spacing: 5px; font-size: 0.7rem; margin-bottom: 10px;">RELATÓRIO DE POSICIONAMENTO ESTRATÉGICO</p>
-                    <h2>${d.nome}</h2>
+            <div class="dossie">
+                <div class="header-dossie">
+                    <p style="color: var(--gold); letter-spacing: 5px; font-size: 0.7rem; margin-bottom: 10px;">RELATÓRIO DE AUTOPOTENCIAL</p>
+                    <h2>Mapeamento de Capacidade</h2>
                 </div>
 
-                <div class="section">
-                    <h3>1. O DNA da Autoridade</h3>
-                    <p>Você não opera no mercado de serviços, você opera no mercado de <strong>Soluções Críticas</strong>. Seu posicionamento atual indica que você é a ponte entre o <strong>${d.dor}</strong> e a <strong>${d.paz}</strong>.</p>
-                    <div class="grid-2">
-                        <div class="metric"><span class="metric-label">Proposta de Valor</span><strong>${d.entrega} Inabalável</strong></div>
-                        <div class="metric"><span class="metric-label">Diferencial Competitivo</span><strong>${d.dif}</strong></div>
+                <div class="box">
+                    <h3>01. Hard Skills (Poder Técnico)</h3>
+                    <div class="skill-grid">
+                        <div class="skill-item"><span class="skill-label">Especialidade Mestra</span><br><strong>${d.h1}</strong></div>
+                        <div class="skill-item"><span class="skill-label">Diferencial Prático</span><br><strong>${d.h2}</strong></div>
+                        <div class="skill-item"><span class="skill-label">Base Intelectual</span><br><strong>${d.h3}</strong></div>
+                        <div class="skill-item"><span class="skill-label">Pilar de Conduta</span><br><strong>${d.val}</strong></div>
                     </div>
                 </div>
 
-                <div class="section">
-                    <h3>2. Análise de Impacto (O Gancho)</h3>
-                    <p>Para atrair <strong>${d.pub}</strong>, sua comunicação deve parar de vender o processo e focar no fim do <strong>${d.obs}</strong>.</p>
-                    <div class="bio-box">
-                        "Enquanto muitos explicam a lei, eu removo o <strong>${d.obs}</strong> que impede você de ter seu <strong>${d.entrega}</strong>. Minha missão é devolver sua <strong>${d.paz}</strong>."
-                    </div>
+                <div class="box">
+                    <h3>02. Soft Skills (Inteligência Humana)</h3>
+                    <p>Sua maior força comportamental reside na <strong>${d.s1}</strong>. Isso, combinado à sua forma de organizar o pensamento através de <strong>${d.s3}</strong>, cria um perfil de alta precisão.</p>
+                    <p>Ao reagir a falhas com <strong>${d.s2}</strong>, você demonstra maturidade executiva superior.</p>
                 </div>
 
-                <div class="section">
-                    <h3>3. Fábrica de Presença Digital (Bios)</h3>
-                    <p><strong>Instagram (O Imã):</strong> ⚖️ ${d.nome} | Especialista em ${d.entrega} 🛡️ Protegendo ${d.pub} contra ${d.dor} ✨ Diferencial: ${d.dif} 👇 Recupere sua ${d.paz} aqui.</p>
-                    <p><strong>LinkedIn (Autoridade):</strong> Ajudo ${d.pub} a superarem o entrave de ${d.obs} para garantirem seu ${d.entrega}. Com foco em ${d.dif}, transformo incerteza em patrimônio seguro. Focada em um legado de ${d.leg}.</p>
+                <div class="box">
+                    <h3>03. O Veredito de Potencial</h3>
+                    <p class="highlight">"Você possui a rara combinação de domínio técnico em ${d.h1} com a resiliência humana de quem prioriza ${d.val}."</p>
+                    <p style="margin-top: 20px;">Sua capacidade de entregar ${d.h2} é o que valida sua autoridade. O legado de ${d.leg} já está sendo construído pela sua consistência atual.</p>
                 </div>
 
-                <div class="section">
-                    <h3>4. Plano de Guerra Profissional</h3>
-                    <ul style="line-height: 2;">
-                        <li><strong>Pare de vender:</strong> Horas técnicas ou burocracia.</li>
-                        <li><strong>Comece a vender:</strong> A sensação de <strong>${d.paz}</strong> e a eliminação do medo de <strong>${d.dor}</strong>.</li>
-                        <li><strong>Estratégia 2026:</strong> Utilize seu domínio em <strong>${d.dif}</strong> para se tornar a única opção viável para <strong>${d.pub}</strong>.</li>
-                    </ul>
-                </div>
-
-                <p style="text-align: center; color: var(--gold); font-size: 0.7rem; opacity: 0.5;">CÁSSIA PROMPT V8 GOD MODE • DOCUMENTO CONFIDENCIAL</p>
+                <p style="text-align: center; color: var(--gold); font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px;">DOCUMENTO DE USO PESSOAL • V8 GOD MODE</p>
             </div>
         `;
     }
