@@ -3,109 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API V8 - Gerador de Perfil Inteligente</title>
+    <title>Cássia Prompt - Plano Criativo Elite</title>
     <style>
-        :root { --ouro: #d4af37; --fundo: #050505; --card: #121212; --texto: #e0e0e0; }
-        body { background: var(--fundo); color: var(--texto); font-family: 'Inter', sans-serif; margin: 0; padding: 40px; }
-        .container { max-width: 1200px; margin: auto; }
-        .header { text-align: center; margin-bottom: 50px; border-bottom: 1px solid var(--ouro); padding-bottom: 20px; }
-        h1 { color: var(--ouro); text-transform: uppercase; letter-spacing: 3px; font-size: 1.8rem; }
+        :root { --gold: #d4af37; --bg: #0a0a0a; --card: #161616; --text: #f0f0f0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; height: 100vh; }
         
-        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .perguntas { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid #222; }
-        .campo { margin-bottom: 15px; }
-        label { display: block; font-size: 0.8rem; color: var(--ouro); margin-bottom: 5px; text-transform: uppercase; }
-        input, textarea { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; }
+        .sidebar { width: 400px; background: var(--card); padding: 30px; border-right: 1px solid var(--gold); overflow-y: auto; box-shadow: 5px 0 15px rgba(0,0,0,0.5); }
+        .main { flex: 1; padding: 50px; overflow-y: auto; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); }
         
-        .btn-gerar { background: var(--ouro); color: #000; border: none; padding: 20px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; font-size: 1rem; transition: 0.3s; }
-        .btn-gerar:hover { background: #fff; transform: translateY(-2px); }
+        h1 { color: var(--gold); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 30px; }
+        label { display: block; margin-top: 15px; font-size: 0.8rem; color: var(--gold); text-transform: uppercase; font-weight: bold; }
+        input, textarea { width: 100%; padding: 12px; margin-top: 5px; background: #000; border: 1px solid #333; color: #fff; border-radius: 5px; box-sizing: border-box; }
+        
+        .btn-executar { background: var(--gold); color: #000; border: none; padding: 20px; width: 100%; margin-top: 30px; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 5px; transition: 0.3s; }
+        .btn-executar:hover { background: #fff; box-shadow: 0 0 20px var(--gold); }
 
-        .resultado-container { background: var(--card); padding: 30px; border-radius: 20px; border: 2px solid var(--ouro); min-height: 600px; }
-        .bio-box { background: #000; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--ouro); position: relative; }
-        .tag { position: absolute; top: -10px; right: 10px; background: var(--ouro); color: #000; font-size: 0.6rem; padding: 2px 8px; font-weight: bold; border-radius: 4px; }
-        .frase-impacto { font-size: 1.2rem; font-style: italic; color: #fff; text-align: center; margin: 20px 0; border-top: 1px solid #333; padding-top: 20px; }
+        /* Estilo do Relatório Gerado */
+        .report-section { background: rgba(255,255,255,0.03); border: 1px solid #333; padding: 25px; border-radius: 10px; margin-bottom: 30px; line-height: 1.6; }
+        .report-section h2 { color: var(--gold); border-left: 4px solid var(--gold); padding-left: 15px; font-size: 1.4rem; margin-top: 0; }
+        .highlight-box { background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--gold); padding: 15px; border-radius: 5px; margin: 15px 0; }
+        .check-list { list-style: none; padding: 0; }
+        .check-list li::before { content: "✅ "; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>Análise de Perfil Inteligente <br><span style="font-size: 0.7rem; color: #fff;">Cássia Prompt V8 God Mode</span></h1>
-    </div>
+<div class="sidebar">
+    <h1>PLANO ESTRATÉGICO V8</h1>
+    <p style="font-size: 0.8rem; opacity: 0.7;">Preencha os 10 pilares para a mentoria de IA:</p>
+    
+    <label>1. Nome e Profissão</label>
+    <input type="text" id="p1" placeholder="Ex: Helen - Advogada Imobiliária">
+    
+    <label>2. O que você entrega? (Resultado Final)</label>
+    <textarea id="p2" placeholder="Ex: Regularização de imóveis e paz de espírito"></textarea>
+    
+    <label>3. O que o cliente perde se não te contratar?</label>
+    <textarea id="p3" placeholder="Ex: Dinheiro, o imóvel, tempo em burocracia"></textarea>
+    
+    <label>4. Qual seu maior diferencial de mercado?</label>
+    <input type="text" id="p4" placeholder="Ex: Rapidez e exclusividade no extrajudicial">
+    
+    <label>5. Quem é o público 1? (Pessoas comuns)</label>
+    <input type="text" id="p5" placeholder="Ex: Herdeiros com inventário parado">
+    
+    <label>6. Quem é o público 2? (Business)</label>
+    <input type="text" id="p6" placeholder="Ex: Investidores de leilão">
+    
+    <label>7. Qual a sua frase de impacto atual?</label>
+    <input type="text" id="p7" placeholder="Ex: Regularizar é valorizar">
+    
+    <label>8. Qual a maior 'dor' que você cura?</label>
+    <input type="text" id="p8" placeholder="Ex: Medo de perder o patrimônio">
+    
+    <label>9. Um exemplo de vitória real (Case)</label>
+    <textarea id="p9" placeholder="Ex: Regularizei uma fazenda em 3 meses"></textarea>
+    
+    <label>10. Tom da Apresentação</label>
+    <select id="p10" style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #333;">
+        <option value="Elite">Elite (Firme e Caro)</option>
+        <option value="Empático">Empático (Acolhedor e Seguro)</option>
+    </select>
 
-    <div class="grid-layout">
-        <div class="perguntas">
-            <div class="campo"><label>1. Nome Completo ou Profissional:</label><input type="text" id="p1"></div>
-            <div class="campo"><label>2. Sua principal especialidade técnica:</label><input type="text" id="p2"></div>
-            <div class="campo"><label>3. Um problema difícil que você resolve com facilidade:</label><input type="text" id="p3"></div>
-            <div class="campo"><label>4. Sua maior qualidade humana (Paciência, Coragem...):</label><input type="text" id="p4"></div>
-            <div class="campo"><label>5. Quem é o seu cliente ideal (Pessoa física, empresas...):</label><input type="text" id="p5"></div>
-            <div class="campo"><label>6. Um valor do qual você não abre mão no trabalho:</label><input type="text" id="p6"></div>
-            <div class="campo"><label>7. Qual o maior sonho da sua carreira hoje?</label><input type="text" id="p7"></div>
-            <div class="campo"><label>8. Uma ferramenta que você domina (Software, Lei, Método):</label><input type="text" id="p8"></div>
-            <div class="campo"><label>9. Como você quer ser lembrado daqui a 10 anos?</label><input type="text" id="p9"></div>
-            <div class="campo"><label>10. Qual tom deseja na análise? (Firme ou Inspirador):</label><input type="text" id="p10"></div>
+    <button class="btn-executar" onclick="gerarPlano()">Gerar Plano Criativo de Elite</button>
+</div>
 
-            <button class="btn-gerar" onclick="processarAPI()">ATIVAR INTELIGÊNCIA V8</button>
-        </div>
-
-        <div id="resultado" class="resultado-container">
-            <h2 style="text-align: center; margin-top: 200px; opacity: 0.3;">AGUARDANDO DADOS PARA MAPEAMENTO...</h2>
-        </div>
+<div class="main" id="output">
+    <div style="text-align: center; margin-top: 20%; opacity: 0.3;">
+        <h2 style="letter-spacing: 5px;">SISTEMA EM ESPERA</h2>
+        <p>Aguardando entrada de dados estratégicos...</p>
     </div>
 </div>
 
 <script>
-    function processarAPI() {
-        const dados = {
-            nome: document.getElementById('p1').value,
-            tecnico: document.getElementById('p2').value,
-            solucao: document.getElementById('p3').value,
-            humano: document.getElementById('p4').value,
-            cliente: document.getElementById('p5').value,
-            valor: document.getElementById('p6').value,
-            sonho: document.getElementById('p7').value,
-            ferramenta: document.getElementById('p8').value,
-            legado: document.getElementById('p9').value,
-            tom: document.getElementById('p10').value
-        };
+function gerarPlano() {
+    const d = {
+        nome: document.getElementById('p1').value,
+        entrega: document.getElementById('p2').value,
+        perda: document.getElementById('p3').value,
+        dif: document.getElementById('p4').value,
+        p1: document.getElementById('p5').value,
+        p2: document.getElementById('p6').value,
+        frase: document.getElementById('p7').value,
+        dor: document.getElementById('p8').value,
+        case: document.getElementById('p9').value,
+        tom: document.getElementById('p10').value
+    };
 
-        const res = document.getElementById('resultado');
-        res.innerHTML = `
-            <h2 style="color: var(--ouro); margin-top: 0;">Análise Concluída: ${dados.nome}</h2>
-            
-            <div class="frase-impacto">
-                "Não é apenas sobre ${dados.tecnico}, é sobre a segurança de entregar ${dados.solucao} com a integridade de quem preza por ${dados.valor}."
+    document.getElementById('output').innerHTML = `
+        <h1 style="font-size: 2rem;">PLANO CRIATIVO DE APRESENTAÇÃO: ${d.nome}</h1>
+        
+        <div class="report-section">
+            <h2>1️⃣ Posicionamento Estratégico (A Base)</h2>
+            <p>Seu diferencial não é o serviço, é a <strong>liberdade</strong>. Você não vende apenas ${d.entrega}, você vende a cura para o ${d.dor}.</p>
+            <div class="highlight-box">
+                <strong>O que o cliente ganha com você:</strong>
+                <ul class="check-list">
+                    <li>Segurança Jurídica Absoluta</li>
+                    <li>Agilidade (Você resolve o que o assusta)</li>
+                    <li>Valorização real do patrimônio</li>
+                </ul>
             </div>
+            <p><strong>Risco do cliente sem você:</strong> ${d.perda}.</p>
+        </div>
 
-            <div class="bio-box">
-                <span class="tag">INSTAGRAM</span>
-                🚀 Especialista em ${dados.tecnico}<br>
-                🛠️ Dominando ${dados.ferramenta} para servir ${dados.cliente}<br>
-                🤝 Baseado em ${dados.humano} e ${dados.valor}<br>
-                📍 Focado em ${dados.sonho}
-            </div>
+        <div class="report-section">
+            <h2>2️⃣ Mensagem Central de Marketing</h2>
+            <p>Sua frase principal de posicionamento forte:</p>
+            <h3 style="color: var(--gold); text-align: center; background: #000; padding: 20px; border-radius: 10px;">
+                "${d.frase.toUpperCase()}: TRANSFORMANDO ${d.dor.toUpperCase()} EM PATRIMÔNIO SEGURO."
+            </h3>
+        </div>
 
-            <div class="bio-box">
-                <span class="tag">LINKEDIN</span>
-                <strong>Estrategista em ${dados.tecnico} | Foco em ${dados.solucao}</strong><br><br>
-                Ajudo ${dados.cliente} a superarem desafios através de ${dados.ferramenta}. Minha atuação é pautada pelo valor de ${dados.valor}, unindo rigor técnico com ${dados.humano}. Construindo um legado de ${dados.legado}.
-            </div>
+        <div class="report-section">
+            <h2>3️⃣ Estratégia de Público-Alvo</h2>
+            <p><strong>Perfil A (${d.p1}):</strong> Foco na dor emocional e na segurança da família.</p>
+            <p><strong>Perfil B (${d.p2}):</strong> Foco em lucro, velocidade e retorno sobre investimento.</p>
+        </div>
 
-            <div class="bio-box">
-                <span class="tag">FRASE DE AUTORIDADE (WHATSAPP)</span>
-                A excelência em ${dados.tecnico} encontra a solução para ${dados.solucao}.
-            </div>
+        <div class="report-section">
+            <h2>4️⃣ Plano de Marketing Educativo</h2>
+            <p>Sugestão de conteúdos que geram autoridade imediata:</p>
+            <ul class="check-list">
+                <li>"Como seu patrimônio pode valer 40% mais hoje"</li>
+                <li>"O erro comum que faz você perder seu ${d.entrega}"</li>
+                <li>"Bastidores: Como resolvi o caso: ${d.case}"</li>
+            </ul>
+        </div>
 
-            <div class="bio-box" style="border-left-color: #4CAF50;">
-                <span class="tag" style="background: #4CAF50;">DIAGNÓSTICO V8</span>
-                <strong>Ponto Forte:</strong> Sua união de ${dados.ferramenta} com ${dados.humano} é rara.<br>
-                <strong>Oportunidade:</strong> O mercado de ${dados.cliente} carece de profissionais que valorizam ${dados.valor}.<br>
-                <strong>Conselho God Mode:</strong> Para alcançar seu sonho de ${dados.sonho}, pare de focar na técnica e comece a vender o seu legado de ${dados.legado}.
+        <div class="report-section">
+            <h2>5️⃣ Estrutura Profissional de Apresentação</h2>
+            <div class="highlight-box">
+                <strong>SOBRE O TRABALHO:</strong><br>
+                "Atuo como especialista em ${d.entrega}, auxiliando ${d.p1} e ${d.p2} a protegerem o que é deles. Meu trabalho é focado em ${d.dif}, garantindo que a burocracia nunca seja um obstáculo para o seu crescimento."
             </div>
-        `;
-    }
+        </div>
+
+        <div class="report-section" style="border-color: #4CAF50;">
+            <h2 style="color: #4CAF50;">6️⃣ BIOS INTELIGENTES PARA REDES</h2>
+            <p><strong>Instagram:</strong> ⚖️ Especialista em ${d.entrega} | 🛡️ Protegendo seu patrimônio de ${d.perda} | 🚀 ${d.frase} | 👇 Clique para Consultoria</p>
+            <p><strong>LinkedIn:</strong> Ajudo ${d.p1} a conquistarem ${d.entrega} através de um método focado em ${d.dif}. Especialista em resolver ${d.dor}.</p>
+        </div>
+    `;
+}
 </script>
-
 </body>
 </html>
