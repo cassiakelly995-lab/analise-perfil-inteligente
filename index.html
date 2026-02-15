@@ -2,121 +2,55 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 God Mode Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>CÁSSIA OFFICE - V8 ELITE EDITION</title>
     <style>
-        :root { --gold: #c5a059; --accent: #ffd700; --bg: #020202; --card: rgba(15, 15, 15, 0.8); }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Outfit', sans-serif; margin: 0; display: flex; height: 100vh; }
-        
-        /* Lateral de Input */
-        .sidebar { width: 420px; background: #050505; border-right: 1px solid rgba(197, 160, 89, 0.1); padding: 40px; overflow-y: auto; }
-        h1 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.3rem; letter-spacing: 5px; text-align: center; margin-bottom: 30px; }
-        
-        .field { margin-bottom: 20px; }
-        label { display: block; font-size: 0.6rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600; }
-        input { width: 100%; background: #000; border: 1px solid #1a1a1a; padding: 15px; color: #fff; border-radius: 4px; font-size: 0.85rem; transition: 0.4s; box-sizing: border-box; }
-        input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(197, 160, 89, 0.1); outline: none; }
-
-        .btn-generate { background: linear-gradient(135deg, #8a6d3b, var(--gold)); color: #000; border: none; padding: 20px; width: 100%; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; border-radius: 4px; margin-top: 20px; }
-        
-        /* Área de Resultado */
-        .main { flex: 1; padding: 60px; overflow-y: auto; background: linear-gradient(180deg, #080808 0%, #020202 100%); display: flex; flex-direction: column; align-items: center; }
-        .report-container { width: 100%; max-width: 800px; display: none; animation: fadeIn 1s forwards; }
-        
-        .glass-card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 50px; border-radius: 8px; backdrop-filter: blur(20px); position: relative; }
-        .glass-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-
-        .section-title { color: var(--gold); font-family: 'Cinzel'; font-size: 0.9rem; letter-spacing: 3px; margin: 30px 0 15px 0; border-bottom: 1px solid rgba(197, 160, 89, 0.2); padding-bottom: 10px; }
-        
-        .ai-command-box { background: #000; border: 1px dashed var(--gold); padding: 20px; border-radius: 4px; margin-top: 20px; position: relative; }
-        .btn-copy { position: absolute; top: 10px; right: 10px; background: var(--gold); color: #000; border: none; padding: 5px 10px; font-size: 0.6rem; cursor: pointer; font-weight: bold; border-radius: 2px; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        :root { --gold: #d4af37; --dark: #1a1a1a; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--dark); color: white; }
+        #sidebar { width: 250px; background: #000; border-right: 2px solid var(--gold); padding: 20px; }
+        #main-content { flex-grow: 1; padding: 20px; display: flex; flex-direction: column; }
+        .app-canvas { background: white; color: black; flex-grow: 1; border-radius: 8px; padding: 10px; margin-top: 10px; min-height: 400px; }
+        button { width: 100%; padding: 15px; margin: 10px 0; background: transparent; color: var(--gold); border: 1px solid var(--gold); cursor: pointer; transition: 0.3s; font-weight: bold; }
+        button:hover { background: var(--gold); color: black; }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <h1>Cássia Prompt</h1>
-    <div style="text-align:center; font-size:0.5rem; letter-spacing:3px; opacity:0.5; margin-bottom:40px;">V8 GOD MODE • SMART INTERFACE</div>
-
-    <div class="field"><label>1. Hard Skill Mestra</label><input type="text" id="q1" placeholder="Ex: Direito Imobiliário"></div>
-    <div class="field"><label>2. Velocidade de Resolução</label><input type="text" id="q2" placeholder="O que você resolve em tempo recorde?"></div>
-    <div class="field"><label>3. Soft Skill (Ouro)</label><input type="text" id="q3" placeholder="Ex: Comunicação Persuasiva"></div>
-    <div class="field"><label>4. Experiência Acumulada</label><input type="text" id="q4" placeholder="Quantos anos ou casos reais?"></div>
-    <div class="field"><label>5. Gestão de Crise</label><input type="text" id="q5" placeholder="Como age sob pressão?"></div>
-    <div class="field"><label>6. Organização Mental</label><input type="text" id="q6" placeholder="Ex: Raciocínio Analítico"></div>
-    <div class="field"><label>7. Valor Inegociável</label><input type="text" id="q7" placeholder="Ex: Integridade Radical"></div>
-    <div class="field"><label>8. Meta de Legado</label><input type="text" id="q8" placeholder="Onde quer chegar?"></div>
-
-    <button class="btn-generate" onclick="processar()">Gerar Análise Elite</button>
+<div id="sidebar">
+    <h2 style="color:var(--gold)">CÁSSIA V8</h2>
+    <button onclick="openApp('writer')">TEXTO (WRITER)</button>
+    <button onclick="openApp('sheets')">PLANILHAS</button>
+    <button onclick="saveDoc()">SALVAR ARQUIVO</button>
 </div>
 
-<div class="main" id="main-area">
-    <div id="placeholder" style="margin: auto; text-align: center; opacity: 0.2;">
-        <h2 style="font-family: 'Cinzel'; letter-spacing: 10px;">System Ready</h2>
-        <p>Aguardando processamento de perfil...</p>
-    </div>
-
-    <div class="report-container" id="report">
-        <div class="glass-card">
-            <h2 style="font-family: 'Cinzel'; color: var(--gold); margin: 0;">Dossiê de Autopotencial</h2>
-            <p style="font-size: 0.7rem; letter-spacing: 3px; opacity: 0.6;">IDENTIDADE PROFISSIONAL DE ALTA PERFORMANCE</p>
-            
-            <div class="section-title">Análise de Capacidade</div>
-            <p id="analise-local">Sua combinação de competências está sendo processada...</p>
-
-            <div class="section-title">O Comando Inteligente (Para colar na IA)</div>
-            <p style="font-size: 0.8rem; opacity: 0.7;">Copie o código abaixo e cole no ChatGPT para uma análise ultra-profunda de 5 páginas:</p>
-            
-            <div class="ai-command-box">
-                <button class="btn-copy" onclick="copiarPrompt()">COPIAR COMANDO</button>
-                <code id="prompt-code" style="font-size: 0.7rem; color: #888; display: block; height: 80px; overflow: hidden;">
-                    Aguardando geração...
-                </code>
-            </div>
-        </div>
+<div id="main-content">
+    <h1 id="app-title">Bem-vinda, Cássia</h1>
+    <div id="editor" class="app-canvas" contenteditable="true">
+        Inicie seu documento jurídico aqui...
     </div>
 </div>
 
 <script>
-    function processar() {
-        const d = {
-            q1: document.getElementById('q1').value, q2: document.getElementById('q2').value,
-            q3: document.getElementById('q3').value, q4: document.getElementById('q4').value,
-            q5: document.getElementById('q5').value, q6: document.getElementById('q6').value,
-            q7: document.getElementById('q7').value, q8: document.getElementById('q8').value
-        };
-
-        // Lógica de Análise Local
-        document.getElementById('analise-local').innerHTML = `
-            O perfil indica uma <strong>Liderança Técnica em ${d.q1}</strong>. A IA detectou que sua capacidade de <strong>${d.q2}</strong> aliada à sua <strong>${d.q3}</strong> cria um posicionamento de "Especialista Escasso". Com <strong>${d.q4}</strong> de estrada, seu valor de mercado é sustentado pela <strong>${d.q7}</strong>.
-        `;
-
-        // Geração do Prompt Mestre para a IA real
-        const promptMestre = `ATUE COMO UM CONSULTOR DE CARREIRA DA MCKINSEY. ANALISE ESTE PERFIL PROFISSIONAL:
-        1. Hard Skill: ${d.q1}
-        2. Diferencial: ${d.q2}
-        3. Soft Skill: ${d.q3}
-        4. Bagagem: ${d.q4}
-        5. Reação a Erros: ${d.q5}
-        6. Pensamento: ${d.q6}
-        7. Valor: ${d.q7}
-        8. Legado: ${d.q8}
-        TAREFA: Gere um relatório de 5 seções incluindo: SWOT Pessoal, Projeção de Legado, 3 Estratégias de Monetização e Análise de Raridade de Perfil.`;
-
-        document.getElementById('prompt-code').innerText = promptMestre;
-        document.getElementById('placeholder').style.display = 'none';
-        document.getElementById('report').style.display = 'block';
+    function openApp(type) {
+        const title = document.getElementById('app-title');
+        const editor = document.getElementById('editor');
+        if(type === 'writer') {
+            title.innerText = "Cássia Writer - Editor de Elite";
+            editor.innerHTML = "Texto formatável e interativo...";
+        } else if(type === 'sheets') {
+            title.innerText = "Cássia Sheets - Cálculos Jurídicos";
+            editor.innerHTML = "Tabela de cálculos carregando...";
+        }
     }
 
-    function copiarPrompt() {
-        const text = document.getElementById('prompt-code').innerText;
-        navigator.clipboard.writeText(text);
-        alert("Comando Copiado! Agora cole no ChatGPT ou Gemini para a análise completa.");
+    function saveDoc() {
+        const text = document.getElementById('editor').innerText;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const anchor = document.createElement('a');
+        anchor.download = "documento_cassia.txt";
+        anchor.href = window.URL.createObjectURL(blob);
+        anchor.click();
+        alert("Documento salvo com sucesso no Protocolo V8!");
     }
 </script>
-
 </body>
 </html>
