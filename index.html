@@ -2,70 +2,61 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA OFFICE V8 | ELITE EDITION</title>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <title>CÁSSIA OFFICE V8 | SUPREMACIA DIGITAL</title>
+    <script src="https://cdn.jsdelivr.net/npm/jspreadsheet-ce/dist/index.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jspreadsheet-ce/dist/jspreadsheet.min.css" type="text/css" />
     <style>
-        :root { --primary: #121212; --accent: #D4AF37; --card: #1E1E1E; --text: #E0E0E0; }
-        body { background: var(--primary); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; display: flex; height: 100vh; }
+        :root { --gold: #D4AF37; --bg: #0A0A0A; --card: #161616; }
+        body { background: var(--bg); color: #FFF; font-family: 'Montserrat', sans-serif; margin: 0; display: flex; }
         
-        /* Sidebar Elegante */
-        #sidebar { width: 280px; background: #080808; border-right: 1px solid #333; display: flex; flex-direction: column; padding: 25px; }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; color: var(--accent); margin-bottom: 40px; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
-        
-        /* Botões de Comando */
-        .btn-nav { background: var(--card); border: 1px solid #333; color: white; padding: 12px; border-radius: 8px; margin-bottom: 15px; cursor: pointer; transition: 0.3s; text-align: left; font-size: 0.9rem; }
-        .btn-nav:hover { border-color: var(--accent); background: #252525; }
+        #sidebar { width: 300px; height: 100vh; background: #000; border-right: 1px solid var(--gold); padding: 20px; box-sizing: border-box; }
+        #main { flex-grow: 1; padding: 30px; overflow-y: auto; }
 
-        /* Workspace Principal */
-        #workspace { flex-grow: 1; padding: 40px; overflow-y: auto; display: flex; justify-content: center; }
-        .editor-container { background: var(--card); width: 100%; max-width: 900px; min-height: 80vh; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 50px; border: 1px solid #333; }
-        
-        /* Área de Anexos */
-        .drop-zone { border: 2px dashed #444; padding: 20px; text-align: center; border-radius: 8px; margin-top: 20px; color: #888; transition: 0.3s; }
-        .drop-zone:hover { border-color: var(--accent); color: var(--accent); }
+        .doc-card { background: var(--card); border: 1px solid #333; padding: 15px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+        .doc-card:hover { border-color: var(--gold); transform: translateX(5px); }
+
+        .flashcard { width: 300px; height: 180px; background: linear-gradient(145deg, #1e1e1e, #111); border: 2px solid var(--gold); border-radius: 15px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; margin: 10px; float: left; }
+
+        .btn-gold { width: 100%; background: var(--gold); border: none; padding: 12px; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div id="sidebar">
-    <div class="logo">CÁSSIA V8</div>
-    <button class="btn-nav" onclick="newDoc()">📄 NOVO DOCUMENTO</button>
-    <button class="btn-nav" onclick="openSheets()">📊 PLANILHAS PRO</button>
-    <button class="btn-nav" onclick="exportPDF()">💎 EXPORTAR PARA PDF</button>
-    <div style="margin-top:auto">
-        <p style="font-size: 0.7rem; color: #555;">SISTEMA OPERACIONAL V8<br>GOD MODE ACTIVATED</p>
+    <h2 style="color: var(--gold)">MEUS ARQUIVOS</h2>
+    <div id="file-list">
+        <div class="doc-card" onclick="loadDoc(1)">📄 Contrato Social - V8</div>
+        <div class="doc-card" onclick="loadDoc(2)">📊 Planejamento 2026</div>
     </div>
+    <hr style="border: 0.5px solid #222; margin: 20px 0;">
+    <h2 style="color: var(--gold)">MEMORIZAÇÃO</h2>
+    <button class="btn-gold" onclick="showFlashcards()">ESTUDAR CARDS</button>
 </div>
 
-<div id="workspace">
-    <div class="editor-container">
-        <h2 contenteditable="true" style="outline:none; color: var(--accent);">Título do Projeto...</h2>
-        <hr border="0" style="border-top: 1px solid #333; margin-bottom: 20px;">
-        <div id="editorjs"></div>
-        
-        <div class="drop-zone" id="dropZone">
-            ARRASTE E SOLTE ANEXOS OU CLIQUE PARA ENVIAR
-            <input type="file" id="fileInput" hidden multiple>
-        </div>
+<div id="main" id="content-area">
+    <h1 id="view-title">Painel Principal - Bem-vinda, Cássia</h1>
+    <div id="editor-container" style="background: white; color: black; min-height: 500px; border-radius: 10px; padding: 20px;">
+        Selecione um documento ou crie um novo template.
     </div>
 </div>
 
 <script>
-    // Inicialização do Editor Profissional
-    const editor = new EditorJS({
-        holder: 'editorjs',
-        placeholder: 'Comece a redigir seu texto de elite...',
-        autofocus: true
-    });
+    function loadDoc(id) {
+        document.getElementById('view-title').innerText = "Editando Documento #" + id;
+        document.getElementById('editor-container').innerHTML = "<div id='spreadsheet'></div>";
+        // Inicializa planilha de modelo
+        jspreadsheet(document.getElementById('spreadsheet'), {
+            data: [['Item', 'Valor', 'Status'], ['Template V8', 'R$ 0,00', 'Pendente']],
+            columns: [{ width: 300 }, { width: 100 }, { width: 100 }]
+        });
+    }
 
-    // Função de Anexos
-    const dropZone = document.getElementById('dropZone');
-    dropZone.onclick = () => document.getElementById('fileInput').click();
-    
-    function exportPDF() {
-        alert("Gerando documento com criptografia de ponta...");
-        window.print(); // Solução nativa elegante para salvar em PDF
+    function showFlashcards() {
+        document.getElementById('view-title').innerText = "Cards de Memorização (Método Ativo)";
+        document.getElementById('editor-container').innerHTML = `
+            <div class="flashcard">FRENTE: Qual o objetivo do V8?<br><br>(Clique para virar)</div>
+            <div class="flashcard">FRENTE: Regra de Ouro do Design<br><br>(Clique para virar)</div>
+        `;
     }
 </script>
 </body>
