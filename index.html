@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CÁSSIA V8 | ULTIMATE COMMAND CENTER</title>
+    <title>CÁSSIA V8 | ULTIMATE COMMAND CENTER - POMODORO EDITION</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap');
 
@@ -55,12 +55,30 @@
             font-size: 0.85rem;
         }
 
-        /* PAINEL CENTRAL: REDAÇÃO E FOCO */
+        /* PAINEL CENTRAL: REDAÇÃO E MÉTODO POMODORO */
         .main {
             padding: 30px;
             display: flex;
             flex-direction: column;
             gap: 20px;
+        }
+
+        .pomodoro-bar {
+            background: #161b22;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+        }
+
+        .timer-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            font-family: monospace;
         }
 
         .editor-container {
@@ -128,6 +146,16 @@
             background: var(--accent); color: #000; font-weight: bold;
             padding: 15px; border: none; width: 100%; cursor: pointer; border-radius: 0 0 15px 15px;
         }
+
+        .pomodoro-btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -148,9 +176,15 @@
     </aside>
 
     <main class="main">
+        <div class="pomodoro-bar">
+            <div><span style="color:var(--accent)">●</span> MODO POMODORO</div>
+            <div class="timer-display" id="timer">25:00</div>
+            <button class="pomodoro-btn" id="p-btn" onclick="togglePomodoro()">INICIAR FOCO</button>
+        </div>
+
         <div class="editor-container">
             <div class="nav-tabs">
-                <button class="tab-btn" onclick="load('docs')">📜 Relação Única (Todos os Casos)</button>
+                <button class="tab-btn" onclick="load('docs')">📜 Relação Única</button>
                 <button class="tab-btn" onclick="load('oficio')">📄 Ofício ao Fórum</button>
                 <button class="tab-btn" onclick="load('especial')">⚠️ Medida/Queixa/Oitiva</button>
             </div>
@@ -162,26 +196,20 @@
     <aside class="right-pane">
         <div class="gimba-box">
             <h3 style="color:var(--gold); margin-top:0;">🛒 GIMBA</h3>
-            <p style="font-size:0.7rem;">COMPRA DE SUPRIMENTOS DO MÊS</p>
             <button onclick="window.open('https://www.gimba.com.br')" style="background:var(--gold); border:none; padding:5px 15px; font-weight:bold; cursor:pointer; border-radius:4px;">ABRIR SITE</button>
         </div>
 
         <h2 style="font-size:0.7rem; color:var(--accent)">AVISOS IMPORTANTES</h2>
         <div class="post-it p-red" contenteditable="true">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
-        <div class="post-it p-yellow" contenteditable="true">🕒 ATENDIMENTO: 09h às 12h. Limite 30 pessoas/dia.</div>
-        <div class="post-it p-green" contenteditable="true">📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerites.</div>
-        
-        <div style="background:#161b22; padding:10px; border-radius:8px; border:1px solid #333;">
-            <h4 style="margin:0; font-size:0.7rem; color:var(--gold);">OBSERVAÇÃO DO DIA:</h4>
-            <div contenteditable="true" style="font-size:0.8rem; min-height:50px; color:#aaa;">Clique para anotar...</div>
-        </div>
+        <div class="post-it p-yellow" contenteditable="true">🕒 ATENDIMENTO: 09h às 12h. Máx 30 senhas.</div>
+        <div class="post-it p-green" contenteditable="true">📋 DOCS: RG, CPF, Residência, Trabalho e Holerites.</div>
     </aside>
 
     <script>
         const vault = {
-            docs: "RELAÇÃO ÚNICA DE DOCUMENTOS PARA ATENDIMENTO:\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (Atualizado)\n3. Carteira de Trabalho (Física ou Digital)\n4. Holerites: Trazer os 03 últimos (caso trabalhe).\n5. Casos de Família/Divórcio: Certidão de Casamento Atualizada e Docs dos Filhos.\n\nOBS: O assistido é responsável por identificar seu caso e apresentar a documentação acima.",
-            oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE __________.\n\nAssunto: Encaminhamento de Documentos Administrativos\n\nA Subseção encaminha em anexo a documentação referente ao assistido abaixo qualificado, conforme solicitado.",
-            especial: "PROTOCOLOS ESPECIAIS:\n- Medida Protetiva\n- Queixa Crime\n- Oitiva de Vítimas Menores\n\n(Verificar urgência e encaminhamento imediato ao setor responsável)."
+            docs: "RELAÇÃO ÚNICA DE DOCUMENTOS:\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (Atualizado)\n3. Carteira de Trabalho\n4. Holerites: Trazer os 03 últimos.\n5. Divórcio/Família: Certidão de Casamento Atualizada e Docs dos Filhos.",
+            oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE __________.\n\nAssunto: Encaminhamento de Documentos Administrativos.\n\nA Subseção encaminha a documentação do assistido abaixo qualificado...",
+            especial: "PROTOCOLOS ESPECIAIS:\n- Medida Protetiva\n- Queixa Crime\n- Oitiva de Vítimas Menores"
         };
 
         function load(k) { document.getElementById('editor').value = vault[k]; }
@@ -189,7 +217,40 @@
             const el = document.getElementById('editor');
             el.select();
             document.execCommand('copy');
-            alert("V8: Texto copiado com sucesso!");
+            alert("V8: Documento copiado!");
+        }
+
+        // Sistema Pomodoro
+        let timer;
+        let timeLeft = 25 * 60;
+        let running = false;
+
+        function togglePomodoro() {
+            const btn = document.getElementById('p-btn');
+            if (running) {
+                clearInterval(timer);
+                btn.innerText = "RETOMAR FOCO";
+                running = false;
+            } else {
+                running = true;
+                btn.innerText = "PAUSAR";
+                timer = setInterval(updateTimer, 1000);
+            }
+        }
+
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("TEMPO ESGOTADO! Faça uma pausa de 5 minutos.");
+                timeLeft = 25 * 60;
+                document.getElementById('p-btn').innerText = "INICIAR NOVO CICLO";
+                running = false;
+            } else {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                document.getElementById('timer').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
         }
     </script>
 </body>
