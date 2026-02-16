@@ -2,220 +2,254 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CÁSSIA V8 | NEURAL COMMAND CENTER</title>
+    <title>CÁSSIA V8 | NEURAL COMMAND CENTER - ULTIMATE</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
         :root {
-            --bg: #0d0f12;
-            --panel: #161b22;
-            --accent: #00d4ff; /* Azul neon para foco e calma */
+            --bg: #050505;
+            --panel: #0d1117;
+            --accent: #00f2ff; /* Ciano de Alta Visibilidade */
             --gold: #d4af37;
-            --danger: #ff4b2b;
-            --text: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: #30363d;
+            --danger: #ff3e3e;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Lexend', sans-serif; /* Fonte excelente para dislexia e foco */
+            font-family: 'Lexend', sans-serif;
             background: var(--bg);
-            color: var(--text);
+            color: #c9d1d9;
             margin: 0;
-            display: flex;
             height: 100vh;
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
             overflow: hidden;
         }
 
-        /* BARRA LATERAL - RIGOR DE TAREFAS */
+        /* BARRA LATERAL: RIGOR ABSOLUTO */
         .sidebar {
-            width: 350px;
             background: var(--panel);
-            border-right: 2px solid #30363d;
-            padding: 20px;
+            border-right: 1px solid var(--border);
+            padding: 25px;
             display: flex;
             flex-direction: column;
-        }
-
-        .task-card {
-            background: #0d1117;
-            border: 1px solid #30363d;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-        }
-
-        .task-card:has(input:checked) {
-            border-color: var(--accent);
-            opacity: 0.6;
-            background: #002b36;
-        }
-
-        /* ÁREA CENTRAL - MODO FOCO */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            display: grid;
-            grid-template-rows: auto 1fr auto;
             gap: 20px;
         }
 
-        .focus-timer {
-            background: linear-gradient(90deg, #161b22, #0d1117);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid var(--accent);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+        h2 { font-size: 0.75rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin: 0; }
+
+        .progress-circle {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: conic-gradient(var(--accent) 0deg, #161b22 0deg);
+            margin: 20px auto; display: flex; align-items: center; justify-content: center;
+            position: relative; transition: 0.5s;
+        }
+        .progress-circle::after {
+            content: attr(data-percent); content: "V8";
+            position: absolute; width: 100px; height: 100px; background: var(--panel);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
 
-        .timer-display {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-        }
-
-        /* CAMPO DE OBSERVAÇÃO (DUMP DE PENSAMENTOS) */
-        .thought-dump {
-            background: #000;
-            border: 1px dashed var(--gold);
-            padding: 15px;
-            border-radius: 10px;
-            color: var(--gold);
-            font-size: 0.9rem;
-        }
-
-        /* EDITOR PROFISSIONAL */
-        .editor-box {
-            background: var(--panel);
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        textarea {
-            flex: 1;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            color: #fff;
-            padding: 20px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            border-radius: 10px;
-            resize: none;
-            outline: none;
-        }
-
-        /* POST-ITS LATERAIS */
-        .right-bar {
-            width: 300px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .post-it {
-            padding: 15px;
+        .task-list { overflow-y: auto; flex: 1; }
+        .task-item {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 12px;
             border-radius: 8px;
-            color: #000;
-            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 0.85rem;
-            box-shadow: 4px 4px 0px rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        .task-item:hover { border-color: var(--accent); }
+        .task-item input { accent-color: var(--accent); width: 18px; height: 18px; }
+
+        /* PAINEL CENTRAL: FOCO E REDAÇÃO */
+        .main {
+            padding: 30px;
+            background: radial-gradient(circle at top, #111, #050505);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .p-1 { background: #ffeb3b; } /* Amarelo - Urgente */
-        .p-2 { background: #00e5ff; } /* Azul - Mensagem */
-        .p-3 { background: #ff4081; } /* Rosa - Compra */
-        .p-4 { background: #76ff03; } /* Verde - Regra */
-
-        .btn-elite {
-            background: var(--accent);
-            border: none;
+        .status-bar {
+            background: var(--panel);
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer-btn {
+            background: var(--accent);
             color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
-            text-transform: uppercase;
+        }
+
+        .editor-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--panel);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        .editor-tools {
+            padding: 10px;
+            background: #161b22;
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tool-btn {
+            background: transparent; border: 1px solid var(--border);
+            color: #fff; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
+        }
+        .tool-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        textarea {
+            flex: 1; background: transparent; border: none; color: #fff;
+            padding: 30px; font-size: 1.2rem; line-height: 2;
+            resize: none; outline: none; font-family: 'Lexend', sans-serif;
+        }
+
+        /* DIREITA: MEMÓRIA EXTERNA (ANTI-DESVANANEIO) */
+        .right-pane {
+            background: var(--panel);
+            border-left: 1px solid var(--border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .thought-dump {
+            background: #000;
+            border: 1px solid var(--gold);
+            padding: 15px;
+            border-radius: 10px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+        .thought-dump h3 { color: var(--gold); font-size: 0.7rem; margin: 0 0 10px 0; }
+        .thought-dump textarea { padding: 0; font-size: 0.85rem; line-height: 1.4; color: var(--gold); }
+
+        .post-it {
+            padding: 15px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.8rem;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+        }
+        .urgent { background: #ff5f5f; border-left: 5px solid #000; }
+        .info { background: #ffd93d; }
+        .suplementos { background: #00d4ff; }
+        .regra { background: #76ff03; }
+
+        .copy-footer {
+            background: var(--accent); color: #000; text-align: center;
+            padding: 15px; font-weight: bold; cursor: pointer; text-transform: uppercase;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <h2 style="color:var(--accent)">ROTEIRO OBRIGATÓRIO</h2>
-        <div id="tasks">
-            <div class="task-card"><input type="checkbox"> 1. Triagem E-mails (10:00)</div>
-            <div class="task-card"><input type="checkbox"> 2. Responder Assistidos</div>
-            <div class="task-card"><input type="checkbox"> 3. Elaborar Ofício Fórum</div>
-            <div class="task-card"><input type="checkbox"> 4. Cotação Gimba</div>
-            <div class="task-card"><input type="checkbox"> 5. Conferência de Prédio</div>
+    <aside class="sidebar">
+        <h2>Protocolo de Rotina</h2>
+        <div class="progress-circle" id="circle"></div>
+        <div class="task-list">
+            <label class="task-item"><input type="checkbox" onchange="upd()"> Chegada / Login (10:00)</label>
+            <label class="task-item"><input type="checkbox" onchange="upd()"> Triagem E-mails</label>
+            <label class="task-item"><input type="checkbox" onchange="upd()"> Ofícios do Fórum</label>
+            <label class="task-item"><input type="checkbox" onchange="upd()"> Compras Gimba</label>
+            <label class="task-item"><input type="checkbox" onchange="upd()"> Checklist Prédio</label>
         </div>
-        
-        <div class="thought-dump" style="margin-top: auto;">
-            <strong>🧠 DEPÓSITO DE DISTRAÇÕES:</strong>
-            <div contenteditable="true" style="margin-top:10px;">Se pensou em algo fora do trabalho, escreva aqui para esquecer e volte à tarefa.</div>
-        </div>
-    </div>
+        <div style="font-size: 0.7rem; color: #666; text-align: center;">CÁSSIA PROMPT V8.0.1</div>
+    </aside>
 
-    <div class="main-content">
-        <div class="focus-timer">
-            <div style="font-size: 0.8rem; letter-spacing: 2px;">MODO DE CONCENTRAÇÃO PROFISSIONAL</div>
-            <div class="timer-display" id="timer">25:00</div>
-            <button onclick="startFocus()" style="background:none; border: 1px solid var(--accent); color:var(--accent); cursor:pointer;">INICIAR CICLO DE FOCO</button>
-        </div>
-
-        <div class="editor-box">
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-elite" onclick="load('oficio')">Ofício</button>
-                <button class="btn-elite" style="background:var(--gold)" onclick="load('docs')">Documentos</button>
-                <button class="btn-elite" style="background:#fff" onclick="copy()">Copiar Resultado</button>
+    <main class="main">
+        <div class="status-bar">
+            <div>
+                <span style="color:var(--accent)">●</span> FOCO ATIVO: <span id="timer">25:00</span>
             </div>
-            <textarea id="editor" placeholder="Aguardando entrada de dados..."></textarea>
+            <button class="timer-btn" onclick="startTimer()">INICIAR CICLO POMODORO</button>
         </div>
-    </div>
 
-    <div class="right-bar">
-        <h2 style="font-size: 0.8rem;">ALERTAS CRÍTICOS</h2>
-        <div class="post-it p-1" contenteditable="true">🚨 EXTINTORES E DEDETIZAÇÃO: Conferir prazos hoje!</div>
-        <div class="post-it p-2" contenteditable="true">📞 ATENDIMENTO: 09h às 12h. Máx 30 pessoas.</div>
-        <div class="post-it p-3" contenteditable="true">📦 GIMBA: Orçar papel A4 e toners.</div>
-        <div class="post-it p-4" contenteditable="true">📎 DOCUMENTOS: RG/CPF/Residência/Carteira Trabalho.</div>
-    </div>
+        <div class="editor-wrapper">
+            <div class="editor-tools">
+                <button class="tool-btn" onclick="load('oficio')">Ofício Fórum</button>
+                <button class="tool-btn" onclick="load('atendimento')">Atendimento Geral</button>
+                <button class="tool-btn" onclick="load('divorcio')">Divórcio/Família</button>
+                <button class="tool-btn" onclick="load('trabalho')">Documentos Trabalho</button>
+            </div>
+            <textarea id="main-editor" placeholder="Aguardando comando de voz ou texto..."></textarea>
+            <div class="copy-footer" onclick="copy()">Copiar Documento Finalizado</div>
+        </div>
+    </main>
+
+    <aside class="right-pane">
+        <div class="thought-dump">
+            <h3>🧠 DEPÓSITO DE DISTRAÇÕES</h3>
+            <textarea placeholder="Pensou em algo aleatório? Escreva aqui e volte ao foco..."></textarea>
+        </div>
+
+        <h2>Lembretes Críticos</h2>
+        <div class="post-it urgent" contenteditable="true">🚨 EXTINTORES E DEDETIZAÇÃO: Verificar hoje sem falta!</div>
+        <div class="post-it info" contenteditable="true">📞 ATENDIMENTO: 09h-12h. Máx 30 senhas.</div>
+        <div class="post-it suplementos" contenteditable="true">🛒 GIMBA: Orçar papel e toners.</div>
+        <div class="post-it regra" contenteditable="true">📋 DOCS: RG, CPF, Residência, Trabalho.</div>
+    </aside>
 
     <script>
-        // Lógica de Mensagens
-        const data = {
-            oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE __________.\n\nAssunto: Protocolo de Documentos Administrativos.\n\nPrezados, servimo-nos do presente para encaminhar a documentação do assistido...",
-            docs: "RELAÇÃO DE DOCUMENTOS PARA ATENDIMENTO:\n1. RG e CPF (Original)\n2. Comprovante de Residência (Mês atual)\n3. Carteira de Trabalho\n4. Se Divórcio: Certidão de Casamento Atualizada\n5. Se Trabalho: 3 últimos holerites."
+        const vault = {
+            oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE __________.\n\nREF: PROTOCOLO DE ENVIO DE DOCUMENTOS\n\nPrezados, encaminhamos em anexo a documentação do assistido abaixo qualificado para os devidos fins.",
+            atendimento: "ATENDIMENTO ADMINISTRATIVO:\n- Segunda a Sexta: 09h às 12h.\n- Limite diário: 30 atendimentos.\n- Ordem de chegada.\n\nDocumentos: RG, CPF, Comprovante de Residência e Carteira de Trabalho.",
+            divorcio: "ASSISTÊNCIA PARA DIVÓRCIO:\nAlém dos documentos básicos, trazer:\n- Certidão de Casamento (Atualizada)\n- Certidão de Nascimento dos Filhos\n- 03 últimos holerites.",
+            trabalho: "ASSISTÊNCIA TRABALHISTA:\n- Carteira de Trabalho (Original)\n- Extrato de FGTS\n- 03 últimos holerites."
         };
 
-        function load(type) { document.getElementById('editor').value = data[type]; }
-        function copy() { 
-            const ed = document.getElementById('editor');
-            ed.select();
+        function load(k) { document.getElementById('main-editor').value = vault[k]; }
+        
+        function copy() {
+            const el = document.getElementById('main-editor');
+            el.select();
             document.execCommand('copy');
-            alert("CONCLUÍDO: Texto pronto para colagem.");
+            alert("SISTEMA: Documento enviado para a área de transferência.");
         }
 
-        // Timer Pomodoro para Autismo/TDAH
-        let time = 25 * 60;
-        function startFocus() {
-            const countdown = setInterval(() => {
-                let mins = Math.floor(time / 60);
-                let secs = time % 60;
-                document.getElementById('timer').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                if (time <= 0) {
-                    clearInterval(countdown);
-                    alert("Ciclo concluído! Faça uma pausa de 5 minutos.");
+        function upd() {
+            const checks = document.querySelectorAll('input[type="checkbox"]');
+            const done = Array.from(checks).filter(c => c.checked).length;
+            const pct = (done / checks.length) * 360;
+            document.getElementById('circle').style.background = `conic-gradient(var(--accent) ${pct}deg, #161b22 0deg)`;
+        }
+
+        let timeLeft = 25 * 60;
+        function startTimer() {
+            const interval = setInterval(() => {
+                const m = Math.floor(timeLeft / 60);
+                const s = timeLeft % 60;
+                document.getElementById('timer').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    alert("CICLO CONCLUÍDO. FAÇA UMA PAUSA DE 5 MINUTOS.");
                 }
-                time--;
+                timeLeft--;
             }, 1000);
         }
     </script>
