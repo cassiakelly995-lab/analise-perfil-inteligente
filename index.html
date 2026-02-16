@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CÁSSIA V8 | ULTIMATE COMMAND CENTER - POMODORO EDITION</title>
+    <title>CÁSSIA V8 | ULTIMATE COMMAND CENTER - PROGRESS EDITION</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap');
 
@@ -13,6 +13,7 @@
             --gold: #d4af37;
             --danger: #ff3e3e;
             --text: #c9d1d9;
+            --success: #76ff03;
         }
 
         body {
@@ -36,11 +37,34 @@
             gap: 20px;
         }
 
-        .status-circle {
-            width: 100px; height: 100px; border-radius: 50%;
-            border: 5px solid #161b22; border-top: 5px solid var(--accent);
-            margin: 0 auto; display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1.2rem; color: var(--accent);
+        /* NOVA BARRA DE PORCENTAGEM */
+        .progress-container {
+            background: #161b22;
+            border-radius: 10px;
+            height: 25px;
+            width: 100%;
+            border: 1px solid #30363d;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            transition: width 0.4s ease-in-out;
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            line-height: 25px;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
         }
 
         .task-item {
@@ -53,7 +77,10 @@
             align-items: center;
             gap: 10px;
             font-size: 0.85rem;
+            transition: 0.2s;
         }
+
+        .task-item:hover { border-color: var(--accent); }
 
         /* PAINEL CENTRAL: REDAÇÃO E MÉTODO POMODORO */
         .main {
@@ -71,7 +98,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
         .timer-display {
@@ -103,8 +129,6 @@
             background: transparent; border: 1px solid #444; color: #fff;
             padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.8rem;
         }
-
-        .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
 
         textarea {
             flex: 1; background: transparent; border: none; color: #fff;
@@ -148,13 +172,8 @@
         }
 
         .pomodoro-btn {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
+            background: var(--accent); color: #000; border: none;
+            padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer;
         }
     </style>
 </head>
@@ -162,14 +181,20 @@
 
     <aside class="sidebar">
         <h2 style="color:var(--accent); font-size: 0.7rem; letter-spacing: 2px;">PROTOCOLO EXECUTIVO</h2>
-        <div class="status-circle">V8</div>
-        <div class="task-list">
-            <label class="task-item"><input type="checkbox"> Chegada Subseção (10h)</label>
-            <label class="task-item"><input type="checkbox"> Triagem de E-mails</label>
-            <label class="task-item"><input type="checkbox"> Ofício Fórum (Envio)</label>
-            <label class="task-item"><input type="checkbox"> Orçamentos Gimba</label>
-            <label class="task-item"><input type="checkbox"> Check Extintores/Dedetiz.</label>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="p-bar"></div>
+            <div class="progress-text" id="p-text">0% CONCLUÍDO</div>
         </div>
+
+        <div class="task-list" id="task-list">
+            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Chegada Subseção (10h)</label>
+            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Triagem de E-mails</label>
+            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Ofício Fórum (Envio)</label>
+            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Orçamentos Gimba</label>
+            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Check Extintores/Dedetiz.</label>
+        </div>
+        
         <div class="dump-area" contenteditable="true">
             🧠 DEPÓSITO DE DISTRAÇÕES: Escreva aqui desvaneios para liberar foco...
         </div>
@@ -213,11 +238,23 @@
         };
 
         function load(k) { document.getElementById('editor').value = vault[k]; }
+        
         function copy() {
             const el = document.getElementById('editor');
             el.select();
             document.execCommand('copy');
             alert("V8: Documento copiado!");
+        }
+
+        // Lógica da Barra de Progresso
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('#task-list input[type="checkbox"]');
+            const total = checkboxes.length;
+            const checked = Array.from(checkboxes).filter(c => c.checked).length;
+            const percent = Math.round((checked / total) * 100);
+            
+            document.getElementById('p-bar').style.width = percent + '%';
+            document.getElementById('p-text').innerText = percent + '% CONCLUÍDO';
         }
 
         // Sistema Pomodoro
