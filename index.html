@@ -2,255 +2,194 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CÁSSIA V8 | NEURAL COMMAND CENTER - ULTIMATE</title>
+    <title>CÁSSIA V8 | ULTIMATE COMMAND CENTER</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap');
 
         :root {
             --bg: #050505;
             --panel: #0d1117;
-            --accent: #00f2ff; /* Ciano de Alta Visibilidade */
+            --accent: #00f2ff;
             --gold: #d4af37;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: #30363d;
             --danger: #ff3e3e;
+            --text: #c9d1d9;
         }
-
-        * { box-sizing: border-box; }
 
         body {
             font-family: 'Lexend', sans-serif;
             background: var(--bg);
-            color: #c9d1d9;
+            color: var(--text);
             margin: 0;
-            height: 100vh;
             display: grid;
-            grid-template-columns: 320px 1fr 300px;
+            grid-template-columns: 320px 1fr 320px;
+            height: 100vh;
             overflow: hidden;
         }
 
-        /* BARRA LATERAL: RIGOR ABSOLUTO */
+        /* BARRA LATERAL: RIGOR EXECUTIVO */
         .sidebar {
             background: var(--panel);
-            border-right: 1px solid var(--border);
+            border-right: 1px solid #30363d;
             padding: 25px;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        h2 { font-size: 0.75rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin: 0; }
-
-        .progress-circle {
-            width: 120px; height: 120px; border-radius: 50%;
-            background: conic-gradient(var(--accent) 0deg, #161b22 0deg);
-            margin: 20px auto; display: flex; align-items: center; justify-content: center;
-            position: relative; transition: 0.5s;
-        }
-        .progress-circle::after {
-            content: attr(data-percent); content: "V8";
-            position: absolute; width: 100px; height: 100px; background: var(--panel);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;
+        .status-circle {
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 5px solid #161b22; border-top: 5px solid var(--accent);
+            margin: 0 auto; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem; color: var(--accent);
         }
 
-        .task-list { overflow-y: auto; flex: 1; }
         .task-item {
-            background: var(--glass);
-            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #30363d;
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-size: 0.85rem;
-            cursor: pointer;
         }
-        .task-item:hover { border-color: var(--accent); }
-        .task-item input { accent-color: var(--accent); width: 18px; height: 18px; }
 
-        /* PAINEL CENTRAL: FOCO E REDAÇÃO */
+        /* PAINEL CENTRAL: REDAÇÃO E FOCO */
         .main {
             padding: 30px;
-            background: radial-gradient(circle at top, #111, #050505);
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        .status-bar {
-            background: var(--panel);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .timer-btn {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .editor-wrapper {
+        .editor-container {
             flex: 1;
+            background: var(--panel);
+            border: 1px solid #30363d;
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
-            background: var(--panel);
-            border-radius: 15px;
-            border: 1px solid var(--border);
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
 
-        .editor-tools {
-            padding: 10px;
+        .nav-tabs {
+            padding: 15px;
             background: #161b22;
             display: flex;
             gap: 10px;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid #30363d;
         }
 
-        .tool-btn {
-            background: transparent; border: 1px solid var(--border);
-            color: #fff; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
+        .tab-btn {
+            background: transparent; border: 1px solid #444; color: #fff;
+            padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.8rem;
         }
-        .tool-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
 
         textarea {
             flex: 1; background: transparent; border: none; color: #fff;
-            padding: 30px; font-size: 1.2rem; line-height: 2;
-            resize: none; outline: none; font-family: 'Lexend', sans-serif;
+            padding: 30px; font-size: 1.15rem; line-height: 2;
+            resize: none; outline: none;
         }
 
-        /* DIREITA: MEMÓRIA EXTERNA (ANTI-DESVANANEIO) */
+        /* DIREITA: GIMBA E ALERTAS */
         .right-pane {
             background: var(--panel);
-            border-left: 1px solid var(--border);
+            border-left: 1px solid #30363d;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        .thought-dump {
-            background: #000;
+        .gimba-box {
+            background: linear-gradient(135deg, #1e1e1e, #000);
             border: 1px solid var(--gold);
             padding: 15px;
             border-radius: 10px;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
+            text-align: center;
         }
-        .thought-dump h3 { color: var(--gold); font-size: 0.7rem; margin: 0 0 10px 0; }
-        .thought-dump textarea { padding: 0; font-size: 0.85rem; line-height: 1.4; color: var(--gold); }
 
         .post-it {
-            padding: 15px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.8rem;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+            padding: 15px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.85rem;
         }
-        .urgent { background: #ff5f5f; border-left: 5px solid #000; }
-        .info { background: #ffd93d; }
-        .suplementos { background: #00d4ff; }
-        .regra { background: #76ff03; }
+        .p-red { background: #ff5f5f; }
+        .p-yellow { background: #ffd93d; }
+        .p-green { background: #76ff03; }
 
-        .copy-footer {
-            background: var(--accent); color: #000; text-align: center;
-            padding: 15px; font-weight: bold; cursor: pointer; text-transform: uppercase;
+        .dump-area {
+            background: #000; border: 1px dashed #444; padding: 10px;
+            border-radius: 8px; color: #888; font-size: 0.8rem; min-height: 80px;
         }
 
+        .btn-copy {
+            background: var(--accent); color: #000; font-weight: bold;
+            padding: 15px; border: none; width: 100%; cursor: pointer; border-radius: 0 0 15px 15px;
+        }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <h2>Protocolo de Rotina</h2>
-        <div class="progress-circle" id="circle"></div>
+        <h2 style="color:var(--accent); font-size: 0.7rem; letter-spacing: 2px;">PROTOCOLO EXECUTIVO</h2>
+        <div class="status-circle">V8</div>
         <div class="task-list">
-            <label class="task-item"><input type="checkbox" onchange="upd()"> Chegada / Login (10:00)</label>
-            <label class="task-item"><input type="checkbox" onchange="upd()"> Triagem E-mails</label>
-            <label class="task-item"><input type="checkbox" onchange="upd()"> Ofícios do Fórum</label>
-            <label class="task-item"><input type="checkbox" onchange="upd()"> Compras Gimba</label>
-            <label class="task-item"><input type="checkbox" onchange="upd()"> Checklist Prédio</label>
+            <label class="task-item"><input type="checkbox"> Chegada Subseção (10h)</label>
+            <label class="task-item"><input type="checkbox"> Triagem de E-mails</label>
+            <label class="task-item"><input type="checkbox"> Ofício Fórum (Envio)</label>
+            <label class="task-item"><input type="checkbox"> Orçamentos Gimba</label>
+            <label class="task-item"><input type="checkbox"> Check Extintores/Dedetiz.</label>
         </div>
-        <div style="font-size: 0.7rem; color: #666; text-align: center;">CÁSSIA PROMPT V8.0.1</div>
+        <div class="dump-area" contenteditable="true">
+            🧠 DEPÓSITO DE DISTRAÇÕES: Escreva aqui desvaneios para liberar foco...
+        </div>
     </aside>
 
     <main class="main">
-        <div class="status-bar">
-            <div>
-                <span style="color:var(--accent)">●</span> FOCO ATIVO: <span id="timer">25:00</span>
+        <div class="editor-container">
+            <div class="nav-tabs">
+                <button class="tab-btn" onclick="load('docs')">📜 Relação Única (Todos os Casos)</button>
+                <button class="tab-btn" onclick="load('oficio')">📄 Ofício ao Fórum</button>
+                <button class="tab-btn" onclick="load('especial')">⚠️ Medida/Queixa/Oitiva</button>
             </div>
-            <button class="timer-btn" onclick="startTimer()">INICIAR CICLO POMODORO</button>
-        </div>
-
-        <div class="editor-wrapper">
-            <div class="editor-tools">
-                <button class="tool-btn" onclick="load('oficio')">Ofício Fórum</button>
-                <button class="tool-btn" onclick="load('atendimento')">Atendimento Geral</button>
-                <button class="tool-btn" onclick="load('divorcio')">Divórcio/Família</button>
-                <button class="tool-btn" onclick="load('trabalho')">Documentos Trabalho</button>
-            </div>
-            <textarea id="main-editor" placeholder="Aguardando comando de voz ou texto..."></textarea>
-            <div class="copy-footer" onclick="copy()">Copiar Documento Finalizado</div>
+            <textarea id="editor" placeholder="Selecione um documento acima..."></textarea>
+            <button class="btn-copy" onclick="copy()">COPIAR DOCUMENTO FINALIZADO</button>
         </div>
     </main>
 
     <aside class="right-pane">
-        <div class="thought-dump">
-            <h3>🧠 DEPÓSITO DE DISTRAÇÕES</h3>
-            <textarea placeholder="Pensou em algo aleatório? Escreva aqui e volte ao foco..."></textarea>
+        <div class="gimba-box">
+            <h3 style="color:var(--gold); margin-top:0;">🛒 GIMBA</h3>
+            <p style="font-size:0.7rem;">COMPRA DE SUPRIMENTOS DO MÊS</p>
+            <button onclick="window.open('https://www.gimba.com.br')" style="background:var(--gold); border:none; padding:5px 15px; font-weight:bold; cursor:pointer; border-radius:4px;">ABRIR SITE</button>
         </div>
 
-        <h2>Lembretes Críticos</h2>
-        <div class="post-it urgent" contenteditable="true">🚨 EXTINTORES E DEDETIZAÇÃO: Verificar hoje sem falta!</div>
-        <div class="post-it info" contenteditable="true">📞 ATENDIMENTO: 09h-12h. Máx 30 senhas.</div>
-        <div class="post-it suplementos" contenteditable="true">🛒 GIMBA: Orçar papel e toners.</div>
-        <div class="post-it regra" contenteditable="true">📋 DOCS: RG, CPF, Residência, Trabalho.</div>
+        <h2 style="font-size:0.7rem; color:var(--accent)">AVISOS IMPORTANTES</h2>
+        <div class="post-it p-red" contenteditable="true">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
+        <div class="post-it p-yellow" contenteditable="true">🕒 ATENDIMENTO: 09h às 12h. Limite 30 pessoas/dia.</div>
+        <div class="post-it p-green" contenteditable="true">📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerites.</div>
+        
+        <div style="background:#161b22; padding:10px; border-radius:8px; border:1px solid #333;">
+            <h4 style="margin:0; font-size:0.7rem; color:var(--gold);">OBSERVAÇÃO DO DIA:</h4>
+            <div contenteditable="true" style="font-size:0.8rem; min-height:50px; color:#aaa;">Clique para anotar...</div>
+        </div>
     </aside>
 
     <script>
         const vault = {
-            oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE __________.\n\nREF: PROTOCOLO DE ENVIO DE DOCUMENTOS\n\nPrezados, encaminhamos em anexo a documentação do assistido abaixo qualificado para os devidos fins.",
-            atendimento: "ATENDIMENTO ADMINISTRATIVO:\n- Segunda a Sexta: 09h às 12h.\n- Limite diário: 30 atendimentos.\n- Ordem de chegada.\n\nDocumentos: RG, CPF, Comprovante de Residência e Carteira de Trabalho.",
-            divorcio: "ASSISTÊNCIA PARA DIVÓRCIO:\nAlém dos documentos básicos, trazer:\n- Certidão de Casamento (Atualizada)\n- Certidão de Nascimento dos Filhos\n- 03 últimos holerites.",
-            trabalho: "ASSISTÊNCIA TRABALHISTA:\n- Carteira de Trabalho (Original)\n- Extrato de FGTS\n- 03 últimos holerites."
+            docs: "RELAÇÃO ÚNICA DE DOCUMENTOS PARA ATENDIMENTO:\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (Atualizado)\n3. Carteira de Trabalho (Física ou Digital)\n4. Holerites: Trazer os 03 últimos (caso trabalhe).\n5. Casos de Família/Divórcio: Certidão de Casamento Atualizada e Docs dos Filhos.\n\nOBS: O assistido é responsável por identificar seu caso e apresentar a documentação acima.",
+            oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE __________.\n\nAssunto: Encaminhamento de Documentos Administrativos\n\nA Subseção encaminha em anexo a documentação referente ao assistido abaixo qualificado, conforme solicitado.",
+            especial: "PROTOCOLOS ESPECIAIS:\n- Medida Protetiva\n- Queixa Crime\n- Oitiva de Vítimas Menores\n\n(Verificar urgência e encaminhamento imediato ao setor responsável)."
         };
 
-        function load(k) { document.getElementById('main-editor').value = vault[k]; }
-        
+        function load(k) { document.getElementById('editor').value = vault[k]; }
         function copy() {
-            const el = document.getElementById('main-editor');
+            const el = document.getElementById('editor');
             el.select();
             document.execCommand('copy');
-            alert("SISTEMA: Documento enviado para a área de transferência.");
-        }
-
-        function upd() {
-            const checks = document.querySelectorAll('input[type="checkbox"]');
-            const done = Array.from(checks).filter(c => c.checked).length;
-            const pct = (done / checks.length) * 360;
-            document.getElementById('circle').style.background = `conic-gradient(var(--accent) ${pct}deg, #161b22 0deg)`;
-        }
-
-        let timeLeft = 25 * 60;
-        function startTimer() {
-            const interval = setInterval(() => {
-                const m = Math.floor(timeLeft / 60);
-                const s = timeLeft % 60;
-                document.getElementById('timer').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-                if (timeLeft <= 0) {
-                    clearInterval(interval);
-                    alert("CICLO CONCLUÍDO. FAÇA UMA PAUSA DE 5 MINUTOS.");
-                }
-                timeLeft--;
-            }, 1000);
+            alert("V8: Texto copiado com sucesso!");
         }
     </script>
 </body>
