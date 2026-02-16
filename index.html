@@ -2,78 +2,83 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CÁSSIA V8 | SUPREMACIA DIGITAL</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css">
+    <title>Cássia Prompt - V8 God Mode</title>
     <style>
-        :root { --gold: #D4AF37; --dark-gray: #121212; --panel: #1E1E1E; }
-        body { background: var(--dark-gray); color: #e0e0e0; font-family: 'Inter', sans-serif; overflow: hidden; }
-        .sidebar { width: 300px; height: 100vh; background: #000; border-right: 1px solid var(--gold); padding: 20px; position: fixed; overflow-y: auto; }
-        .main-stage { margin-left: 300px; height: 100vh; padding: 40px; }
-        .v8-card { background: var(--panel); border: 1px solid #333; border-radius: 12px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); height: 80vh; display: flex; flex-direction: column; }
-        .nav-link-v8 { color: #888; cursor: pointer; padding: 10px; border-radius: 5px; transition: 0.3s; margin-bottom: 5px; display: block; text-decoration: none; border-left: 3px solid transparent; }
-        .nav-link-v8:hover { background: #252525; color: var(--gold); border-left: 3px solid var(--gold); }
-        .active-v8 { color: var(--gold); background: #252525; border-left: 3px solid var(--gold); }
-        #editor-v8 { background: white; color: black; flex-grow: 1; border-radius: 8px; padding: 20px; outline: none; overflow-y: auto; }
-        .btn-save { background: var(--gold); color: black; font-weight: bold; border: none; margin-top: 15px; }
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4af37; /* Tom dourado Elite Edition */
+            --text: #ffffff;
+            --bg: #121212;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+        .card { background: var(--primary); border: 1px solid var(--accent); padding: 20px; border-radius: 8px; }
+        h2 { border-bottom: 1px solid var(--accent); padding-bottom: 10px; color: var(--accent); }
+        .timer { font-size: 2em; text-align: center; margin: 10px 0; }
+        button { cursor: pointer; background: var(--accent); border: none; padding: 10px; font-weight: bold; border-radius: 4px; transition: 0.3s; }
+        button:hover { opacity: 0.8; }
+        .msg-list button { display: block; width: 100%; margin-bottom: 8px; text-align: left; }
+        textarea { width: 100%; height: 80px; margin-top: 10px; background: #222; color: #fff; border: 1px solid #444; }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <h3 class="text-center mb-4" style="color:var(--gold); font-weight:800;">CÁSSIA V8 PRO</h3>
-    <small class="text-muted">MEU PAINEL (SALVO)</small>
-    <div id="file-list">
-        <a class="nav-link-v8 active-v8" onclick="switchMode('text')">📄 Novo Documento de Texto</a>
-    </div>
-    <hr style="border-color: #333;">
-    <small class="text-muted">20 TEMPLATES DE PLANILHAS</small>
-    <div id="sheet-templates">
-        </div>
-</div>
+<h1>Cássia Prompt | <small>Elite Edition V8</small></h1>
 
-<div class="main-stage">
-    <div class="v8-card">
-        <div class="d-flex justify-content-between mb-3">
-            <h4 id="work-title">Editor de Texto de Elite</h4>
-            <span class="badge bg-success" id="status">Sincronizado</span>
+<div class="grid">
+    <div class="card">
+        <h2>⏱️ Gestão de Tempo</h2>
+        <div class="timer" id="display">00:00:00</div>
+        <div style="display:flex; gap:10px; justify-content: center;">
+            <button onclick="startTimer()">Iniciar</button>
+            <button onclick="stopTimer()">Pausar</button>
+            <button onclick="resetTimer()">Resetar</button>
         </div>
-        <div id="editor-v8" contenteditable="true">Inicie sua redação profissional aqui...</div>
-        <div id="sheet-v8" style="display:none;"></div>
-        <button class="btn btn-save" onclick="saveToPanel()">SALVAR NO PAINEL V8</button>
+        <h3>Rotina Diária</h3>
+        <ul id="todo">
+            <li><input type="checkbox"> Revisar prazos Projudi</li>
+            <li><input type="checkbox"> Responder e-mails prioritários</li>
+            <li><input type="checkbox"> Atualizar andamentos V8</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>⚖️ Atendimento aos Advogados</h2>
+        <div class="msg-list">
+            <p>Clique para copiar a resposta pronta:</p>
+            <button onclick="copyMsg('Olá Dr(a)., informo que o protocolo solicitado já foi realizado e o comprovante segue anexo.')">✅ Confirmação de Protocolo</button>
+            <button onclick="copyMsg('Prezado, o processo está em fase de análise conclusa. Monitoramos diariamente qualquer movimentação.')">🔍 Status de Andamento</button>
+            <button onclick="copyMsg('Doutor, necessitamos da documentação complementar (RG/CPF e Comprovante de Residência) para prosseguir.')">📂 Solicitação de Documentos</button>
+        </div>
+        <textarea id="clipboard-area" placeholder="A mensagem copiada aparecerá aqui para edição rápida..."></textarea>
     </div>
 </div>
 
 <script>
-    const templates = ["Fluxo de Caixa", "Controle de Prazos", "Gestão de Clientes", "Cálculo de Honorários", "Cronograma V8", "Orçamento Anual", "Auditoria de Dados", "Metas de Vendas", "Inventário", "Escala de Equipe", "Logística", "Database V8", "Relatório de Custos", "Tabela de Preços", "Dashboard de Performance", "Controle de Horas", "Checklist de Projetos", "Análise de Riscos", "Follow-up", "Arquivamento"];
-
-    const tempDiv = document.getElementById('sheet-templates');
-    templates.forEach((t, i) => {
-        tempDiv.innerHTML += `<a class="nav-link-v8" onclick="loadSheet('${t}')">📊 ${t}</a>`;
-    });
-
-    function switchMode(mode) {
-        document.getElementById('editor-v8').style.display = mode === 'text' ? 'block' : 'none';
-        document.getElementById('sheet-v8').style.display = mode === 'sheet' ? 'block' : 'none';
+    // Lógica do Cronômetro
+    let timer;
+    let seconds = 0;
+    function startTimer() {
+        if(!timer) timer = setInterval(() => {
+            seconds++;
+            let h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            let m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            let s = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('display').innerText = `${h}:${m}:${s}`;
+        }, 1000);
     }
+    function stopTimer() { clearInterval(timer); timer = null; }
+    function resetTimer() { stopTimer(); seconds = 0; document.getElementById('display').innerText = "00:00:00"; }
 
-    function loadSheet(name) {
-        switchMode('sheet');
-        document.getElementById('work-title').innerText = name;
-        document.getElementById('sheet-v8').innerHTML = ""; 
-        new Handsontable(document.getElementById('sheet-v8'), {
-            data: [['Item', 'Qtd', 'Valor', 'Total'], ['', '', '', '']],
-            rowHeaders: true, colHeaders: true, height: '400', licenseKey: 'non-commercial-and-evaluation'
-        });
-    }
-
-    function saveToPanel() {
-        const title = document.getElementById('work-title').innerText;
-        const list = document.getElementById('file-list');
-        list.innerHTML += `<a class="nav-link-v8">📁 ${title} (Salvo em ${new Date().toLocaleTimeString()})</a>`;
-        alert("Protocolo V8: Documento Arquivado com Sucesso!");
+    // Lógica de Cópia
+    function copyMsg(text) {
+        const area = document.getElementById('clipboard-area');
+        area.value = text;
+        area.select();
+        document.execCommand('copy');
+        alert('Mensagem copiada para o clipboard!');
     }
 </script>
+
 </body>
 </html>
