@@ -2,86 +2,107 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA V8 - ELITE EDITION</title>
+    <title>CÁSSIA V8 - ELITE EDITION (GOD MODE)</title>
     <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --card: #161616; --text: #e0e0e0; }
-        body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); margin: 0; padding: 20px; }
-        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: auto; }
-        .card { background: var(--card); border-left: 4px solid var(--gold); padding: 20px; border-radius: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h2 { color: var(--gold); text-transform: uppercase; font-size: 1.1em; letter-spacing: 1px; margin-top: 0; }
-        .btn-msg { display: block; width: 100%; background: #222; border: 1px solid #333; color: #fff; padding: 12px; text-align: left; margin-bottom: 10px; cursor: pointer; transition: 0.2s; border-radius: 4px; }
-        .btn-msg:hover { border-color: var(--gold); background: #2a2a2a; }
-        .alert-item { background: #1a1a1a; padding: 10px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .alert-item.urgent { border-color: #ff4444; }
-        textarea { width: 100%; height: 100px; background: #000; color: var(--gold); border: 1px solid #333; padding: 10px; box-sizing: border-box; font-size: 0.9em; }
-        .status-badge { font-size: 0.8em; background: var(--gold); color: #000; padding: 2px 8px; font-weight: bold; border-radius: 3px; }
+        :root { --gold: #d4af37; --dark: #0a0a0a; --card: #1c1c1c; --text: #e0e0e0; --postit: #fef08a; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: var(--text); margin: 0; padding: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 20px; }
+        .card { background: var(--card); border: 1px solid #333; padding: 15px; border-radius: 8px; position: relative; }
+        h2 { color: var(--gold); font-size: 1rem; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 5px; }
+        
+        /* Checklist e Contadores */
+        .stats { font-size: 0.8rem; color: var(--gold); margin-bottom: 10px; }
+        .todo-item { display: flex; align-items: center; margin-bottom: 8px; }
+        
+        /* Mensagens Editáveis */
+        textarea { width: 100%; height: 150px; background: #000; color: #fff; border: 1px solid var(--gold); padding: 10px; font-family: inherit; margin-top: 10px; }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 10px; }
+        button { background: var(--gold); color: #000; border: none; padding: 8px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+
+        /* Calendário e Post-it */
+        .calendar-input { width: 100%; background: #222; color: #fff; border: none; padding: 5px; margin-bottom: 10px; }
+        .post-it-container { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .post-it { background: var(--postit); color: #000; padding: 15px; min-height: 100px; border-radius: 2px; box-shadow: 5px 5px 10px rgba(0,0,0,0.5); font-weight: bold; transform: rotate(-1deg); }
+        .post-it contenteditable="true" { outline: none; }
     </style>
 </head>
 <body>
 
-<header style="text-align: center; margin-bottom: 30px;">
-    <h1 style="color: var(--gold); margin: 0;">CÁSSIA V8 <span style="font-weight: 200;">| GOD MODE</span></h1>
-    <p style="font-size: 0.9em; opacity: 0.7;">Protocolo de Atendimento e Gestão Subseção</p>
+<header style="text-align:center; border-bottom: 2px solid var(--gold); margin-bottom: 20px; padding-bottom: 10px;">
+    <h1>CÁSSIA V8 <small>Elite Edition</small></h1>
 </header>
 
-<div class="dashboard">
-    
+<div class="grid">
     <div class="card">
-        <h2>⚖️ Atendimento de Assistidos</h2>
-        <p style="font-size: 0.8em; margin-bottom: 15px;">Regras: Seg-Sex, 09h às 12h | Limite: 30 pessoas | Ordem de Chegada</p>
+        <h2>📋 Rotina de Trabalho</h2>
+        <div class="stats" id="counter">Concluído: 0 / 5</div>
+        <div id="checklist">
+            <div class="todo-item"><input type="checkbox" onclick="updateCounter()"> Chegada Subseção (10h)</div>
+            <div class="todo-item"><input type="checkbox" onclick="updateCounter()"> Responder E-mails</div>
+            <div class="todo-item"><input type="checkbox" onclick="updateCounter()"> Ofício do Fórum</div>
+            <div class="todo-item"><input type="checkbox" onclick="updateCounter()"> Orçamentos Gimba</div>
+            <div class="todo-item"><input type="checkbox" onclick="updateCounter()"> Verificação Extintores</div>
+        </div>
         
-        <button class="btn-msg" onclick="copyText(1)">📋 Lista de Documentos Geral</button>
-        <button class="btn-msg" onclick="copyText(2)">💍 Divórcio (Doc. Adicionais)</button>
-        <button class="btn-msg" onclick="copyText(3)">💼 Trabalho (Comprovação Renda)</button>
-        
-        <textarea id="output" readonly placeholder="Clique em um botão para copiar a mensagem..."></textarea>
+        <h2 style="margin-top:20px;">📅 Calendário de Eventos</h2>
+        <input type="date" class="calendar-input">
+        <div contenteditable="true" style="background:#222; min-height:100px; padding:10px; font-size:0.9rem;">
+            - Digite aqui seus compromissos...
+        </div>
     </div>
 
     <div class="card">
-        <h2>🛠️ Manutenção e Suprimentos</h2>
-        
-        <div class="alert-item urgent">
-            <span>📅 <strong>Troca de Extintores</strong></span>
-            <span class="status-badge">VERIFICAR DATA</span>
+        <h2>⚖️ Central de Mensagens e Ofícios</h2>
+        <p style="font-size:0.8rem;">Selecione o modelo, edite abaixo e copie:</p>
+        <div class="btn-group">
+            <button onclick="loadMsg('atendimento')">Atendimento Geral</button>
+            <button onclick="loadMsg('divorcio')">Divórcio</button>
+            <button onclick="loadMsg('trabalho')">Trabalhista</button>
+            <button onclick="loadMsg('oficio')">Ofício Fórum</button>
         </div>
-        
-        <div class="alert-item urgent">
-            <span>🕷️ <strong>Dedetização Subseção</strong></span>
-            <span class="status-badge">VERIFICAR DATA</span>
-        </div>
+        <textarea id="editor"></textarea>
+        <button style="width:100%; margin-top:10px; background:#fff;" onclick="copyEditor()">COPIAR MENSAGEM EDITADA</button>
+    </div>
 
-        <div class="alert-item">
-            <span>🛒 <strong>Gimba:</strong> Orçamentos e Suplementos</span>
-            <button onclick="window.open('https://www.gimba.com.br', '_blank')" style="background:var(--gold); border:none; cursor:pointer; padding:2px 10px; font-size:0.7em; font-weight:bold;">ABRIR SITE</button>
-        </div>
-        
-        <div style="margin-top: 20px;">
-            <h2>📝 Lembretes Rápidos</h2>
-            <div id="todo-list">
-                <input type="checkbox"> Chegada na Subseção (10:00)<br>
-                <input type="checkbox"> Triagem de E-mails (Advogados/Assistidos)<br>
-                <input type="checkbox"> Conferência de Estoque
+    <div class="card">
+        <h2>🔥 Urgente / Importante</h2>
+        <div class="post-it-container">
+            <div class="post-it" contenteditable="true">
+                Clique para editar:<br>
+                - TROCAR EXTINTORES!<br>
+                - DEDETIZAÇÃO PRÓXIMA!
+            </div>
+            <div class="post-it" style="background: #bae6fd; transform: rotate(1deg);" contenteditable="true">
+                Lembrete secundário...
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
-    const messages = {
-        1: "Prezado(a), o atendimento ocorre de segunda a sexta-feira, das 09:00 às 12:00, limitado a 30 pessoas por dia (ordem de chegada). É obrigatória a apresentação dos seguintes documentos originais: RG, CPF, Comprovante de Residência atualizado e Carteira de Trabalho.",
-        2: "Para casos de divórcio, além dos documentos básicos (RG, CPF, Comprovante de Residência e Carteira de Trabalho), é necessário apresentar a Certidão de Casamento atualizada e os documentos dos filhos menores, se houver.",
-        3: "Sobre a comprovação de renda: caso esteja trabalhando, favor apresentar os 03 últimos holerites. Caso não possua registro em carteira, trazer apenas a Carteira de Trabalho original."
+    const msgs = {
+        atendimento: "Prezado(a), atendimento de Seg a Sex, das 09h às 12h. Trazer RG, CPF, Comprovante de Residência e Carteira de Trabalho.",
+        divorcio: "Para Divórcio: Documentos básicos + Certidão de Casamento atualizada e documentos dos filhos menores.",
+        trabalho: "Para Trabalhista: Trazer os 3 últimos holerites ou a Carteira de Trabalho original.",
+        oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE ______.\nRef: Protocolo de Envio de Documentos.\n\nPrezados, encaminhamos em anexo a documentação solicitada referente ao assistido..."
     };
 
-    function copyText(id) {
-        const text = messages[id];
-        const out = document.getElementById('output');
-        out.value = text;
-        out.select();
+    function loadMsg(type) {
+        document.getElementById('editor').value = msgs[type];
+    }
+
+    function copyEditor() {
+        const text = document.getElementById('editor');
+        text.select();
         document.execCommand('copy');
-        alert("Comando Executado: Mensagem copiada para o clipboard.");
+        alert("Copiado com sucesso!");
+    }
+
+    function updateCounter() {
+        const total = document.querySelectorAll('#checklist input[type="checkbox"]').length;
+        const checked = document.querySelectorAll('#checklist input[type="checkbox"]:checked').length;
+        document.getElementById('counter').innerText = `Concluído: ${checked} / ${total}`;
+        if(checked === total) alert("Missão Cumprida, Cássia! Todas as tarefas concluídas.");
     }
 </script>
 
