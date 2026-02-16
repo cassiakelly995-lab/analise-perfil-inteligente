@@ -2,293 +2,175 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CÁSSIA V8 | ULTIMATE COMMAND CENTER - PROGRESS EDITION</title>
+    <title>CÁSSIA V8 | NEURAL COMMAND CENTER - ULTIMATE</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap');
-
         :root {
-            --bg: #050505;
-            --panel: #0d1117;
-            --accent: #00f2ff;
-            --gold: #d4af37;
-            --danger: #ff3e3e;
-            --text: #c9d1d9;
-            --success: #76ff03;
+            --bg: #050505; --panel: #0d1117; --accent: #00f2ff;
+            --gold: #d4af37; --danger: #ff3e3e; --text: #c9d1d9; --success: #76ff03;
         }
-
         body {
-            font-family: 'Lexend', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: grid;
-            grid-template-columns: 320px 1fr 320px;
-            height: 100vh;
-            overflow: hidden;
+            font-family: 'Lexend', sans-serif; background: var(--bg); color: var(--text);
+            margin: 0; display: grid; grid-template-columns: 320px 1fr 320px; height: 100vh; overflow: hidden;
         }
+        /* SIDEBARS */
+        .sidebar, .right-pane { background: var(--panel); border: 1px solid #30363d; padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+        
+        /* PROGRESS BAR */
+        .progress-container { background: #161b22; border-radius: 10px; height: 25px; border: 1px solid #30363d; position: relative; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--success)); transition: 0.4s; }
+        .progress-text { position: absolute; width: 100%; text-align: center; font-size: 0.7rem; line-height: 25px; font-weight: bold; color: #fff; }
 
-        /* BARRA LATERAL: RIGOR EXECUTIVO */
-        .sidebar {
-            background: var(--panel);
-            border-right: 1px solid #30363d;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        /* TASK LIST */
+        .task-item { background: rgba(255,255,255,0.03); border: 1px solid #30363d; padding: 10px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+        .pulse-alert { animation: pulse-border 1.5s infinite; }
+        @keyframes pulse-border { 0% { border-color: #30363d; } 50% { border-color: var(--danger); box-shadow: 0 0 10px var(--danger); } 100% { border-color: #30363d; } }
 
-        /* NOVA BARRA DE PORCENTAGEM */
-        .progress-container {
-            background: #161b22;
-            border-radius: 10px;
-            height: 25px;
-            width: 100%;
-            border: 1px solid #30363d;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
+        /* MAIN PANEL */
+        .main { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .pomodoro-bar { background: #161b22; padding: 12px; border-radius: 10px; border: 1px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        .timer-display { font-size: 1.8rem; font-weight: bold; color: var(--accent); font-family: monospace; }
+        
+        /* SMART FIELDS */
+        .smart-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #161b22; padding: 10px; border-radius: 10px; }
+        .smart-fields input { background: #000; border: 1px solid #444; color: var(--accent); padding: 8px; border-radius: 5px; font-size: 0.8rem; outline: none; }
+        .smart-fields input:focus { border-color: var(--accent); }
 
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--success));
-            transition: width 0.4s ease-in-out;
-        }
+        /* EDITOR */
+        .editor-container { flex: 1; background: var(--panel); border: 1px solid #30363d; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
+        .nav-tabs { padding: 10px; background: #161b22; display: flex; gap: 8px; border-bottom: 1px solid #30363d; }
+        .tab-btn { background: transparent; border: 1px solid #444; color: #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+        .tab-btn:hover { border-color: var(--accent); }
+        textarea { flex: 1; background: transparent; border: none; color: #fff; padding: 25px; font-size: 1.15rem; line-height: 1.8; resize: none; outline: none; }
 
-        .progress-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-            line-height: 25px;
-            color: #fff;
-            text-shadow: 1px 1px 2px #000;
-        }
-
-        .task-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid #30363d;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            transition: 0.2s;
-        }
-
-        .task-item:hover { border-color: var(--accent); }
-
-        /* PAINEL CENTRAL: REDAÇÃO E MÉTODO POMODORO */
-        .main {
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .pomodoro-bar {
-            background: #161b22;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--accent);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .timer-display {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--accent);
-            font-family: monospace;
-        }
-
-        .editor-container {
-            flex: 1;
-            background: var(--panel);
-            border: 1px solid #30363d;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .nav-tabs {
-            padding: 15px;
-            background: #161b22;
-            display: flex;
-            gap: 10px;
-            border-bottom: 1px solid #30363d;
-        }
-
-        .tab-btn {
-            background: transparent; border: 1px solid #444; color: #fff;
-            padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.8rem;
-        }
-
-        textarea {
-            flex: 1; background: transparent; border: none; color: #fff;
-            padding: 30px; font-size: 1.15rem; line-height: 2;
-            resize: none; outline: none;
-        }
-
-        /* DIREITA: GIMBA E ALERTAS */
-        .right-pane {
-            background: var(--panel);
-            border-left: 1px solid #30363d;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .gimba-box {
-            background: linear-gradient(135deg, #1e1e1e, #000);
-            border: 1px solid var(--gold);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .post-it {
-            padding: 15px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.85rem;
-        }
-        .p-red { background: #ff5f5f; }
-        .p-yellow { background: #ffd93d; }
-        .p-green { background: #76ff03; }
-
-        .dump-area {
-            background: #000; border: 1px dashed #444; padding: 10px;
-            border-radius: 8px; color: #888; font-size: 0.8rem; min-height: 80px;
-        }
-
-        .btn-copy {
-            background: var(--accent); color: #000; font-weight: bold;
-            padding: 15px; border: none; width: 100%; cursor: pointer; border-radius: 0 0 15px 15px;
-        }
-
-        .pomodoro-btn {
-            background: var(--accent); color: #000; border: none;
-            padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer;
-        }
+        /* POST-ITS */
+        .post-it { padding: 12px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.8rem; min-height: 60px; }
+        .p-red { background: #ff5f5f; } .p-yellow { background: #ffd93d; } .p-green { background: #76ff03; }
+        
+        .btn-copy { background: var(--accent); color: #000; font-weight: bold; padding: 12px; border: none; cursor: pointer; border-radius: 0 0 12px 12px; text-transform: uppercase; }
+        button:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <h2 style="color:var(--accent); font-size: 0.7rem; letter-spacing: 2px;">PROTOCOLO EXECUTIVO</h2>
-        
+        <h2 style="color:var(--accent); font-size: 0.7rem; letter-spacing: 2px;">V8 NEURAL COMMAND</h2>
         <div class="progress-container">
             <div class="progress-bar" id="p-bar"></div>
-            <div class="progress-text" id="p-text">0% CONCLUÍDO</div>
+            <div class="progress-text" id="p-text">0%</div>
         </div>
-
-        <div class="task-list" id="task-list">
-            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Chegada Subseção (10h)</label>
-            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Triagem de E-mails</label>
-            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Ofício Fórum (Envio)</label>
-            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Orçamentos Gimba</label>
-            <label class="task-item"><input type="checkbox" onchange="updateProgress()"> Check Extintores/Dedetiz.</label>
+        <div id="task-list">
+            <label class="task-item"><input type="checkbox" onchange="saveData()"> Chegada Subseção (10h)</label>
+            <label class="task-item"><input type="checkbox" onchange="saveData()"> Triagem de E-mails</label>
+            <label id="task-oficio" class="task-item"><input type="checkbox" onchange="saveData()"> Ofício Fórum (Envio)</label>
+            <label class="task-item"><input type="checkbox" onchange="saveData()"> Orçamentos Gimba</label>
+            <label class="task-item"><input type="checkbox" onchange="saveData()"> Check Extintores/Dedetiz.</label>
         </div>
-        
-        <div class="dump-area" contenteditable="true">
-            🧠 DEPÓSITO DE DISTRAÇÕES: Escreva aqui desvaneios para liberar foco...
+        <div style="background:#000; padding:10px; border-radius:8px; border:1px dashed #444;">
+            <span style="font-size:0.7rem; color:var(--gold)">🧠 DEPÓSITO DE DISTRAÇÕES</span>
+            <textarea id="dump" style="height:100px; font-size:0.8rem; padding:5px; color:#888;" oninput="saveData()" placeholder="Tire da cabeça aqui..."></textarea>
         </div>
     </aside>
 
     <main class="main">
         <div class="pomodoro-bar">
-            <div><span style="color:var(--accent)">●</span> MODO POMODORO</div>
             <div class="timer-display" id="timer">25:00</div>
-            <button class="pomodoro-btn" id="p-btn" onclick="togglePomodoro()">INICIAR FOCO</button>
+            <div>
+                <button class="tab-btn" onclick="toggleNoise()">🔊 RUÍDO BRANCO</button>
+                <button onclick="togglePomodoro()" id="p-btn" style="background:var(--accent); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">INICIAR FOCO</button>
+            </div>
+        </div>
+
+        <div class="smart-fields">
+            <input type="text" id="f-vara" placeholder="Vara (Ex: 1ª Vara Cível)">
+            <input type="text" id="f-comarca" placeholder="Comarca">
+            <input type="text" id="f-nome" placeholder="Nome do Assistido">
         </div>
 
         <div class="editor-container">
             <div class="nav-tabs">
-                <button class="tab-btn" onclick="load('docs')">📜 Relação Única</button>
-                <button class="tab-btn" onclick="load('oficio')">📄 Ofício ao Fórum</button>
-                <button class="tab-btn" onclick="load('especial')">⚠️ Medida/Queixa/Oitiva</button>
+                <button class="tab-btn" onclick="loadDoc('docs')">📜 Relação Única</button>
+                <button class="tab-btn" onclick="loadDoc('oficio')">📄 Ofício Automático</button>
+                <button class="tab-btn" onclick="loadDoc('especial')">⚠️ Medidas/Oitivas</button>
             </div>
-            <textarea id="editor" placeholder="Selecione um documento acima..."></textarea>
-            <button class="btn-copy" onclick="copy()">COPIAR DOCUMENTO FINALIZADO</button>
+            <textarea id="editor" placeholder="Selecione um documento..."></textarea>
+            <button class="btn-copy" onclick="copyText()">Copiar para o Clipboard</button>
         </div>
     </main>
 
     <aside class="right-pane">
-        <div class="gimba-box">
-            <h3 style="color:var(--gold); margin-top:0;">🛒 GIMBA</h3>
-            <button onclick="window.open('https://www.gimba.com.br')" style="background:var(--gold); border:none; padding:5px 15px; font-weight:bold; cursor:pointer; border-radius:4px;">ABRIR SITE</button>
+        <div style="background:linear-gradient(135deg,#1e1e1e,#000); padding:10px; border:1px solid var(--gold); border-radius:10px; text-align:center;">
+            <h3 style="color:var(--gold); margin:0; font-size:0.8rem;">🛒 GIMBA</h3>
+            <button onclick="window.open('https://www.gimba.com.br')" style="background:var(--gold); border:none; padding:5px 10px; margin-top:5px; cursor:pointer; font-weight:bold; border-radius:4px;">COMPRAR SUPRIMENTOS</button>
         </div>
-
-        <h2 style="font-size:0.7rem; color:var(--accent)">AVISOS IMPORTANTES</h2>
-        <div class="post-it p-red" contenteditable="true">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
-        <div class="post-it p-yellow" contenteditable="true">🕒 ATENDIMENTO: 09h às 12h. Máx 30 senhas.</div>
-        <div class="post-it p-green" contenteditable="true">📋 DOCS: RG, CPF, Residência, Trabalho e Holerites.</div>
+        <h2 style="font-size:0.7rem;">ALERTAS CRÍTICOS</h2>
+        <div class="post-it p-red" contenteditable="true" id="p1" oninput="saveData()">🚫 NÃO ATENDEMOS: Trabalhista e Previdenciário.</div>
+        <div class="post-it p-yellow" contenteditable="true" id="p2" oninput="saveData()">🕒 ATENDIMENTO: 09h às 12h (30 senhas).</div>
+        <div class="post-it p-green" contenteditable="true" id="p3" oninput="saveData()">📋 RELAÇÃO ÚNICA: RG, CPF, Residência, Trabalho.</div>
     </aside>
+
+    <audio id="noise" loop>
+        <source src="https://www.soundjay.com/nature/rain-07.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const vault = {
-            docs: "RELAÇÃO ÚNICA DE DOCUMENTOS:\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (Atualizado)\n3. Carteira de Trabalho\n4. Holerites: Trazer os 03 últimos.\n5. Divórcio/Família: Certidão de Casamento Atualizada e Docs dos Filhos.",
-            oficio: "AO JUÍZO DA ___ VARA DO FÓRUM DA COMARCA DE __________.\n\nAssunto: Encaminhamento de Documentos Administrativos.\n\nA Subseção encaminha a documentação do assistido abaixo qualificado...",
-            especial: "PROTOCOLOS ESPECIAIS:\n- Medida Protetiva\n- Queixa Crime\n- Oitiva de Vítimas Menores"
+            docs: () => `RELAÇÃO ÚNICA DE DOCUMENTOS:\n1. RG e CPF (Original)\n2. Comprovante de Residência (Atualizado)\n3. Carteira de Trabalho\n4. Holerites: 03 últimos.\n\nO assistido deve apresentar a relação acima para o caso pretendido.`,
+            oficio: () => {
+                const vara = document.getElementById('f-vara').value || "____ Vara";
+                const comarca = document.getElementById('f-comarca').value || "____";
+                const nome = document.getElementById('f-nome').value || "____";
+                return `AO JUÍZO DA ${vara.toUpperCase()} DO FÓRUM DA COMARCA DE ${comarca.toUpperCase()}.\n\nASSUNTO: ENCAMINHAMENTO DE DOCUMENTAÇÃO\n\nA Subseção encaminha em anexo os documentos de ${nome.toUpperCase()}, para os devidos fins.`;
+            },
+            especial: () => `PROTOCOLOS ESPECIAIS:\n- Medida Protetiva\n- Queixa Crime\n- Oitiva de Vítimas Menores\n\nVerificar prioridade imediata.`
         };
 
-        function load(k) { document.getElementById('editor').value = vault[k]; }
-        
-        function copy() {
-            const el = document.getElementById('editor');
-            el.select();
-            document.execCommand('copy');
-            alert("V8: Documento copiado!");
-        }
+        function loadDoc(k) { document.getElementById('editor').value = vault[k](); }
+        function copyText() { const e = document.getElementById('editor'); e.select(); document.execCommand('copy'); alert("V8: Documento Copiado!"); }
 
-        // Lógica da Barra de Progresso
-        function updateProgress() {
-            const checkboxes = document.querySelectorAll('#task-list input[type="checkbox"]');
-            const total = checkboxes.length;
-            const checked = Array.from(checkboxes).filter(c => c.checked).length;
-            const percent = Math.round((checked / total) * 100);
-            
-            document.getElementById('p-bar').style.width = percent + '%';
-            document.getElementById('p-text').innerText = percent + '% CONCLUÍDO';
-        }
-
-        // Sistema Pomodoro
-        let timer;
-        let timeLeft = 25 * 60;
-        let running = false;
-
+        // POMODORO & NOISE
+        let timer, timeLeft = 25*60, running = false, noise = document.getElementById('noise');
         function togglePomodoro() {
-            const btn = document.getElementById('p-btn');
-            if (running) {
-                clearInterval(timer);
-                btn.innerText = "RETOMAR FOCO";
-                running = false;
+            if(running) { clearInterval(timer); running = false; document.getElementById('p-btn').innerText = "RETOMAR"; }
+            else { running = true; document.getElementById('p-btn').innerText = "PAUSAR"; timer = setInterval(updateTimer, 1000); }
+        }
+        function updateTimer() {
+            if(timeLeft <= 0) { clearInterval(timer); alert("Ciclo Completo!"); timeLeft = 25*60; }
+            else { timeLeft--; let m = Math.floor(timeLeft/60), s = timeLeft%60; document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; }
+        }
+        function toggleNoise() { noise.paused ? noise.play() : noise.pause(); }
+
+        // PERSISTENCIA & PROGRESSO
+        function saveData() {
+            const checks = Array.from(document.querySelectorAll('input[type="checkbox"]')).map(c => c.checked);
+            localStorage.setItem('v8_tasks', JSON.stringify(checks));
+            localStorage.setItem('v8_dump', document.getElementById('dump').value);
+            localStorage.setItem('v8_p1', document.getElementById('p1').innerText);
+            updateProgressBar();
+        }
+        function updateProgressBar() {
+            const checks = document.querySelectorAll('input[type="checkbox"]');
+            const done = Array.from(checks).filter(c => c.checked).length;
+            const pct = Math.round((done / checks.length) * 100);
+            document.getElementById('p-bar').style.width = pct + '%';
+            document.getElementById('p-text').innerText = pct + '% CONCLUÍDO';
+            
+            // Alerta de Horário (Pulsar se não feito após 11:30)
+            const agora = new Date();
+            if(agora.getHours() >= 11 && agora.getMinutes() >= 30 && !checks[2].checked) {
+                document.getElementById('task-oficio').classList.add('pulse-alert');
             } else {
-                running = true;
-                btn.innerText = "PAUSAR";
-                timer = setInterval(updateTimer, 1000);
+                document.getElementById('task-oficio').classList.remove('pulse-alert');
             }
         }
 
-        function updateTimer() {
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                alert("TEMPO ESGOTADO! Faça uma pausa de 5 minutos.");
-                timeLeft = 25 * 60;
-                document.getElementById('p-btn').innerText = "INICIAR NOVO CICLO";
-                running = false;
-            } else {
-                timeLeft--;
-                let m = Math.floor(timeLeft / 60);
-                let s = timeLeft % 60;
-                document.getElementById('timer').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            }
-        }
+        window.onload = () => {
+            const savedTasks = JSON.parse(localStorage.getItem('v8_tasks'));
+            if(savedTasks) { document.querySelectorAll('input[type="checkbox"]').forEach((c, i) => c.checked = savedTasks[i]); }
+            document.getElementById('dump').value = localStorage.getItem('v8_dump') || "";
+            document.getElementById('p1').innerText = localStorage.getItem('v8_p1') || "🚫 NÃO ATENDEMOS: Trabalhista...";
+            updateProgressBar();
+        };
     </script>
 </body>
 </html>
