@@ -2,63 +2,73 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CÁSSIA V8 | NEURAL COMMAND CENTER - ULTIMATE</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap');
+        
         :root {
             --bg: #050505; --panel: #0d1117; --accent: #00f2ff;
             --gold: #d4af37; --danger: #ff3e3e; --text: #c9d1d9; --success: #76ff03;
         }
+
+        * { box-sizing: border-box; }
         body {
             font-family: 'Lexend', sans-serif; background: var(--bg); color: var(--text);
             margin: 0; display: grid; grid-template-columns: 320px 1fr 320px; height: 100vh; overflow: hidden;
         }
+
         /* SIDEBARS */
         .sidebar, .right-pane { background: var(--panel); border: 1px solid #30363d; padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
         
         /* PROGRESS BAR */
-        .progress-container { background: #161b22; border-radius: 10px; height: 25px; border: 1px solid #30363d; position: relative; overflow: hidden; }
+        .progress-container { background: #161b22; border-radius: 10px; height: 25px; border: 1px solid #30363d; position: relative; overflow: hidden; margin-bottom: 5px; }
         .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--success)); transition: 0.4s; }
-        .progress-text { position: absolute; width: 100%; text-align: center; font-size: 0.7rem; line-height: 25px; font-weight: bold; color: #fff; }
+        .progress-text { position: absolute; width: 100%; text-align: center; font-size: 0.7rem; line-height: 25px; font-weight: bold; color: #fff; z-index: 2; }
 
         /* TASK LIST */
-        .task-item { background: rgba(255,255,255,0.03); border: 1px solid #30363d; padding: 10px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
-        .pulse-alert { animation: pulse-border 1.5s infinite; }
+        .task-item { background: rgba(255,255,255,0.03); border: 1px solid #30363d; padding: 10px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; }
+        .task-item:hover { border-color: var(--accent); }
+        .pulse-alert { animation: pulse-border 1.5s infinite; background: rgba(255, 62, 62, 0.1) !important; }
         @keyframes pulse-border { 0% { border-color: #30363d; } 50% { border-color: var(--danger); box-shadow: 0 0 10px var(--danger); } 100% { border-color: #30363d; } }
 
         /* MAIN PANEL */
-        .main { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .pomodoro-bar { background: #161b22; padding: 12px; border-radius: 10px; border: 1px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
-        .timer-display { font-size: 1.8rem; font-weight: bold; color: var(--accent); font-family: monospace; }
+        .main { padding: 20px; display: flex; flex-direction: column; gap: 15px; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
+        .pomodoro-bar { background: #161b22; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 0 20px rgba(0,242,255,0.1); }
+        .timer-display { font-size: 2rem; font-weight: bold; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
         
         /* SMART FIELDS */
-        .smart-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #161b22; padding: 10px; border-radius: 10px; }
-        .smart-fields input { background: #000; border: 1px solid #444; color: var(--accent); padding: 8px; border-radius: 5px; font-size: 0.8rem; outline: none; }
-        .smart-fields input:focus { border-color: var(--accent); }
+        .smart-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #161b22; padding: 12px; border-radius: 10px; border: 1px solid #333; }
+        .smart-fields input { background: #000; border: 1px solid #444; color: var(--accent); padding: 10px; border-radius: 6px; font-size: 0.85rem; outline: none; font-family: 'Lexend'; }
+        .smart-fields input:focus { border-color: var(--accent); box-shadow: 0 0 5px var(--accent); }
 
         /* EDITOR */
-        .editor-container { flex: 1; background: var(--panel); border: 1px solid #30363d; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; }
-        .nav-tabs { padding: 10px; background: #161b22; display: flex; gap: 8px; border-bottom: 1px solid #30363d; }
-        .tab-btn { background: transparent; border: 1px solid #444; color: #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
-        .tab-btn:hover { border-color: var(--accent); }
-        textarea { flex: 1; background: transparent; border: none; color: #fff; padding: 25px; font-size: 1.15rem; line-height: 1.8; resize: none; outline: none; }
+        .editor-container { flex: 1; background: var(--panel); border: 1px solid #30363d; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .nav-tabs { padding: 12px; background: #161b22; display: flex; gap: 8px; border-bottom: 1px solid #30363d; }
+        .tab-btn { background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; transition: 0.3s; }
+        .tab-btn:hover { border-color: var(--accent); background: rgba(0,242,255,0.1); }
+        textarea { flex: 1; background: transparent; border: none; color: #fff; padding: 30px; font-size: 1.2rem; line-height: 2; resize: none; outline: none; font-family: 'Lexend', sans-serif; }
 
         /* POST-ITS */
-        .post-it { padding: 12px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.8rem; min-height: 60px; }
+        .post-it { padding: 15px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.85rem; min-height: 80px; box-shadow: 5px 5px 15px rgba(0,0,0,0.3); }
         .p-red { background: #ff5f5f; } .p-yellow { background: #ffd93d; } .p-green { background: #76ff03; }
         
-        .btn-copy { background: var(--accent); color: #000; font-weight: bold; padding: 12px; border: none; cursor: pointer; border-radius: 0 0 12px 12px; text-transform: uppercase; }
-        button:active { transform: scale(0.98); }
+        .btn-copy { background: var(--accent); color: #000; font-weight: bold; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+        .btn-copy:hover { background: #00c8d7; }
+
+        .dump-area { background: #000; border: 1px dashed #444; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 5px; }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <h2 style="color:var(--accent); font-size: 0.7rem; letter-spacing: 2px;">V8 NEURAL COMMAND</h2>
+        <h2 style="color:var(--accent); font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px;">V8 NEURAL COMMAND</h2>
+        
         <div class="progress-container">
             <div class="progress-bar" id="p-bar"></div>
-            <div class="progress-text" id="p-text">0%</div>
+            <div class="progress-text" id="p-text">0% CONCLUÍDO</div>
         </div>
+
         <div id="task-list">
             <label class="task-item"><input type="checkbox" onchange="saveData()"> Chegada Subseção (10h)</label>
             <label class="task-item"><input type="checkbox" onchange="saveData()"> Triagem de E-mails</label>
@@ -66,25 +76,26 @@
             <label class="task-item"><input type="checkbox" onchange="saveData()"> Orçamentos Gimba</label>
             <label class="task-item"><input type="checkbox" onchange="saveData()"> Check Extintores/Dedetiz.</label>
         </div>
-        <div style="background:#000; padding:10px; border-radius:8px; border:1px dashed #444;">
-            <span style="font-size:0.7rem; color:var(--gold)">🧠 DEPÓSITO DE DISTRAÇÕES</span>
-            <textarea id="dump" style="height:100px; font-size:0.8rem; padding:5px; color:#888;" oninput="saveData()" placeholder="Tire da cabeça aqui..."></textarea>
+
+        <div class="dump-area">
+            <span style="font-size:0.7rem; color:var(--gold); font-weight: bold;">🧠 DEPÓSITO DE DISTRAÇÕES</span>
+            <textarea id="dump" style="height:120px; font-size:0.9rem; border:none; background:transparent; color:#888; line-height:1.4;" oninput="saveData()" placeholder="Escreva o desvaneio aqui para liberar seu cérebro..."></textarea>
         </div>
     </aside>
 
     <main class="main">
         <div class="pomodoro-bar">
             <div class="timer-display" id="timer">25:00</div>
-            <div>
-                <button class="tab-btn" onclick="toggleNoise()">🔊 RUÍDO BRANCO</button>
-                <button onclick="togglePomodoro()" id="p-btn" style="background:var(--accent); border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">INICIAR FOCO</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="tab-btn" id="noise-btn" onclick="toggleNoise()" style="font-weight: bold;">🔊 RUÍDO BRANCO: OFF</button>
+                <button onclick="togglePomodoro()" id="p-btn" style="background:var(--accent); border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer; color: #000;">INICIAR FOCO</button>
             </div>
         </div>
 
         <div class="smart-fields">
-            <input type="text" id="f-vara" placeholder="Vara (Ex: 1ª Vara Cível)">
-            <input type="text" id="f-comarca" placeholder="Comarca">
-            <input type="text" id="f-nome" placeholder="Nome do Assistido">
+            <input type="text" id="f-vara" placeholder="Vara (Ex: 1ª Vara Cível)" oninput="autoUpdate()">
+            <input type="text" id="f-comarca" placeholder="Comarca" oninput="autoUpdate()">
+            <input type="text" id="f-nome" placeholder="Nome do Assistido" oninput="autoUpdate()">
         </div>
 
         <div class="editor-container">
@@ -93,69 +104,103 @@
                 <button class="tab-btn" onclick="loadDoc('oficio')">📄 Ofício Automático</button>
                 <button class="tab-btn" onclick="loadDoc('especial')">⚠️ Medidas/Oitivas</button>
             </div>
-            <textarea id="editor" placeholder="Selecione um documento..."></textarea>
-            <button class="btn-copy" onclick="copyText()">Copiar para o Clipboard</button>
+            <textarea id="editor" placeholder="Selecione um documento ou digite aqui..."></textarea>
+            <button class="btn-copy" onclick="copyText()">Copiar para o Clipboard (Pronto para Colar)</button>
         </div>
     </main>
 
     <aside class="right-pane">
-        <div style="background:linear-gradient(135deg,#1e1e1e,#000); padding:10px; border:1px solid var(--gold); border-radius:10px; text-align:center;">
-            <h3 style="color:var(--gold); margin:0; font-size:0.8rem;">🛒 GIMBA</h3>
-            <button onclick="window.open('https://www.gimba.com.br')" style="background:var(--gold); border:none; padding:5px 10px; margin-top:5px; cursor:pointer; font-weight:bold; border-radius:4px;">COMPRAR SUPRIMENTOS</button>
+        <div style="background:linear-gradient(135deg,#1e1e1e,#000); padding:15px; border:1px solid var(--gold); border-radius:12px; text-align:center;">
+            <h3 style="color:var(--gold); margin:0; font-size:0.9rem; letter-spacing: 1px;">🛒 GIMBA</h3>
+            <p style="font-size: 0.65rem; color: #aaa; margin: 5px 0;">SUPRIMENTOS DO MÊS</p>
+            <button onclick="window.open('https://www.gimba.com.br')" style="background:var(--gold); border:none; padding:8px 15px; margin-top:5px; cursor:pointer; font-weight:bold; border-radius:6px; width: 100%;">ABRIR SITE</button>
         </div>
-        <h2 style="font-size:0.7rem;">ALERTAS CRÍTICOS</h2>
-        <div class="post-it p-red" contenteditable="true" id="p1" oninput="saveData()">🚫 NÃO ATENDEMOS: Trabalhista e Previdenciário.</div>
-        <div class="post-it p-yellow" contenteditable="true" id="p2" oninput="saveData()">🕒 ATENDIMENTO: 09h às 12h (30 senhas).</div>
-        <div class="post-it p-green" contenteditable="true" id="p3" oninput="saveData()">📋 RELAÇÃO ÚNICA: RG, CPF, Residência, Trabalho.</div>
+
+        <h2 style="font-size:0.7rem; color:var(--accent); letter-spacing: 1px;">ALERTAS DE RIGOR</h2>
+        <div class="post-it p-red" contenteditable="true" id="p1" oninput="saveData()">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
+        <div class="post-it p-yellow" contenteditable="true" id="p2" oninput="saveData()">🕒 ATENDIMENTO: 09h às 12h (Limite 30 senhas/dia).</div>
+        <div class="post-it p-green" contenteditable="true" id="p3" oninput="saveData()">📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.</div>
     </aside>
 
-    <audio id="noise" loop>
-        <source src="https://www.soundjay.com/nature/rain-07.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
+        // Configuração de Áudio (Fonte mais estável)
+        let noise = new Audio('https://actions.google.com/sounds/v1/water/rain_on_roof.ogg');
+        noise.loop = true;
+
         const vault = {
-            docs: () => `RELAÇÃO ÚNICA DE DOCUMENTOS:\n1. RG e CPF (Original)\n2. Comprovante de Residência (Atualizado)\n3. Carteira de Trabalho\n4. Holerites: 03 últimos.\n\nO assistido deve apresentar a relação acima para o caso pretendido.`,
+            docs: () => `RELAÇÃO ÚNICA DE DOCUMENTOS:\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (Mês atual)\n3. Carteira de Trabalho\n4. Holerites: Trazer os 03 últimos.\n\nO assistido deve apresentar os documentos acima para triagem de qualquer caso civil/família.`,
             oficio: () => {
                 const vara = document.getElementById('f-vara').value || "____ Vara";
                 const comarca = document.getElementById('f-comarca').value || "____";
                 const nome = document.getElementById('f-nome').value || "____";
-                return `AO JUÍZO DA ${vara.toUpperCase()} DO FÓRUM DA COMARCA DE ${comarca.toUpperCase()}.\n\nASSUNTO: ENCAMINHAMENTO DE DOCUMENTAÇÃO\n\nA Subseção encaminha em anexo os documentos de ${nome.toUpperCase()}, para os devidos fins.`;
+                return `AO JUÍZO DA ${vara.toUpperCase()} DO FÓRUM DA COMARCA DE ${comarca.toUpperCase()}.\n\nASSUNTO: ENCAMINHAMENTO DE DOCUMENTAÇÃO TÉCNICA\n\nA Subseção, no exercício de suas funções, encaminha em anexo a documentação do assistido(a) ${nome.toUpperCase()}, para a devida instrução processual.\n\nAtenciosamente,\nSecretaria Administrativa.`;
             },
-            especial: () => `PROTOCOLOS ESPECIAIS:\n- Medida Protetiva\n- Queixa Crime\n- Oitiva de Vítimas Menores\n\nVerificar prioridade imediata.`
+            especial: () => `PROTOCOLOS DE URGÊNCIA:\n\n- Medida Protetiva (Lei Maria da Penha)\n- Queixa Crime\n- Oitiva de Vítimas Menores\n\nEstes casos devem ser triados com prioridade máxima e encaminhados imediatamente.`
         };
 
-        function loadDoc(k) { document.getElementById('editor').value = vault[k](); }
-        function copyText() { const e = document.getElementById('editor'); e.select(); document.execCommand('copy'); alert("V8: Documento Copiado!"); }
+        let currentKey = 'docs';
+        function loadDoc(k) { currentKey = k; document.getElementById('editor').value = vault[k](); }
+        function autoUpdate() { if(currentKey === 'oficio') document.getElementById('editor').value = vault.oficio(); }
+        
+        function copyText() { 
+            const e = document.getElementById('editor'); 
+            e.select(); 
+            document.execCommand('copy'); 
+            alert("SISTEMA V8: Documento copiado com sucesso!"); 
+        }
 
         // POMODORO & NOISE
-        let timer, timeLeft = 25*60, running = false, noise = document.getElementById('noise');
+        let timer, timeLeft = 25*60, running = false;
         function togglePomodoro() {
-            if(running) { clearInterval(timer); running = false; document.getElementById('p-btn').innerText = "RETOMAR"; }
-            else { running = true; document.getElementById('p-btn').innerText = "PAUSAR"; timer = setInterval(updateTimer, 1000); }
+            const btn = document.getElementById('p-btn');
+            if(running) { 
+                clearInterval(timer); running = false; btn.innerText = "RETOMAR"; 
+            } else { 
+                running = true; btn.innerText = "PAUSAR"; timer = setInterval(updateTimer, 1000); 
+            }
         }
         function updateTimer() {
-            if(timeLeft <= 0) { clearInterval(timer); alert("Ciclo Completo!"); timeLeft = 25*60; }
-            else { timeLeft--; let m = Math.floor(timeLeft/60), s = timeLeft%60; document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; }
+            if(timeLeft <= 0) { 
+                clearInterval(timer); alert("CICLO DE FOCO COMPLETO! Faça uma pausa."); timeLeft = 25*60; 
+                document.getElementById('p-btn').innerText = "INICIAR NOVO"; running = false;
+            } else { 
+                timeLeft--; 
+                let m = Math.floor(timeLeft/60), s = timeLeft%60; 
+                document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; 
+            }
         }
-        function toggleNoise() { noise.paused ? noise.play() : noise.pause(); }
+        function toggleNoise() {
+            const btn = document.getElementById('noise-btn');
+            if (noise.paused) {
+                noise.play();
+                btn.innerText = "🔊 RUÍDO BRANCO: ON";
+                btn.style.color = "var(--success)";
+            } else {
+                noise.pause();
+                btn.innerText = "🔊 RUÍDO BRANCO: OFF";
+                btn.style.color = "#fff";
+            }
+        }
 
         // PERSISTENCIA & PROGRESSO
         function saveData() {
-            const checks = Array.from(document.querySelectorAll('input[type="checkbox"]')).map(c => c.checked);
+            const checks = Array.from(document.querySelectorAll('#task-list input[type="checkbox"]')).map(c => c.checked);
             localStorage.setItem('v8_tasks', JSON.stringify(checks));
             localStorage.setItem('v8_dump', document.getElementById('dump').value);
             localStorage.setItem('v8_p1', document.getElementById('p1').innerText);
+            localStorage.setItem('v8_p2', document.getElementById('p2').innerText);
+            localStorage.setItem('v8_p3', document.getElementById('p3').innerText);
             updateProgressBar();
         }
+
         function updateProgressBar() {
-            const checks = document.querySelectorAll('input[type="checkbox"]');
+            const checks = document.querySelectorAll('#task-list input[type="checkbox"]');
             const done = Array.from(checks).filter(c => c.checked).length;
             const pct = Math.round((done / checks.length) * 100);
             document.getElementById('p-bar').style.width = pct + '%';
             document.getElementById('p-text').innerText = pct + '% CONCLUÍDO';
             
-            // Alerta de Horário (Pulsar se não feito após 11:30)
+            // Alerta de Horário (Pulsar o Ofício se não feito após 11:30)
             const agora = new Date();
             if(agora.getHours() >= 11 && agora.getMinutes() >= 30 && !checks[2].checked) {
                 document.getElementById('task-oficio').classList.add('pulse-alert');
@@ -166,9 +211,11 @@
 
         window.onload = () => {
             const savedTasks = JSON.parse(localStorage.getItem('v8_tasks'));
-            if(savedTasks) { document.querySelectorAll('input[type="checkbox"]').forEach((c, i) => c.checked = savedTasks[i]); }
+            if(savedTasks) { document.querySelectorAll('#task-list input[type="checkbox"]').forEach((c, i) => c.checked = savedTasks[i]); }
             document.getElementById('dump').value = localStorage.getItem('v8_dump') || "";
             document.getElementById('p1').innerText = localStorage.getItem('v8_p1') || "🚫 NÃO ATENDEMOS: Trabalhista...";
+            document.getElementById('p2').innerText = localStorage.getItem('v8_p2') || "🕒 ATENDIMENTO: 09h às 12h...";
+            document.getElementById('p3').innerText = localStorage.getItem('v8_p3') || "📋 RELAÇÃO ÚNICA: RG, CPF...";
             updateProgressBar();
         };
     </script>
