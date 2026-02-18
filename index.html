@@ -17,601 +17,175 @@
             --gold: #ffd54f;
             --danger: #ef5350;
             --success: #66bb6a;
-            --warn: #ffa726;
             --text: #cdd6e8;
             --text-dim: #5a6a85;
             --purple: #9575cd;
             --teal: #4db6ac;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--bg);
             color: var(--text);
             display: grid;
-            grid-template-columns: 290px 1fr 300px;
+            grid-template-columns: 290px 1fr 320px;
             grid-template-rows: 100vh;
             overflow: hidden;
         }
-
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-        .sidebar {
-            background: var(--surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            padding: 20px 16px;
-            overflow-y: auto;
-        }
-
-        .logo {
-            text-align: center;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-        .logo h1 {
-            font-family: 'DM Mono', monospace;
-            font-size: 1rem;
-            color: var(--accent);
-            letter-spacing: 3px;
-            font-weight: 500;
-        }
-        .logo span {
-            font-size: 0.6rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            display: block;
-            margin-top: 3px;
-        }
-
-        .frase-box {
-            background: linear-gradient(135deg, #0e1a2e, #111e35);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--gold);
-            border-radius: 10px;
-            padding: 12px 14px;
-        }
-        .frase-box p {
-            font-size: 0.78rem;
-            color: var(--gold);
-            font-style: italic;
-            line-height: 1.6;
-        }
-        .frase-box .frase-autor {
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            margin-top: 5px;
-            text-align: right;
-        }
-
-        .prog-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-        .prog-track {
-            background: var(--surface2);
-            border-radius: 20px;
-            height: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-        .prog-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--teal));
-            border-radius: 20px;
-            transition: width 0.5s cubic-bezier(.4,0,.2,1);
-        }
-        .prog-pct {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--accent);
-            text-align: right;
-            margin-top: 4px;
-        }
-
-        .section-title {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
+        .sidebar { background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px; padding: 20px 16px; overflow-y: auto; }
+        .logo { text-align: center; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .logo h1 { font-family: 'DM Mono', monospace; font-size: 1rem; color: var(--accent); letter-spacing: 3px; font-weight: 500; }
+        .logo span { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 2px; display: block; margin-top: 3px; }
+        .frase-box { background: linear-gradient(135deg, #0e1a2e, #111e35); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 10px; padding: 12px 14px; }
+        .frase-box p { font-size: 0.78rem; color: var(--gold); font-style: italic; line-height: 1.6; }
+        .frase-box .frase-autor { font-size: 0.65rem; color: var(--text-dim); margin-top: 5px; text-align: right; }
+        .prog-label { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 6px; }
+        .prog-track { background: var(--surface2); border-radius: 20px; height: 8px; overflow: hidden; border: 1px solid var(--border); }
+        .prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--teal)); border-radius: 20px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+        .prog-pct { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--accent); text-align: right; margin-top: 4px; }
+        .section-title { font-size: 0.6rem; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; }
         .task-list { display: flex; flex-direction: column; gap: 6px; }
-        .task-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 0.78rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
-        }
+        .task-item { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; cursor: pointer; transition: all 0.2s; user-select: none; }
         .task-item:hover { border-color: var(--accent); background: rgba(79,195,247,0.05); }
         .task-item input[type="checkbox"] { display: none; }
-        .task-check {
-            width: 16px;
-            height: 16px;
-            border: 1.5px solid var(--border);
-            border-radius: 4px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
+        .task-check { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .task-item.done .task-check { background: var(--success); border-color: var(--success); }
         .task-item.done .task-check::after { content: '✓'; font-size: 0.6rem; color: #000; font-weight: bold; }
         .task-item.done .task-label { text-decoration: line-through; color: var(--text-dim); }
-        .task-item.pulse-alert {
-            animation: pulse-red 1.5s infinite;
-        }
-        @keyframes pulse-red {
-            0%, 100% { border-color: var(--border); }
-            50% { border-color: var(--danger); box-shadow: 0 0 12px rgba(239,83,80,0.3); }
-        }
+        .task-item.pulse-alert { animation: pulse-red 1.5s infinite; }
+        @keyframes pulse-red { 0%,100% { border-color: var(--border); } 50% { border-color: var(--danger); box-shadow: 0 0 12px rgba(239,83,80,0.3); } }
         .task-time { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-dim); margin-left: auto; }
-
-        .dump-box {
-            background: #0a0d14;
-            border: 1px dashed var(--border);
-            border-radius: 10px;
-            padding: 12px;
-        }
-        .dump-box .dump-title {
-            font-size: 0.6rem;
-            color: var(--purple);
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-        .dump-box textarea {
-            width: 100%;
-            height: 90px;
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            font-size: 0.78rem;
-            resize: none;
-            outline: none;
-            font-family: 'DM Sans', sans-serif;
-            line-height: 1.6;
-        }
+        .dump-box { background: #0a0d14; border: 1px dashed var(--border); border-radius: 10px; padding: 12px; }
+        .dump-box .dump-title { font-size: 0.6rem; color: var(--purple); letter-spacing: 1.5px; margin-bottom: 8px; text-transform: uppercase; }
+        .dump-box textarea { width: 100%; height: 80px; background: transparent; border: none; color: var(--text-dim); font-size: 0.78rem; resize: none; outline: none; font-family: 'DM Sans', sans-serif; line-height: 1.6; }
         .dump-box textarea::placeholder { color: #2a3345; }
+        .btn-foco { background: var(--surface2); border: 1px solid var(--border); color: var(--accent); padding: 10px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 1px; transition: 0.2s; width: 100%; }
+        .btn-foco:hover { border-color: var(--accent); }
 
-        .main {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            padding: 18px;
-            background: var(--bg);
-            overflow-y: auto;
-        }
-
-        .pomo-bar {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
+        .main { display: flex; flex-direction: column; gap: 14px; padding: 18px; background: var(--bg); overflow-y: auto; }
+        .pomo-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
         .timer-wrap { display: flex; align-items: center; gap: 14px; }
-        .timer-ring {
-            width: 56px;
-            height: 56px;
-            position: relative;
-        }
+        .timer-ring { width: 56px; height: 56px; }
         .timer-ring svg { transform: rotate(-90deg); }
-        .timer-ring circle {
-            fill: none;
-            stroke-width: 3;
-        }
+        .timer-ring circle { fill: none; stroke-width: 3; }
         .ring-bg { stroke: var(--border); }
         .ring-progress { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
-        .timer-display {
-            font-family: 'DM Mono', monospace;
-            font-size: 1.8rem;
-            color: var(--accent);
-            font-weight: 500;
-            letter-spacing: 2px;
-            min-width: 100px;
-        }
-        .pomo-mode-label {
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+        .timer-display { font-family: 'DM Mono', monospace; font-size: 1.8rem; color: var(--accent); font-weight: 500; letter-spacing: 2px; min-width: 100px; }
+        .pomo-mode-label { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
         .pomo-controls { display: flex; gap: 8px; align-items: center; }
-        .btn-pomo {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: 1px;
-        }
+        .btn-pomo { background: var(--accent); color: #000; border: none; padding: 10px 22px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: 0.2s; font-family: 'DM Sans', sans-serif; letter-spacing: 1px; }
         .btn-pomo:hover { background: var(--accent2); }
-        .btn-mode {
-            background: var(--surface2);
-            color: var(--text-dim);
-            border: 1px solid var(--border);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.72rem;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'DM Sans', sans-serif;
-        }
+        .btn-mode { background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px; font-size: 0.72rem; cursor: pointer; transition: 0.2s; font-family: 'DM Sans', sans-serif; }
         .btn-mode:hover, .btn-mode.active { border-color: var(--accent); color: var(--accent); }
-        .btn-noise {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--text-dim);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.72rem;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'DM Sans', sans-serif;
-        }
+        .btn-noise { background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim); padding: 8px 14px; border-radius: 8px; font-size: 0.72rem; cursor: pointer; transition: 0.2s; font-family: 'DM Sans', sans-serif; }
         .btn-noise.on { border-color: var(--success); color: var(--success); }
-
-        .smart-fields {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-        }
-        .field-wrap {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 14px;
-            transition: 0.2s;
-        }
+        .smart-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .field-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; transition: 0.2s; }
         .field-wrap:focus-within { border-color: var(--accent); }
-        .field-wrap label {
-            font-size: 0.58rem;
-            color: var(--text-dim);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .field-wrap input {
-            background: transparent;
-            border: none;
-            color: var(--text);
-            font-size: 0.85rem;
-            outline: none;
-            width: 100%;
-            font-family: 'DM Sans', sans-serif;
-        }
+        .field-wrap label { font-size: 0.58rem; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        .field-wrap input { background: transparent; border: none; color: var(--text); font-size: 0.85rem; outline: none; width: 100%; font-family: 'DM Sans', sans-serif; }
         .field-wrap input::placeholder { color: var(--text-dim); }
-
-        .editor-wrap {
-            flex: 1;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            min-height: 300px;
-        }
-        .nav-tabs {
-            display: flex;
-            gap: 6px;
-            padding: 12px 14px;
-            background: var(--surface2);
-            border-bottom: 1px solid var(--border);
-        }
-        .tab-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-dim);
-            padding: 7px 14px;
-            border-radius: 6px;
-            font-size: 0.72rem;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'DM Sans', sans-serif;
-        }
+        .editor-wrap { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; overflow: hidden; min-height: 280px; }
+        .nav-tabs { display: flex; gap: 6px; padding: 12px 14px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+        .tab-btn { background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: 7px 14px; border-radius: 6px; font-size: 0.72rem; cursor: pointer; transition: 0.2s; font-family: 'DM Sans', sans-serif; }
         .tab-btn:hover, .tab-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(79,195,247,0.06); }
-        .editor-area {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text);
-            padding: 24px 28px;
-            font-size: 0.95rem;
-            line-height: 2;
-            resize: none;
-            outline: none;
-            font-family: 'DM Sans', sans-serif;
-        }
-        .btn-copy {
-            background: var(--surface2);
-            border: none;
-            border-top: 1px solid var(--border);
-            color: var(--accent);
-            padding: 14px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: 0.2s;
-            font-family: 'DM Sans', sans-serif;
-        }
+        .editor-area { flex: 1; background: transparent; border: none; color: var(--text); padding: 24px 28px; font-size: 0.95rem; line-height: 2; resize: none; outline: none; font-family: 'DM Sans', sans-serif; }
+        .btn-copy { background: var(--surface2); border: none; border-top: 1px solid var(--border); color: var(--accent); padding: 14px; font-size: 0.78rem; font-weight: 700; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transition: 0.2s; font-family: 'DM Sans', sans-serif; }
         .btn-copy:hover { background: rgba(79,195,247,0.1); }
         .btn-copy.copied { color: var(--success); }
 
-        .modo-foco-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: #04060b;
-            z-index: 100;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 24px;
-        }
-        .modo-foco-overlay.active { display: flex; }
-        .foco-task-title {
-            font-size: 2.5rem;
-            color: var(--accent);
-            font-weight: 300;
-            text-align: center;
-            max-width: 600px;
-            line-height: 1.4;
-        }
-        .foco-timer {
-            font-family: 'DM Mono', monospace;
-            font-size: 5rem;
-            color: var(--text);
-            font-weight: 300;
-            letter-spacing: 4px;
-        }
-        .foco-bar {
-            width: 300px;
-            height: 3px;
-            background: var(--border);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .foco-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 100%;
-            transition: width 1s linear;
-        }
-        .btn-exit-foco {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-dim);
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: 1px;
-            transition: 0.2s;
-        }
-        .btn-exit-foco:hover { border-color: var(--danger); color: var(--danger); }
+        .right-pane { background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+        .right-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--surface2); flex-shrink: 0; }
+        .right-tab { flex: 1; background: transparent; border: none; color: var(--text-dim); padding: 13px 6px; font-size: 0.68rem; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 0.5px; transition: 0.2s; border-bottom: 2px solid transparent; }
+        .right-tab:hover { color: var(--text); }
+        .right-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .right-panel-content { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+        .right-section { display: none; flex-direction: column; gap: 14px; }
+        .right-section.active { display: flex; }
 
-        .pausa-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(4,6,11,0.97);
-            z-index: 110;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-        .pausa-overlay.active { display: flex; }
-        .pausa-title { font-size: 1.4rem; color: var(--teal); letter-spacing: 2px; }
-        .pausa-subtitle { font-size: 0.8rem; color: var(--text-dim); text-align: center; max-width: 320px; line-height: 1.8; }
-        .pausa-breath {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid var(--teal);
-            animation: breathe 8s infinite ease-in-out;
-            background: rgba(77,182,172,0.05);
-        }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.4; }
-            50% { transform: scale(1.5); opacity: 1; }
-        }
-        .pausa-options { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        .pausa-opt {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 8px 18px;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            cursor: default;
-        }
-        .btn-fechar-pausa {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-dim);
-            padding: 10px 28px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            margin-top: 10px;
-            font-family: 'DM Sans', sans-serif;
-            transition: 0.2s;
-        }
-        .btn-fechar-pausa:hover { border-color: var(--teal); color: var(--teal); }
-        .pausa-counter {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-        }
+        .postit-toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .postit-add-btn { background: var(--surface2); border: 1px dashed var(--border); color: var(--accent); padding: 8px 14px; border-radius: 8px; font-size: 0.72rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: 0.2s; }
+        .postit-add-btn:hover { border-color: var(--accent); background: rgba(79,195,247,0.06); }
+        .postit-colors { display: flex; gap: 6px; align-items: center; }
+        .color-dot { width: 20px; height: 20px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.15s; flex-shrink: 0; }
+        .color-dot:hover, .color-dot.selected { border-color: #fff; transform: scale(1.2); }
+        .postits-grid { display: flex; flex-direction: column; gap: 8px; }
+        .postit-card { border-radius: 10px; padding: 12px 14px; position: relative; min-height: 70px; box-shadow: 3px 3px 12px rgba(0,0,0,0.3); transition: box-shadow 0.2s, transform 0.15s; }
+        .postit-card:hover { box-shadow: 4px 4px 20px rgba(0,0,0,0.5); transform: translateY(-1px); }
+        .postit-del { position: absolute; top: 7px; right: 8px; background: rgba(0,0,0,0.15); border: none; color: rgba(0,0,0,0.45); width: 20px; height: 20px; border-radius: 50%; font-size: 0.65rem; cursor: pointer; display: none; align-items: center; justify-content: center; transition: 0.2s; line-height: 1; }
+        .postit-card:hover .postit-del { display: flex; }
+        .postit-del:hover { background: rgba(0,0,0,0.35); color: #000; }
+        .postit-body { font-size: 0.82rem; line-height: 1.6; min-height: 40px; outline: none; color: rgba(0,0,0,0.72); font-weight: 500; word-break: break-word; }
+        .postit-body:empty::before { content: attr(data-placeholder); color: rgba(0,0,0,0.28); font-style: italic; }
+        .pi-yellow { background: #ffd54f; }
+        .pi-red    { background: #ff8a80; }
+        .pi-green  { background: #a5d6a7; }
+        .pi-blue   { background: #81d4fa; }
+        .pi-purple { background: #ce93d8; }
+        .pi-orange { background: #ffcc80; }
 
-        .right-pane {
-            background: var(--surface);
-            border-left: 1px solid var(--border);
-            padding: 20px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            overflow-y: auto;
-        }
+        .checklist-add-row { display: flex; gap: 6px; }
+        .cl-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; color: var(--text); font-size: 0.78rem; outline: none; font-family: 'DM Sans', sans-serif; transition: 0.2s; min-width: 0; }
+        .cl-input:focus { border-color: var(--accent); }
+        .cl-input::placeholder { color: var(--text-dim); }
+        .cl-time-input { width: 68px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 9px 6px; color: var(--text); font-size: 0.72rem; outline: none; font-family: 'DM Mono', monospace; text-align: center; transition: 0.2s; flex-shrink: 0; }
+        .cl-time-input:focus { border-color: var(--accent); }
+        .btn-cl-add { background: var(--accent); border: none; color: #000; width: 34px; height: 34px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: bold; transition: 0.2s; }
+        .btn-cl-add:hover { background: var(--accent2); }
+        .custom-task-list { display: flex; flex-direction: column; gap: 6px; }
+        .custom-task { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; transition: border-color 0.2s; }
+        .custom-task:hover { border-color: #2a3a55; }
+        .ct-check { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .ct-check.checked { background: var(--success); border-color: var(--success); }
+        .ct-check.checked::after { content: '✓'; font-size: 0.6rem; color: #000; font-weight: bold; }
+        .ct-label { flex: 1; font-size: 0.78rem; color: var(--text); outline: none; background: transparent; border: none; font-family: 'DM Sans', sans-serif; min-width: 0; cursor: text; }
+        .ct-label.done { text-decoration: line-through; color: var(--text-dim); }
+        .ct-time { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-dim); flex-shrink: 0; }
+        .ct-del { background: transparent; border: none; color: var(--text-dim); cursor: pointer; font-size: 0.8rem; padding: 2px 5px; border-radius: 4px; transition: 0.15s; opacity: 0; flex-shrink: 0; }
+        .custom-task:hover .ct-del { opacity: 1; }
+        .ct-del:hover { color: var(--danger); background: rgba(239,83,80,0.1); }
+        .cl-empty { font-size: 0.75rem; color: var(--text-dim); text-align: center; padding: 24px 12px; font-style: italic; line-height: 1.8; }
 
-        .timeline { display: flex; flex-direction: column; gap: 0; }
-        .tl-item {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            position: relative;
-        }
-        .tl-item:not(:last-child)::before {
-            content: '';
-            position: absolute;
-            left: 17px;
-            top: 28px;
-            width: 1px;
-            height: calc(100% + 2px);
-            background: var(--border);
-        }
-        .tl-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-            background: var(--surface2);
-            flex-shrink: 0;
-            margin-top: 8px;
-            position: relative;
-            z-index: 1;
-            transition: 0.3s;
-        }
-        .tl-item.current .tl-dot { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-        .tl-item.done-tl .tl-dot { border-color: var(--success); background: var(--success); }
-        .tl-content {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 12px;
-            flex: 1;
-            margin-bottom: 6px;
-            transition: 0.2s;
-        }
-        .tl-item.current .tl-content { border-color: var(--accent); background: rgba(79,195,247,0.04); }
-        .tl-time { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-dim); }
-        .tl-name { font-size: 0.78rem; color: var(--text); margin: 2px 0; }
-        .tl-dur { font-size: 0.65rem; color: var(--text-dim); }
-        .tl-status { font-size: 0.65rem; margin-top: 3px; }
-        .status-current { color: var(--accent); }
-        .status-done { color: var(--success); }
-        .status-pending { color: var(--text-dim); }
-
-        .alert-card {
-            border-radius: 10px;
-            padding: 12px 14px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            line-height: 1.6;
-            outline: none;
-        }
+        .gimba-card { background: linear-gradient(135deg, var(--surface2), #0e1420); border: 1px solid var(--gold); border-radius: 12px; padding: 14px; text-align: center; }
+        .gimba-card h3 { color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 4px; }
+        .gimba-card p { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 10px; }
+        .btn-gimba { background: var(--gold); color: #000; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 700; font-size: 0.75rem; cursor: pointer; width: 100%; transition: 0.2s; font-family: 'DM Sans', sans-serif; letter-spacing: 1px; }
+        .btn-gimba:hover { background: #ffe082; }
+        .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .prod-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; text-align: center; }
+        .prod-num { font-family: 'DM Mono', monospace; font-size: 1.3rem; font-weight: 500; color: var(--accent); display: block; }
+        .prod-label { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 1px; margin-top: 2px; }
+        .alert-card { border-radius: 10px; padding: 12px 14px; font-size: 0.78rem; font-weight: 500; line-height: 1.6; outline: none; }
         .alert-red { background: rgba(239,83,80,0.12); border: 1px solid rgba(239,83,80,0.3); color: #ff8a80; }
         .alert-yellow { background: rgba(255,167,38,0.1); border: 1px solid rgba(255,167,38,0.25); color: #ffcc80; }
         .alert-green { background: rgba(102,187,106,0.1); border: 1px solid rgba(102,187,106,0.25); color: #a5d6a7; }
 
-        .gimba-card {
-            background: linear-gradient(135deg, var(--surface2), #0e1420);
-            border: 1px solid var(--gold);
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
-        }
-        .gimba-card h3 { color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 4px; }
-        .gimba-card p { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 10px; }
-        .btn-gimba {
-            background: var(--gold);
-            color: #000;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.2s;
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: 1px;
-        }
-        .btn-gimba:hover { background: #ffe082; }
-
-        .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .prod-card {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 12px;
-            text-align: center;
-        }
-        .prod-num {
-            font-family: 'DM Mono', monospace;
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: var(--accent);
-            display: block;
-        }
-        .prod-label { font-size: 0.62rem; color: var(--text-dim); letter-spacing: 1px; margin-top: 2px; }
-
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-size: 0.78rem;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 200;
-            pointer-events: none;
-        }
+        .modo-foco-overlay { display: none; position: fixed; inset: 0; background: #04060b; z-index: 100; flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+        .modo-foco-overlay.active { display: flex; }
+        .foco-task-title { font-size: 2.2rem; color: var(--accent); font-weight: 300; text-align: center; max-width: 600px; line-height: 1.4; }
+        .foco-timer { font-family: 'DM Mono', monospace; font-size: 5rem; color: var(--text); font-weight: 300; letter-spacing: 4px; }
+        .foco-bar { width: 300px; height: 3px; background: var(--border); border-radius: 3px; overflow: hidden; }
+        .foco-fill { height: 100%; background: var(--accent); width: 100%; transition: width 1s linear; }
+        .btn-exit-foco { background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: 10px 24px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 1px; transition: 0.2s; }
+        .btn-exit-foco:hover { border-color: var(--danger); color: var(--danger); }
+        .pausa-overlay { display: none; position: fixed; inset: 0; background: rgba(4,6,11,0.97); z-index: 110; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+        .pausa-overlay.active { display: flex; }
+        .pausa-title { font-size: 1.4rem; color: var(--teal); letter-spacing: 2px; }
+        .pausa-subtitle { font-size: 0.8rem; color: var(--text-dim); text-align: center; max-width: 320px; line-height: 1.8; }
+        .pausa-breath { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--teal); animation: breathe 8s infinite ease-in-out; background: rgba(77,182,172,0.05); }
+        @keyframes breathe { 0%,100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.5); opacity: 1; } }
+        .pausa-options { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .pausa-opt { background: var(--surface2); border: 1px solid var(--border); border-radius: 30px; padding: 8px 18px; font-size: 0.75rem; color: var(--text-dim); }
+        .btn-fechar-pausa { background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: 10px 28px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: 0.2s; }
+        .btn-fechar-pausa:hover { border-color: var(--teal); color: var(--teal); }
+        .pausa-counter { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-dim); }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 10px 24px; border-radius: 30px; font-size: 0.78rem; opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none; }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         .toast.green { border-color: var(--success); color: var(--success); }
-
-        @media (max-width: 900px) {
-            body { grid-template-columns: 1fr; grid-template-rows: auto; overflow: auto; }
-            .sidebar, .right-pane { display: none; }
-        }
     </style>
 </head>
 <body>
@@ -621,63 +195,45 @@
         <h1>CÁSSIA V8</h1>
         <span>PAINEL NEURAL — DEFENSORIASP</span>
     </div>
-
     <div class="frase-box">
         <p id="frase-texto">"Disciplina gera liberdade."</p>
         <div class="frase-autor" id="frase-autor">— Sistema V8</div>
     </div>
-
     <div>
-        <div class="prog-label">
-            <span>PROGRESSO DO DIA</span>
-            <span id="prog-pct-top">0%</span>
-        </div>
+        <div class="prog-label"><span>PROGRESSO DO DIA</span><span id="prog-pct-top">0%</span></div>
         <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
         <div class="prog-pct" id="prog-label">0 de 5 tarefas</div>
     </div>
-
     <div>
-        <div class="section-title">CHECKLIST DO DIA</div>
+        <div class="section-title">CHECKLIST FIXO</div>
         <div class="task-list" id="task-list">
             <label class="task-item" onclick="toggleTask(this)">
-                <input type="checkbox">
-                <div class="task-check"></div>
-                <span class="task-label">Chegada Subseção</span>
-                <span class="task-time">10h</span>
+                <input type="checkbox"><div class="task-check"></div>
+                <span class="task-label">Chegada Subseção</span><span class="task-time">10h</span>
             </label>
             <label class="task-item" onclick="toggleTask(this)">
-                <input type="checkbox">
-                <div class="task-check"></div>
-                <span class="task-label">Triagem de E-mails</span>
-                <span class="task-time">10:30h</span>
+                <input type="checkbox"><div class="task-check"></div>
+                <span class="task-label">Triagem de E-mails</span><span class="task-time">10:30h</span>
             </label>
             <label class="task-item" id="task-oficio" onclick="toggleTask(this)">
-                <input type="checkbox">
-                <div class="task-check"></div>
-                <span class="task-label">Ofício Fórum (Envio)</span>
-                <span class="task-time">11h</span>
+                <input type="checkbox"><div class="task-check"></div>
+                <span class="task-label">Ofício Fórum (Envio)</span><span class="task-time">11h</span>
             </label>
             <label class="task-item" onclick="toggleTask(this)">
-                <input type="checkbox">
-                <div class="task-check"></div>
-                <span class="task-label">Orçamentos Gimba</span>
-                <span class="task-time">14h</span>
+                <input type="checkbox"><div class="task-check"></div>
+                <span class="task-label">Orçamentos Gimba</span><span class="task-time">14h</span>
             </label>
             <label class="task-item" onclick="toggleTask(this)">
-                <input type="checkbox">
-                <div class="task-check"></div>
-                <span class="task-label">Check Extintores / Dedetização</span>
-                <span class="task-time">15h</span>
+                <input type="checkbox"><div class="task-check"></div>
+                <span class="task-label">Check Extintores / Dedetização</span><span class="task-time">15h</span>
             </label>
         </div>
     </div>
-
     <div class="dump-box">
         <div class="dump-title">🧠 Depósito de Distrações</div>
-        <textarea id="dump" placeholder="Escreva aqui o que desviar seu foco para liberar a mente..." oninput="saveData()"></textarea>
+        <textarea id="dump" placeholder="Escreva aqui o que desviar seu foco..." oninput="saveData()"></textarea>
     </div>
-
-    <button onclick="abrirModoFoco()" style="background:var(--surface2); border:1px solid var(--border); color:var(--accent); padding:10px; border-radius:8px; font-size:0.75rem; cursor:pointer; font-family:'DM Sans',sans-serif; letter-spacing:1px; transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">⚡ ATIVAR MODO FOCO</button>
+    <button class="btn-foco" onclick="abrirModoFoco()">⚡ ATIVAR MODO FOCO</button>
 </aside>
 
 <main class="main">
@@ -685,10 +241,8 @@
         <div class="timer-wrap">
             <div class="timer-ring">
                 <svg viewBox="0 0 56 56" width="56" height="56">
-                    <circle class="ring-bg" cx="28" cy="28" r="24" />
-                    <circle class="ring-progress" id="ring-prog" cx="28" cy="28" r="24"
-                        stroke-dasharray="150.8"
-                        stroke-dashoffset="0" />
+                    <circle class="ring-bg" cx="28" cy="28" r="24"/>
+                    <circle class="ring-progress" id="ring-prog" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="0"/>
                 </svg>
             </div>
             <div>
@@ -704,28 +258,17 @@
             <button class="btn-pomo" id="p-btn" onclick="togglePomodoro()">INICIAR</button>
         </div>
     </div>
-
     <div class="smart-fields">
-        <div class="field-wrap">
-            <label>VARA</label>
-            <input type="text" id="f-vara" placeholder="Ex: 1ª Vara Cível" oninput="autoUpdate()">
-        </div>
-        <div class="field-wrap">
-            <label>COMARCA</label>
-            <input type="text" id="f-comarca" placeholder="Ex: São Paulo" oninput="autoUpdate()">
-        </div>
-        <div class="field-wrap">
-            <label>NOME DO ASSISTIDO</label>
-            <input type="text" id="f-nome" placeholder="Nome completo" oninput="autoUpdate()">
-        </div>
+        <div class="field-wrap"><label>VARA</label><input type="text" id="f-vara" placeholder="Ex: 1ª Vara Cível" oninput="autoUpdate()"></div>
+        <div class="field-wrap"><label>COMARCA</label><input type="text" id="f-comarca" placeholder="Ex: São Paulo" oninput="autoUpdate()"></div>
+        <div class="field-wrap"><label>NOME DO ASSISTIDO</label><input type="text" id="f-nome" placeholder="Nome completo" oninput="autoUpdate()"></div>
     </div>
-
     <div class="editor-wrap">
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="loadDoc('docs', this)">📜 Relação Única</button>
-            <button class="tab-btn" onclick="loadDoc('oficio', this)">📄 Ofício Automático</button>
-            <button class="tab-btn" onclick="loadDoc('urgencia', this)">⚠️ Medidas/Oitivas</button>
-            <button class="tab-btn" onclick="loadDoc('blank', this)">✏️ Rascunho Livre</button>
+            <button class="tab-btn active" onclick="loadDoc('docs',this)">📜 Relação Única</button>
+            <button class="tab-btn" onclick="loadDoc('oficio',this)">📄 Ofício Automático</button>
+            <button class="tab-btn" onclick="loadDoc('urgencia',this)">⚠️ Medidas/Oitivas</button>
+            <button class="tab-btn" onclick="loadDoc('blank',this)">✏️ Rascunho Livre</button>
         </div>
         <textarea class="editor-area" id="editor" placeholder="Selecione um modelo acima ou escreva aqui..."></textarea>
         <button class="btn-copy" id="btn-copy" onclick="copyText()">⧉ COPIAR PARA O CLIPBOARD</button>
@@ -733,51 +276,71 @@
 </main>
 
 <aside class="right-pane">
-    <div class="section-title">MONITOR DE PRODUTIVIDADE</div>
-    <div class="prod-grid">
-        <div class="prod-card">
-            <span class="prod-num" id="prod-pct">0%</span>
-            <div class="prod-label">CONCLUÍDO</div>
-        </div>
-        <div class="prod-card">
-            <span class="prod-num" id="prod-ciclos">0</span>
-            <div class="prod-label">CICLOS FOCO</div>
-        </div>
-        <div class="prod-card">
-            <span class="prod-num" id="prod-tempo">0h</span>
-            <div class="prod-label">TEMPO FOCADO</div>
-        </div>
-        <div class="prod-card">
-            <span class="prod-num" id="prod-restantes">5</span>
-            <div class="prod-label">PENDENTES</div>
-        </div>
+    <div class="right-tabs">
+        <button class="right-tab active" onclick="switchTab('postits',this)">🗒 Post-its</button>
+        <button class="right-tab" onclick="switchTab('checklist',this)">✅ Checklist</button>
+        <button class="right-tab" onclick="switchTab('info',this)">📋 Alertas</button>
     </div>
+    <div class="right-panel-content">
 
-    <div class="section-title">LINHA DO TEMPO</div>
-    <div class="timeline" id="timeline"></div>
+        <div class="right-section active" id="sec-postits">
+            <div class="postit-toolbar">
+                <button class="postit-add-btn" onclick="addPostit()">＋ Novo post-it</button>
+                <div class="postit-colors">
+                    <div class="color-dot selected" style="background:#ffd54f" data-color="pi-yellow" onclick="selectColor(this)" title="Amarelo"></div>
+                    <div class="color-dot" style="background:#ff8a80" data-color="pi-red" onclick="selectColor(this)" title="Vermelho"></div>
+                    <div class="color-dot" style="background:#a5d6a7" data-color="pi-green" onclick="selectColor(this)" title="Verde"></div>
+                    <div class="color-dot" style="background:#81d4fa" data-color="pi-blue" onclick="selectColor(this)" title="Azul"></div>
+                    <div class="color-dot" style="background:#ce93d8" data-color="pi-purple" onclick="selectColor(this)" title="Roxo"></div>
+                    <div class="color-dot" style="background:#ffcc80" data-color="pi-orange" onclick="selectColor(this)" title="Laranja"></div>
+                </div>
+            </div>
+            <div class="postits-grid" id="postits-grid"></div>
+        </div>
 
-    <div class="gimba-card">
-        <h3>🛒 GIMBA</h3>
-        <p>SUPRIMENTOS DO MÊS</p>
-        <button class="btn-gimba" onclick="window.open('https://www.gimba.com.br')">ABRIR SITE</button>
+        <div class="right-section" id="sec-checklist">
+            <div class="checklist-add-row">
+                <input class="cl-input" id="cl-text" type="text" placeholder="Nova tarefa..." onkeydown="if(event.key==='Enter')addCustomTask()">
+                <input class="cl-time-input" id="cl-time" type="text" placeholder="10:00" maxlength="5">
+                <button class="btn-cl-add" onclick="addCustomTask()">+</button>
+            </div>
+            <div class="custom-task-list" id="custom-task-list">
+                <div class="cl-empty" id="cl-empty">Nenhuma tarefa ainda.<br>Adicione acima! 👆</div>
+            </div>
+        </div>
+
+        <div class="right-section" id="sec-info">
+            <div class="gimba-card">
+                <h3>🛒 GIMBA</h3>
+                <p>SUPRIMENTOS DO MÊS</p>
+                <button class="btn-gimba" onclick="window.open('https://www.gimba.com.br')">ABRIR SITE</button>
+            </div>
+            <div class="section-title">MONITOR DE PRODUTIVIDADE</div>
+            <div class="prod-grid">
+                <div class="prod-card"><span class="prod-num" id="prod-pct">0%</span><div class="prod-label">CONCLUÍDO</div></div>
+                <div class="prod-card"><span class="prod-num" id="prod-ciclos">0</span><div class="prod-label">CICLOS FOCO</div></div>
+                <div class="prod-card"><span class="prod-num" id="prod-tempo">0h</span><div class="prod-label">TEMPO FOCADO</div></div>
+                <div class="prod-card"><span class="prod-num" id="prod-restantes">5</span><div class="prod-label">PENDENTES</div></div>
+            </div>
+            <div class="section-title">ALERTAS DE RIGOR</div>
+            <div class="alert-card alert-red" contenteditable="true" id="p1" oninput="saveData()">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
+            <div class="alert-card alert-yellow" contenteditable="true" id="p2" oninput="saveData()">🕒 ATENDIMENTO: 09h às 12h — Limite 30 senhas/dia.</div>
+            <div class="alert-card alert-green" contenteditable="true" id="p3" oninput="saveData()">📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.</div>
+        </div>
+
     </div>
-
-    <div class="section-title">ALERTAS DE RIGOR</div>
-    <div class="alert-card alert-red" contenteditable="true" id="p1" oninput="saveData()">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
-    <div class="alert-card alert-yellow" contenteditable="true" id="p2" oninput="saveData()">🕒 ATENDIMENTO: 09h às 12h — Limite 30 senhas/dia.</div>
-    <div class="alert-card alert-green" contenteditable="true" id="p3" oninput="saveData()">📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.</div>
 </aside>
 
 <div class="modo-foco-overlay" id="modo-foco">
-    <div style="font-size:0.65rem; color:var(--text-dim); letter-spacing:3px;">MODO FOCO ATIVO</div>
-    <div class="foco-task-title" id="foco-task">Concentração máxima.</div>
+    <div style="font-size:0.65rem;color:var(--text-dim);letter-spacing:3px;">MODO FOCO ATIVO</div>
+    <div class="foco-task-title">Concentração máxima.</div>
     <div class="foco-timer" id="foco-timer">25:00</div>
     <div class="foco-bar"><div class="foco-fill" id="foco-fill"></div></div>
     <button class="btn-exit-foco" onclick="fecharModoFoco()">✕ SAIR DO MODO FOCO</button>
 </div>
 
 <div class="pausa-overlay" id="pausa-overlay">
-    <div style="font-size:0.65rem; color:var(--text-dim); letter-spacing:3px;">PAUSA SENSORIAL</div>
+    <div style="font-size:0.65rem;color:var(--text-dim);letter-spacing:3px;">PAUSA SENSORIAL</div>
     <div class="pausa-title">🌿 Momento de Recuperação</div>
     <div class="pausa-breath"></div>
     <div class="pausa-subtitle">Acompanhe o círculo: inspire enquanto expande, expire enquanto contrai.<br>Ciclo 4 — 4 — 4.</div>
@@ -794,322 +357,294 @@
 <div class="toast" id="toast"></div>
 
 <script>
-    const frases = [
-        { t: '"Disciplina gera liberdade."', a: '— Jocko Willink' },
-        { t: '"Constância supera intensidade."', a: '— Sistema V8' },
-        { t: '"Organização reduz ansiedade."', a: '— Sistema V8' },
-        { t: '"Você está construindo estabilidade todos os dias."', a: '— Para Cássia' },
-        { t: '"Um passo por vez, uma tarefa por vez."', a: '— Sistema V8' },
-        { t: '"Clareza mental começa com clareza no ambiente."', a: '— Sistema V8' },
-    ];
-    function sortearFrase() {
-        const idx = Math.floor(Math.random() * frases.length);
-        document.getElementById('frase-texto').textContent = frases[idx].t;
-        document.getElementById('frase-autor').textContent = frases[idx].a;
-    }
-    sortearFrase();
+const frases=[
+    {t:'"Disciplina gera liberdade."',a:'— Jocko Willink'},
+    {t:'"Constância supera intensidade."',a:'— Sistema V8'},
+    {t:'"Organização reduz ansiedade."',a:'— Sistema V8'},
+    {t:'"Você está construindo estabilidade todos os dias."',a:'— Para Cássia'},
+    {t:'"Um passo por vez, uma tarefa por vez."',a:'— Sistema V8'},
+    {t:'"Clareza mental começa com clareza no ambiente."',a:'— Sistema V8'},
+];
+(()=>{const i=Math.floor(Math.random()*frases.length);document.getElementById('frase-texto').textContent=frases[i].t;document.getElementById('frase-autor').textContent=frases[i].a;})();
 
-    const tlData = [
-        { hora: '08:00', nome: 'Organização inicial', dur: '20 min' },
-        { hora: '10:00', nome: 'Chegada Subseção', dur: '30 min' },
-        { hora: '10:30', nome: 'Triagem de E-mails', dur: '30 min' },
-        { hora: '11:00', nome: 'Ofício Fórum', dur: '30 min' },
-        { hora: '12:00', nome: 'Pausa Almoço', dur: '1h' },
-        { hora: '14:00', nome: 'Orçamentos Gimba', dur: '1h' },
-        { hora: '15:00', nome: 'Check Extintores/Dedetização', dur: '1h' },
-        { hora: '16:30', nome: 'Revisão do Dia', dur: '30 min' },
-    ];
-    function renderTimeline() {
-        const agora = new Date();
-        const horaAtual = agora.getHours() * 60 + agora.getMinutes();
-        const container = document.getElementById('timeline');
-        container.innerHTML = '';
-        tlData.forEach((item, i) => {
-            const [h, m] = item.hora.split(':').map(Number);
-            const itemMin = h * 60 + m;
-            const nextMin = i < tlData.length - 1
-                ? (() => { const [nh, nm] = tlData[i+1].hora.split(':').map(Number); return nh*60+nm; })()
-                : itemMin + 60;
-            let cls = '';
-            let statusHtml = `<div class="tl-status status-pending">Pendente</div>`;
-            if (horaAtual >= nextMin) {
-                cls = 'done-tl';
-                statusHtml = `<div class="tl-status status-done">✓ Concluído</div>`;
-            } else if (horaAtual >= itemMin) {
-                cls = 'current';
-                statusHtml = `<div class="tl-status status-current">● Em andamento</div>`;
-            }
-            container.innerHTML += `
-            <div class="tl-item ${cls}">
-                <div class="tl-dot"></div>
-                <div class="tl-content">
-                    <div class="tl-time">${item.hora}</div>
-                    <div class="tl-name">${item.nome}</div>
-                    <div class="tl-dur">${item.dur}</div>
-                    ${statusHtml}
-                </div>
-            </div>`;
-        });
-    }
-    renderTimeline();
-    setInterval(renderTimeline, 60000);
+function switchTab(id,btn){
+    document.querySelectorAll('.right-section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.right-tab').forEach(b=>b.classList.remove('active'));
+    document.getElementById('sec-'+id).classList.add('active');
+    btn.classList.add('active');
+}
 
-    const CIRCUM = 2 * Math.PI * 24;
-    let modoSec = 25 * 60;
-    let timeLeft = modoSec;
-    let running = false;
-    let pomTimer;
-    let ciclosFoco = 0;
-    let minutosFoco = 0;
-    let minTickFoco = 0;
+let selectedColor='pi-yellow';
+let postits=[];
 
-    function setMode(min, label) {
-        clearInterval(pomTimer);
-        running = false;
-        modoSec = min * 60;
-        timeLeft = modoSec;
-        document.getElementById('p-btn').textContent = 'INICIAR';
-        document.getElementById('pomo-mode-label').textContent = label;
-        updateTimerDisplay();
-        document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
-        document.getElementById('btn-' + min).classList.add('active');
-    }
+function selectColor(dot){
+    document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('selected'));
+    dot.classList.add('selected');
+    selectedColor=dot.dataset.color;
+}
 
-    function togglePomodoro() {
-        const btn = document.getElementById('p-btn');
-        if (running) {
-            clearInterval(pomTimer);
-            running = false;
-            btn.textContent = 'RETOMAR';
-        } else {
-            running = true;
-            btn.textContent = 'PAUSAR';
-            pomTimer = setInterval(tickPomo, 1000);
-        }
-    }
+function addPostit(){
+    const id=Date.now();
+    postits.push({id,color:selectedColor,text:''});
+    renderPostits();
+    saveData();
+    setTimeout(()=>{
+        const el=document.querySelector(`[data-pid="${id}"] .postit-body`);
+        if(el)el.focus();
+    },60);
+}
 
-    function tickPomo() {
-        if (timeLeft <= 0) {
-            clearInterval(pomTimer);
-            running = false;
-            const label = document.getElementById('pomo-mode-label').textContent;
-            if (label === 'FOCO') {
-                ciclosFoco++;
-                minutosFoco += modoSec / 60;
-                saveData();
-                showToast('Ciclo de foco completo! 🎯', 'green');
-                setTimeout(abrirPausa, 1200);
-            } else {
-                showToast('Pausa encerrada. Hora de focar!', '');
-            }
-            timeLeft = modoSec;
-            document.getElementById('p-btn').textContent = 'INICIAR';
-            updateTimerDisplay();
-            updateProd();
-            return;
-        }
-        timeLeft--;
-        if (document.getElementById('pomo-mode-label').textContent === 'FOCO') {
-            minTickFoco++;
-            if (minTickFoco >= 60) { minTickFoco = 0; }
-        }
-        updateTimerDisplay();
-    }
+function deletePostit(id){
+    postits=postits.filter(p=>p.id!==id);
+    renderPostits();
+    saveData();
+}
 
-    function updateTimerDisplay() {
-        const m = Math.floor(timeLeft / 60);
-        const s = timeLeft % 60;
-        const str = `${m}:${s < 10 ? '0' : ''}${s}`;
-        document.getElementById('timer').textContent = str;
-        document.getElementById('foco-timer').textContent = str;
-        const pct = timeLeft / modoSec;
-        const offset = CIRCUM * (1 - pct);
-        document.getElementById('ring-prog').style.strokeDashoffset = offset;
-        document.getElementById('foco-fill').style.width = (pct * 100) + '%';
-    }
+function updatePostitText(id,el){
+    const p=postits.find(x=>x.id===id);
+    if(p)p.text=el.innerText;
+}
 
-    let audioCtx = null;
-    let noiseNode = null;
-    let gainNode = null;
-    let noiseOn = false;
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-    function initAudio() {
-        if (audioCtx) return;
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        gainNode = audioCtx.createGain();
-        gainNode.gain.value = 0.06;
-        gainNode.connect(audioCtx.destination);
+function renderPostits(){
+    const grid=document.getElementById('postits-grid');
+    if(postits.length===0){
+        grid.innerHTML='<div style="font-size:0.75rem;color:var(--text-dim);text-align:center;padding:32px 12px;font-style:italic;line-height:1.8;">Nenhum post-it ainda.<br>Escolha uma cor e clique em<br>＋ Novo post-it 📝</div>';
+        return;
     }
+    grid.innerHTML=postits.map(p=>`
+        <div class="postit-card ${p.color}" data-pid="${p.id}">
+            <button class="postit-del" onclick="deletePostit(${p.id})">✕</button>
+            <div class="postit-body" contenteditable="true" data-placeholder="Escreva aqui..."
+                oninput="updatePostitText(${p.id},this)" onblur="saveData()">${esc(p.text)}</div>
+        </div>`).join('');
+}
 
-    function startNoise() {
-        initAudio();
-        if (noiseNode) { noiseNode.stop(); noiseNode = null; }
-        const bufSize = audioCtx.sampleRate * 2;
-        const buffer = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
-        noiseNode = audioCtx.createBufferSource();
-        noiseNode.buffer = buffer;
-        noiseNode.loop = true;
-        noiseNode.connect(gainNode);
-        noiseNode.start();
-    }
+let customTasks=[];
 
-    function stopNoise() {
-        if (noiseNode) { noiseNode.stop(); noiseNode = null; }
-    }
+function addCustomTask(){
+    const textEl=document.getElementById('cl-text');
+    const timeEl=document.getElementById('cl-time');
+    const text=textEl.value.trim();
+    if(!text){textEl.focus();return;}
+    customTasks.push({id:Date.now(),text,time:timeEl.value.trim(),done:false});
+    textEl.value='';timeEl.value='';textEl.focus();
+    renderCustomTasks();saveData();
+}
 
-    function toggleNoise() {
-        const btn = document.getElementById('noise-btn');
-        if (noiseOn) {
-            stopNoise();
-            btn.textContent = '🔊 Chuva: OFF';
-            btn.classList.remove('on');
-        } else {
-            startNoise();
-            btn.textContent = '🔊 Chuva: ON';
-            btn.classList.add('on');
-        }
-        noiseOn = !noiseOn;
-    }
+function toggleCustomTask(id){
+    const t=customTasks.find(x=>x.id===id);
+    if(t)t.done=!t.done;
+    renderCustomTasks();saveData();
+}
 
-    function toggleTask(label) {
-        const cb = label.querySelector('input[type="checkbox"]');
-        cb.checked = !cb.checked;
-        label.classList.toggle('done', cb.checked);
-        updateProgress();
-        saveData();
-    }
+function deleteCustomTask(id){
+    customTasks=customTasks.filter(x=>x.id!==id);
+    renderCustomTasks();saveData();
+}
 
-    function updateProgress() {
-        const items = document.querySelectorAll('#task-list .task-item');
-        const done = document.querySelectorAll('#task-list .task-item.done').length;
-        const total = items.length;
-        const pct = Math.round((done / total) * 100);
-        document.getElementById('prog-fill').style.width = pct + '%';
-        document.getElementById('prog-pct-top').textContent = pct + '%';
-        document.getElementById('prog-label').textContent = `${done} de ${total} tarefas`;
-        updateProd();
-        const agora = new Date();
-        const oficio = document.getElementById('task-oficio');
-        if (agora.getHours() >= 11 && agora.getMinutes() >= 30 && !oficio.classList.contains('done')) {
-            oficio.classList.add('pulse-alert');
-        } else {
-            oficio.classList.remove('pulse-alert');
-        }
-    }
+function updateCustomTaskText(id,el){
+    const t=customTasks.find(x=>x.id===id);
+    if(t)t.text=el.innerText.trim();
+}
 
-    function updateProd() {
-        const done = document.querySelectorAll('#task-list .task-item.done').length;
-        const total = document.querySelectorAll('#task-list .task-item').length;
-        document.getElementById('prod-pct').textContent = Math.round((done / total) * 100) + '%';
-        document.getElementById('prod-ciclos').textContent = ciclosFoco;
-        document.getElementById('prod-tempo').textContent = Math.floor(minutosFoco / 60) + 'h' + (minutosFoco % 60 > 0 ? (minutosFoco % 60) + 'm' : '');
-        document.getElementById('prod-restantes').textContent = total - done;
+function renderCustomTasks(){
+    const list=document.getElementById('custom-task-list');
+    const empty=document.getElementById('cl-empty');
+    if(customTasks.length===0){
+        list.innerHTML='';
+        list.appendChild(empty);
+        return;
     }
+    list.innerHTML=customTasks.map(t=>`
+        <div class="custom-task">
+            <div class="ct-check ${t.done?'checked':''}" onclick="toggleCustomTask(${t.id})"></div>
+            <div class="ct-label ${t.done?'done':''}" contenteditable="true"
+                oninput="updateCustomTaskText(${t.id},this)" onblur="saveData()">${esc(t.text)}</div>
+            ${t.time?`<span class="ct-time">${t.time}</span>`:''}
+            <button class="ct-del" onclick="deleteCustomTask(${t.id})">✕</button>
+        </div>`).join('');
+    list.appendChild(empty);
+    empty.style.display='none';
+}
 
-    const vault = {
-        docs: () => `RELAÇÃO ÚNICA DE DOCUMENTOS\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (mês atual)\n3. Carteira de Trabalho\n4. Holerites — últimos 03 meses\n\nO assistido deve apresentar todos os documentos acima para triagem de qualquer demanda civil ou de família.`,
-        oficio: () => {
-            const vara = document.getElementById('f-vara').value || '____';
-            const comarca = document.getElementById('f-comarca').value || '____';
-            const nome = document.getElementById('f-nome').value || '____';
-            const hoje = new Date().toLocaleDateString('pt-BR');
-            return `AO JUÍZO DA ${vara.toUpperCase()} DO FÓRUM DA COMARCA DE ${comarca.toUpperCase()}\n\nSão Paulo, ${hoje}.\n\nASSUNTO: ENCAMINHAMENTO DE DOCUMENTAÇÃO TÉCNICA\n\nA Subseção da Defensoria Pública, no exercício de suas funções institucionais, encaminha em anexo a documentação do(a) assistido(a) ${nome.toUpperCase()}, para devida instrução processual.\n\nAtenciosamente,\nSecretaria Administrativa\nDefensoria Pública do Estado de São Paulo`;
-        },
-        urgencia: () => `PROTOCOLOS DE URGÊNCIA\n\n1. Medida Protetiva (Lei Maria da Penha)\n   → Triagem imediata, encaminhar à Defensora\n\n2. Queixa Crime\n   → Registrar BO antes do atendimento\n\n3. Oitiva de Vítima Menor\n   → Sala reservada, presença obrigatória de responsável legal\n\n⚠️ Estes casos têm PRIORIDADE MÁXIMA sobre a fila regular.`,
-        blank: () => ''
-    };
+const CIRCUM=2*Math.PI*24;
+let modoSec=25*60,timeLeft=modoSec,running=false,pomTimer;
+let ciclosFoco=0,minutosFoco=0;
 
-    let currentKey = 'docs';
-    function loadDoc(k, btn) {
-        currentKey = k;
-        document.getElementById('editor').value = vault[k]();
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        if (btn) btn.classList.add('active');
-    }
-    function autoUpdate() {
-        if (currentKey === 'oficio') document.getElementById('editor').value = vault.oficio();
-    }
+function setMode(min,label){
+    clearInterval(pomTimer);running=false;modoSec=min*60;timeLeft=modoSec;
+    document.getElementById('p-btn').textContent='INICIAR';
+    document.getElementById('pomo-mode-label').textContent=label;
+    updateTimerDisplay();
+    document.querySelectorAll('.btn-mode').forEach(b=>b.classList.remove('active'));
+    document.getElementById('btn-'+min).classList.add('active');
+}
 
-    function copyText() {
-        const e = document.getElementById('editor');
-        e.select();
-        document.execCommand('copy');
-        const btn = document.getElementById('btn-copy');
-        btn.textContent = '✓ COPIADO COM SUCESSO';
-        btn.classList.add('copied');
-        setTimeout(() => {
-            btn.textContent = '⧉ COPIAR PARA O CLIPBOARD';
-            btn.classList.remove('copied');
-        }, 2000);
-    }
+function togglePomodoro(){
+    const btn=document.getElementById('p-btn');
+    if(running){clearInterval(pomTimer);running=false;btn.textContent='RETOMAR';}
+    else{running=true;btn.textContent='PAUSAR';pomTimer=setInterval(tickPomo,1000);}
+}
 
-    function abrirModoFoco() {
-        document.getElementById('modo-foco').classList.add('active');
+function tickPomo(){
+    if(timeLeft<=0){
+        clearInterval(pomTimer);running=false;
+        if(document.getElementById('pomo-mode-label').textContent==='FOCO'){
+            ciclosFoco++;minutosFoco+=modoSec/60;
+            showToast('Ciclo de foco completo! 🎯','green');
+            setTimeout(abrirPausa,1200);
+        }else{showToast('Pausa encerrada. Hora de focar!','');}
+        timeLeft=modoSec;
+        document.getElementById('p-btn').textContent='INICIAR';
+        updateTimerDisplay();updateProd();saveData();return;
     }
-    function fecharModoFoco() {
-        document.getElementById('modo-foco').classList.remove('active');
-    }
+    timeLeft--;updateTimerDisplay();
+}
 
-    let pausaTimer;
-    let pausaSec = 5 * 60;
-    function abrirPausa() {
-        pausaSec = 5 * 60;
-        document.getElementById('pausa-overlay').classList.add('active');
-        clearInterval(pausaTimer);
-        updatePausaCounter();
-        pausaTimer = setInterval(() => {
-            pausaSec--;
-            if (pausaSec <= 0) { fecharPausa(); return; }
-            updatePausaCounter();
-        }, 1000);
-    }
-    function updatePausaCounter() {
-        const m = Math.floor(pausaSec / 60);
-        const s = pausaSec % 60;
-        document.getElementById('pausa-counter').textContent = `Retomando em ${m}:${s < 10 ? '0' : ''}${s}...`;
-    }
-    function fecharPausa() {
-        clearInterval(pausaTimer);
-        document.getElementById('pausa-overlay').classList.remove('active');
-    }
+function updateTimerDisplay(){
+    const m=Math.floor(timeLeft/60),s=timeLeft%60;
+    const str=`${m}:${s<10?'0':''}${s}`;
+    document.getElementById('timer').textContent=str;
+    document.getElementById('foco-timer').textContent=str;
+    const pct=timeLeft/modoSec;
+    document.getElementById('ring-prog').style.strokeDashoffset=CIRCUM*(1-pct);
+    document.getElementById('foco-fill').style.width=(pct*100)+'%';
+}
 
-    function showToast(msg, type) {
-        const t = document.getElementById('toast');
-        t.textContent = msg;
-        t.className = 'toast show ' + type;
-        setTimeout(() => t.className = 'toast', 3000);
-    }
+let audioCtx,noiseNode,gainNode,noiseOn=false;
+function initAudio(){
+    if(audioCtx)return;
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    gainNode=audioCtx.createGain();gainNode.gain.value=0.06;
+    gainNode.connect(audioCtx.destination);
+}
+function startNoise(){
+    initAudio();
+    if(noiseNode){noiseNode.stop();noiseNode=null;}
+    const buf=audioCtx.sampleRate*2,buffer=audioCtx.createBuffer(1,buf,audioCtx.sampleRate);
+    const data=buffer.getChannelData(0);
+    for(let i=0;i<buf;i++)data[i]=Math.random()*2-1;
+    noiseNode=audioCtx.createBufferSource();
+    noiseNode.buffer=buffer;noiseNode.loop=true;
+    noiseNode.connect(gainNode);noiseNode.start();
+}
+function toggleNoise(){
+    const btn=document.getElementById('noise-btn');
+    if(noiseOn){if(noiseNode)noiseNode.stop();btn.textContent='🔊 Chuva: OFF';btn.classList.remove('on');}
+    else{startNoise();btn.textContent='🔊 Chuva: ON';btn.classList.add('on');}
+    noiseOn=!noiseOn;
+}
 
-    function saveData() {
-        const checks = Array.from(document.querySelectorAll('#task-list .task-item')).map(l => l.classList.contains('done'));
-        localStorage.setItem('v8_tasks', JSON.stringify(checks));
-        localStorage.setItem('v8_dump', document.getElementById('dump').value);
-        localStorage.setItem('v8_p1', document.getElementById('p1').innerText);
-        localStorage.setItem('v8_p2', document.getElementById('p2').innerText);
-        localStorage.setItem('v8_p3', document.getElementById('p3').innerText);
-        localStorage.setItem('v8_ciclos', ciclosFoco);
-        localStorage.setItem('v8_minutos', minutosFoco);
-    }
+function toggleTask(label){
+    const cb=label.querySelector('input[type="checkbox"]');
+    cb.checked=!cb.checked;
+    label.classList.toggle('done',cb.checked);
+    updateProgress();saveData();
+}
+function updateProgress(){
+    const items=document.querySelectorAll('#task-list .task-item');
+    const done=document.querySelectorAll('#task-list .task-item.done').length;
+    const pct=Math.round((done/items.length)*100);
+    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-pct-top').textContent=pct+'%';
+    document.getElementById('prog-label').textContent=`${done} de ${items.length} tarefas`;
+    updateProd();
+    const agora=new Date(),oficio=document.getElementById('task-oficio');
+    if(agora.getHours()>=11&&agora.getMinutes()>=30&&!oficio.classList.contains('done'))
+        oficio.classList.add('pulse-alert');
+    else oficio.classList.remove('pulse-alert');
+}
+function updateProd(){
+    const done=document.querySelectorAll('#task-list .task-item.done').length;
+    const total=document.querySelectorAll('#task-list .task-item').length;
+    document.getElementById('prod-pct').textContent=Math.round((done/total)*100)+'%';
+    document.getElementById('prod-ciclos').textContent=ciclosFoco;
+    const h=Math.floor(minutosFoco/60),m2=minutosFoco%60;
+    document.getElementById('prod-tempo').textContent=h+'h'+(m2>0?m2+'m':'');
+    document.getElementById('prod-restantes').textContent=total-done;
+}
 
-    window.onload = () => {
-        const tasks = JSON.parse(localStorage.getItem('v8_tasks') || '[]');
-        document.querySelectorAll('#task-list .task-item').forEach((l, i) => {
-            if (tasks[i]) l.classList.add('done');
-            const cb = l.querySelector('input[type="checkbox"]');
-            if (tasks[i]) cb.checked = true;
-        });
-        document.getElementById('dump').value = localStorage.getItem('v8_dump') || '';
-        document.getElementById('p1').innerText = localStorage.getItem('v8_p1') || '🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.';
-        document.getElementById('p2').innerText = localStorage.getItem('v8_p2') || '🕒 ATENDIMENTO: 09h às 12h — Limite 30 senhas/dia.';
-        document.getElementById('p3').innerText = localStorage.getItem('v8_p3') || '📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.';
-        ciclosFoco = parseInt(localStorage.getItem('v8_ciclos') || 0);
-        minutosFoco = parseInt(localStorage.getItem('v8_minutos') || 0);
-        updateProgress();
-        loadDoc('docs', document.querySelector('.tab-btn'));
-        setInterval(updateProgress, 30000);
-    };
+const vault={
+    docs:()=>`RELAÇÃO ÚNICA DE DOCUMENTOS\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (mês atual)\n3. Carteira de Trabalho\n4. Holerites — últimos 03 meses\n\nO assistido deve apresentar todos os documentos acima para triagem de qualquer demanda civil ou de família.`,
+    oficio:()=>{
+        const vara=document.getElementById('f-vara').value||'____';
+        const comarca=document.getElementById('f-comarca').value||'____';
+        const nome=document.getElementById('f-nome').value||'____';
+        return `AO JUÍZO DA ${vara.toUpperCase()} DO FÓRUM DA COMARCA DE ${comarca.toUpperCase()}\n\nSão Paulo, ${new Date().toLocaleDateString('pt-BR')}.\n\nASSUNTO: ENCAMINHAMENTO DE DOCUMENTAÇÃO TÉCNICA\n\nA Subseção da Defensoria Pública encaminha em anexo a documentação do(a) assistido(a) ${nome.toUpperCase()}, para devida instrução processual.\n\nAtenciosamente,\nSecretaria Administrativa\nDefensoria Pública do Estado de São Paulo`;
+    },
+    urgencia:()=>`PROTOCOLOS DE URGÊNCIA\n\n1. Medida Protetiva (Lei Maria da Penha)\n   → Triagem imediata, encaminhar à Defensora\n\n2. Queixa Crime\n   → Registrar BO antes do atendimento\n\n3. Oitiva de Vítima Menor\n   → Sala reservada, presença obrigatória de responsável legal\n\n⚠️ Estes casos têm PRIORIDADE MÁXIMA sobre a fila regular.`,
+    blank:()=>''
+};
+let currentKey='docs';
+function loadDoc(k,btn){
+    currentKey=k;document.getElementById('editor').value=vault[k]();
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    if(btn)btn.classList.add('active');
+}
+function autoUpdate(){if(currentKey==='oficio')document.getElementById('editor').value=vault.oficio();}
+function copyText(){
+    const e=document.getElementById('editor');e.select();document.execCommand('copy');
+    const btn=document.getElementById('btn-copy');
+    btn.textContent='✓ COPIADO COM SUCESSO';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='⧉ COPIAR PARA O CLIPBOARD';btn.classList.remove('copied');},2000);
+}
+
+function abrirModoFoco(){document.getElementById('modo-foco').classList.add('active');}
+function fecharModoFoco(){document.getElementById('modo-foco').classList.remove('active');}
+
+let pausaTimer,pausaSec=300;
+function abrirPausa(){
+    pausaSec=300;
+    document.getElementById('pausa-overlay').classList.add('active');
+    clearInterval(pausaTimer);updatePausaCounter();
+    pausaTimer=setInterval(()=>{pausaSec--;if(pausaSec<=0){fecharPausa();return;}updatePausaCounter();},1000);
+}
+function updatePausaCounter(){
+    const m=Math.floor(pausaSec/60),s=pausaSec%60;
+    document.getElementById('pausa-counter').textContent=`Retomando em ${m}:${s<10?'0':''}${s}...`;
+}
+function fecharPausa(){clearInterval(pausaTimer);document.getElementById('pausa-overlay').classList.remove('active');}
+
+function showToast(msg,type){
+    const t=document.getElementById('toast');
+    t.textContent=msg;t.className='toast show '+type;
+    setTimeout(()=>t.className='toast',3000);
+}
+
+function saveData(){
+    const checks=Array.from(document.querySelectorAll('#task-list .task-item')).map(l=>l.classList.contains('done'));
+    localStorage.setItem('v8_tasks',JSON.stringify(checks));
+    localStorage.setItem('v8_dump',document.getElementById('dump').value);
+    localStorage.setItem('v8_p1',document.getElementById('p1').innerText);
+    localStorage.setItem('v8_p2',document.getElementById('p2').innerText);
+    localStorage.setItem('v8_p3',document.getElementById('p3').innerText);
+    localStorage.setItem('v8_ciclos',ciclosFoco);
+    localStorage.setItem('v8_minutos',minutosFoco);
+    localStorage.setItem('v8_postits',JSON.stringify(postits));
+    localStorage.setItem('v8_ctasks',JSON.stringify(customTasks));
+}
+
+window.onload=()=>{
+    const tasks=JSON.parse(localStorage.getItem('v8_tasks')||'[]');
+    document.querySelectorAll('#task-list .task-item').forEach((l,i)=>{
+        if(tasks[i]){l.classList.add('done');l.querySelector('input').checked=true;}
+    });
+    document.getElementById('dump').value=localStorage.getItem('v8_dump')||'';
+    document.getElementById('p1').innerText=localStorage.getItem('v8_p1')||'🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.';
+    document.getElementById('p2').innerText=localStorage.getItem('v8_p2')||'🕒 ATENDIMENTO: 09h às 12h — Limite 30 senhas/dia.';
+    document.getElementById('p3').innerText=localStorage.getItem('v8_p3')||'📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.';
+    ciclosFoco=parseInt(localStorage.getItem('v8_ciclos')||0);
+    minutosFoco=parseInt(localStorage.getItem('v8_minutos')||0);
+    const sp=localStorage.getItem('v8_postits');
+    if(sp){postits=JSON.parse(sp);}renderPostits();
+    const sc=localStorage.getItem('v8_ctasks');
+    if(sc){customTasks=JSON.parse(sc);}renderCustomTasks();
+    updateProgress();
+    loadDoc('docs',document.querySelector('.tab-btn'));
+    setInterval(updateProgress,30000);
+};
 </script>
 </body>
 </html>
