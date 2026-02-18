@@ -3,221 +3,1113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA V8 | NEURAL COMMAND CENTER - ULTIMATE</title>
+    <title>CÁSSIA V8 | PAINEL NEURAL DEFINITIVO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap');
-        
         :root {
-            --bg: #050505; --panel: #0d1117; --accent: #00f2ff;
-            --gold: #d4af37; --danger: #ff3e3e; --text: #c9d1d9; --success: #76ff03;
+            --bg: #07090f;
+            --surface: #0e1420;
+            --surface2: #141c2e;
+            --border: #1e2a40;
+            --accent: #4fc3f7;
+            --accent2: #81d4fa;
+            --gold: #ffd54f;
+            --danger: #ef5350;
+            --success: #66bb6a;
+            --warn: #ffa726;
+            --text: #cdd6e8;
+            --text-dim: #5a6a85;
+            --purple: #9575cd;
+            --teal: #4db6ac;
         }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        * { box-sizing: border-box; }
         body {
-            font-family: 'Lexend', sans-serif; background: var(--bg); color: var(--text);
-            margin: 0; display: grid; grid-template-columns: 320px 1fr 320px; height: 100vh; overflow: hidden;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: grid;
+            grid-template-columns: 290px 1fr 300px;
+            grid-template-rows: 100vh;
+            overflow: hidden;
         }
 
-        /* SIDEBARS */
-        .sidebar, .right-pane { background: var(--panel); border: 1px solid #30363d; padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
-        
-        /* PROGRESS BAR */
-        .progress-container { background: #161b22; border-radius: 10px; height: 25px; border: 1px solid #30363d; position: relative; overflow: hidden; margin-bottom: 5px; }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--success)); transition: 0.4s; }
-        .progress-text { position: absolute; width: 100%; text-align: center; font-size: 0.7rem; line-height: 25px; font-weight: bold; color: #fff; z-index: 2; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-        /* TASK LIST */
-        .task-item { background: rgba(255,255,255,0.03); border: 1px solid #30363d; padding: 10px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; }
-        .task-item:hover { border-color: var(--accent); }
-        .pulse-alert { animation: pulse-border 1.5s infinite; background: rgba(255, 62, 62, 0.1) !important; }
-        @keyframes pulse-border { 0% { border-color: #30363d; } 50% { border-color: var(--danger); box-shadow: 0 0 10px var(--danger); } 100% { border-color: #30363d; } }
+        .sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px 16px;
+            overflow-y: auto;
+        }
 
-        /* MAIN PANEL */
-        .main { padding: 20px; display: flex; flex-direction: column; gap: 15px; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
-        .pomodoro-bar { background: #161b22; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 0 20px rgba(0,242,255,0.1); }
-        .timer-display { font-size: 2rem; font-weight: bold; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
-        
-        /* SMART FIELDS */
-        .smart-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #161b22; padding: 12px; border-radius: 10px; border: 1px solid #333; }
-        .smart-fields input { background: #000; border: 1px solid #444; color: var(--accent); padding: 10px; border-radius: 6px; font-size: 0.85rem; outline: none; font-family: 'Lexend'; }
-        .smart-fields input:focus { border-color: var(--accent); box-shadow: 0 0 5px var(--accent); }
+        .logo {
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .logo h1 {
+            font-family: 'DM Mono', monospace;
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            font-weight: 500;
+        }
+        .logo span {
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            display: block;
+            margin-top: 3px;
+        }
 
-        /* EDITOR */
-        .editor-container { flex: 1; background: var(--panel); border: 1px solid #30363d; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .nav-tabs { padding: 12px; background: #161b22; display: flex; gap: 8px; border-bottom: 1px solid #30363d; }
-        .tab-btn { background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; transition: 0.3s; }
-        .tab-btn:hover { border-color: var(--accent); background: rgba(0,242,255,0.1); }
-        textarea { flex: 1; background: transparent; border: none; color: #fff; padding: 30px; font-size: 1.2rem; line-height: 2; resize: none; outline: none; font-family: 'Lexend', sans-serif; }
+        .frase-box {
+            background: linear-gradient(135deg, #0e1a2e, #111e35);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--gold);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+        .frase-box p {
+            font-size: 0.78rem;
+            color: var(--gold);
+            font-style: italic;
+            line-height: 1.6;
+        }
+        .frase-box .frase-autor {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            margin-top: 5px;
+            text-align: right;
+        }
 
-        /* POST-ITS */
-        .post-it { padding: 15px; border-radius: 8px; color: #000; font-weight: bold; font-size: 0.85rem; min-height: 80px; box-shadow: 5px 5px 15px rgba(0,0,0,0.3); }
-        .p-red { background: #ff5f5f; } .p-yellow { background: #ffd93d; } .p-green { background: #76ff03; }
-        
-        .btn-copy { background: var(--accent); color: #000; font-weight: bold; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
-        .btn-copy:hover { background: #00c8d7; }
+        .prog-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .prog-track {
+            background: var(--surface2);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .prog-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--teal));
+            border-radius: 20px;
+            transition: width 0.5s cubic-bezier(.4,0,.2,1);
+        }
+        .prog-pct {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--accent);
+            text-align: right;
+            margin-top: 4px;
+        }
 
-        .dump-area { background: #000; border: 1px dashed #444; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 5px; }
+        .section-title {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .task-list { display: flex; flex-direction: column; gap: 6px; }
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .task-item:hover { border-color: var(--accent); background: rgba(79,195,247,0.05); }
+        .task-item input[type="checkbox"] { display: none; }
+        .task-check {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .task-item.done .task-check { background: var(--success); border-color: var(--success); }
+        .task-item.done .task-check::after { content: '✓'; font-size: 0.6rem; color: #000; font-weight: bold; }
+        .task-item.done .task-label { text-decoration: line-through; color: var(--text-dim); }
+        .task-item.pulse-alert {
+            animation: pulse-red 1.5s infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { border-color: var(--border); }
+            50% { border-color: var(--danger); box-shadow: 0 0 12px rgba(239,83,80,0.3); }
+        }
+        .task-time { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-dim); margin-left: auto; }
+
+        .dump-box {
+            background: #0a0d14;
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            padding: 12px;
+        }
+        .dump-box .dump-title {
+            font-size: 0.6rem;
+            color: var(--purple);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .dump-box textarea {
+            width: 100%;
+            height: 90px;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 0.78rem;
+            resize: none;
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+        }
+        .dump-box textarea::placeholder { color: #2a3345; }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 18px;
+            background: var(--bg);
+            overflow-y: auto;
+        }
+
+        .pomo-bar {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .timer-wrap { display: flex; align-items: center; gap: 14px; }
+        .timer-ring {
+            width: 56px;
+            height: 56px;
+            position: relative;
+        }
+        .timer-ring svg { transform: rotate(-90deg); }
+        .timer-ring circle {
+            fill: none;
+            stroke-width: 3;
+        }
+        .ring-bg { stroke: var(--border); }
+        .ring-progress { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+        .timer-display {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 2px;
+            min-width: 100px;
+        }
+        .pomo-mode-label {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .pomo-controls { display: flex; gap: 8px; align-items: center; }
+        .btn-pomo {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 1px;
+        }
+        .btn-pomo:hover { background: var(--accent2); }
+        .btn-mode {
+            background: var(--surface2);
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-mode:hover, .btn-mode.active { border-color: var(--accent); color: var(--accent); }
+        .btn-noise {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-noise.on { border-color: var(--success); color: var(--success); }
+
+        .smart-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .field-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px;
+            transition: 0.2s;
+        }
+        .field-wrap:focus-within { border-color: var(--accent); }
+        .field-wrap label {
+            font-size: 0.58rem;
+            color: var(--text-dim);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .field-wrap input {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 0.85rem;
+            outline: none;
+            width: 100%;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .field-wrap input::placeholder { color: var(--text-dim); }
+
+        .editor-wrap {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 300px;
+        }
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            padding: 12px 14px;
+            background: var(--surface2);
+            border-bottom: 1px solid var(--border);
+        }
+        .tab-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .tab-btn:hover, .tab-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(79,195,247,0.06); }
+        .editor-area {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            padding: 24px 28px;
+            font-size: 0.95rem;
+            line-height: 2;
+            resize: none;
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-copy {
+            background: var(--surface2);
+            border: none;
+            border-top: 1px solid var(--border);
+            color: var(--accent);
+            padding: 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-copy:hover { background: rgba(79,195,247,0.1); }
+        .btn-copy.copied { color: var(--success); }
+
+        .modo-foco-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #04060b;
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+        .modo-foco-overlay.active { display: flex; }
+        .foco-task-title {
+            font-size: 2.5rem;
+            color: var(--accent);
+            font-weight: 300;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+        .foco-timer {
+            font-family: 'DM Mono', monospace;
+            font-size: 5rem;
+            color: var(--text);
+            font-weight: 300;
+            letter-spacing: 4px;
+        }
+        .foco-bar {
+            width: 300px;
+            height: 3px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .foco-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 100%;
+            transition: width 1s linear;
+        }
+        .btn-exit-foco {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+        .btn-exit-foco:hover { border-color: var(--danger); color: var(--danger); }
+
+        .pausa-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(4,6,11,0.97);
+            z-index: 110;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .pausa-overlay.active { display: flex; }
+        .pausa-title { font-size: 1.4rem; color: var(--teal); letter-spacing: 2px; }
+        .pausa-subtitle { font-size: 0.8rem; color: var(--text-dim); text-align: center; max-width: 320px; line-height: 1.8; }
+        .pausa-breath {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--teal);
+            animation: breathe 8s infinite ease-in-out;
+            background: rgba(77,182,172,0.05);
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+        .pausa-options { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .pausa-opt {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            cursor: default;
+        }
+        .btn-fechar-pausa {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 10px 28px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-top: 10px;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.2s;
+        }
+        .btn-fechar-pausa:hover { border-color: var(--teal); color: var(--teal); }
+        .pausa-counter {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        .right-pane {
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow-y: auto;
+        }
+
+        .timeline { display: flex; flex-direction: column; gap: 0; }
+        .tl-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            position: relative;
+        }
+        .tl-item:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 28px;
+            width: 1px;
+            height: calc(100% + 2px);
+            background: var(--border);
+        }
+        .tl-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            background: var(--surface2);
+            flex-shrink: 0;
+            margin-top: 8px;
+            position: relative;
+            z-index: 1;
+            transition: 0.3s;
+        }
+        .tl-item.current .tl-dot { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        .tl-item.done-tl .tl-dot { border-color: var(--success); background: var(--success); }
+        .tl-content {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            flex: 1;
+            margin-bottom: 6px;
+            transition: 0.2s;
+        }
+        .tl-item.current .tl-content { border-color: var(--accent); background: rgba(79,195,247,0.04); }
+        .tl-time { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--text-dim); }
+        .tl-name { font-size: 0.78rem; color: var(--text); margin: 2px 0; }
+        .tl-dur { font-size: 0.65rem; color: var(--text-dim); }
+        .tl-status { font-size: 0.65rem; margin-top: 3px; }
+        .status-current { color: var(--accent); }
+        .status-done { color: var(--success); }
+        .status-pending { color: var(--text-dim); }
+
+        .alert-card {
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            line-height: 1.6;
+            outline: none;
+        }
+        .alert-red { background: rgba(239,83,80,0.12); border: 1px solid rgba(239,83,80,0.3); color: #ff8a80; }
+        .alert-yellow { background: rgba(255,167,38,0.1); border: 1px solid rgba(255,167,38,0.25); color: #ffcc80; }
+        .alert-green { background: rgba(102,187,106,0.1); border: 1px solid rgba(102,187,106,0.25); color: #a5d6a7; }
+
+        .gimba-card {
+            background: linear-gradient(135deg, var(--surface2), #0e1420);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+        .gimba-card h3 { color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 4px; }
+        .gimba-card p { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 10px; }
+        .btn-gimba {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 1px;
+        }
+        .btn-gimba:hover { background: #ffe082; }
+
+        .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .prod-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            text-align: center;
+        }
+        .prod-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--accent);
+            display: block;
+        }
+        .prod-label { font-size: 0.62rem; color: var(--text-dim); letter-spacing: 1px; margin-top: 2px; }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 200;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.green { border-color: var(--success); color: var(--success); }
+
+        @media (max-width: 900px) {
+            body { grid-template-columns: 1fr; grid-template-rows: auto; overflow: auto; }
+            .sidebar, .right-pane { display: none; }
+        }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <h2 style="color:var(--accent); font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px;">V8 NEURAL COMMAND</h2>
-        
-        <div class="progress-container">
-            <div class="progress-bar" id="p-bar"></div>
-            <div class="progress-text" id="p-text">0% CONCLUÍDO</div>
-        </div>
+<aside class="sidebar">
+    <div class="logo">
+        <h1>CÁSSIA V8</h1>
+        <span>PAINEL NEURAL — DEFENSORIASP</span>
+    </div>
 
-        <div id="task-list">
-            <label class="task-item"><input type="checkbox" onchange="saveData()"> Chegada Subseção (10h)</label>
-            <label class="task-item"><input type="checkbox" onchange="saveData()"> Triagem de E-mails</label>
-            <label id="task-oficio" class="task-item"><input type="checkbox" onchange="saveData()"> Ofício Fórum (Envio)</label>
-            <label class="task-item"><input type="checkbox" onchange="saveData()"> Orçamentos Gimba</label>
-            <label class="task-item"><input type="checkbox" onchange="saveData()"> Check Extintores/Dedetiz.</label>
-        </div>
+    <div class="frase-box">
+        <p id="frase-texto">"Disciplina gera liberdade."</p>
+        <div class="frase-autor" id="frase-autor">— Sistema V8</div>
+    </div>
 
-        <div class="dump-area">
-            <span style="font-size:0.7rem; color:var(--gold); font-weight: bold;">🧠 DEPÓSITO DE DISTRAÇÕES</span>
-            <textarea id="dump" style="height:120px; font-size:0.9rem; border:none; background:transparent; color:#888; line-height:1.4;" oninput="saveData()" placeholder="Escreva o desvaneio aqui para liberar seu cérebro..."></textarea>
+    <div>
+        <div class="prog-label">
+            <span>PROGRESSO DO DIA</span>
+            <span id="prog-pct-top">0%</span>
         </div>
-    </aside>
+        <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+        <div class="prog-pct" id="prog-label">0 de 5 tarefas</div>
+    </div>
 
-    <main class="main">
-        <div class="pomodoro-bar">
-            <div class="timer-display" id="timer">25:00</div>
-            <div style="display: flex; gap: 10px;">
-                <button class="tab-btn" id="noise-btn" onclick="toggleNoise()" style="font-weight: bold;">🔊 RUÍDO BRANCO: OFF</button>
-                <button onclick="togglePomodoro()" id="p-btn" style="background:var(--accent); border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer; color: #000;">INICIAR FOCO</button>
+    <div>
+        <div class="section-title">CHECKLIST DO DIA</div>
+        <div class="task-list" id="task-list">
+            <label class="task-item" onclick="toggleTask(this)">
+                <input type="checkbox">
+                <div class="task-check"></div>
+                <span class="task-label">Chegada Subseção</span>
+                <span class="task-time">10h</span>
+            </label>
+            <label class="task-item" onclick="toggleTask(this)">
+                <input type="checkbox">
+                <div class="task-check"></div>
+                <span class="task-label">Triagem de E-mails</span>
+                <span class="task-time">10:30h</span>
+            </label>
+            <label class="task-item" id="task-oficio" onclick="toggleTask(this)">
+                <input type="checkbox">
+                <div class="task-check"></div>
+                <span class="task-label">Ofício Fórum (Envio)</span>
+                <span class="task-time">11h</span>
+            </label>
+            <label class="task-item" onclick="toggleTask(this)">
+                <input type="checkbox">
+                <div class="task-check"></div>
+                <span class="task-label">Orçamentos Gimba</span>
+                <span class="task-time">14h</span>
+            </label>
+            <label class="task-item" onclick="toggleTask(this)">
+                <input type="checkbox">
+                <div class="task-check"></div>
+                <span class="task-label">Check Extintores / Dedetização</span>
+                <span class="task-time">15h</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="dump-box">
+        <div class="dump-title">🧠 Depósito de Distrações</div>
+        <textarea id="dump" placeholder="Escreva aqui o que desviar seu foco para liberar a mente..." oninput="saveData()"></textarea>
+    </div>
+
+    <button onclick="abrirModoFoco()" style="background:var(--surface2); border:1px solid var(--border); color:var(--accent); padding:10px; border-radius:8px; font-size:0.75rem; cursor:pointer; font-family:'DM Sans',sans-serif; letter-spacing:1px; transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">⚡ ATIVAR MODO FOCO</button>
+</aside>
+
+<main class="main">
+    <div class="pomo-bar">
+        <div class="timer-wrap">
+            <div class="timer-ring">
+                <svg viewBox="0 0 56 56" width="56" height="56">
+                    <circle class="ring-bg" cx="28" cy="28" r="24" />
+                    <circle class="ring-progress" id="ring-prog" cx="28" cy="28" r="24"
+                        stroke-dasharray="150.8"
+                        stroke-dashoffset="0" />
+                </svg>
+            </div>
+            <div>
+                <div class="pomo-mode-label" id="pomo-mode-label">FOCO</div>
+                <div class="timer-display" id="timer">25:00</div>
             </div>
         </div>
-
-        <div class="smart-fields">
-            <input type="text" id="f-vara" placeholder="Vara (Ex: 1ª Vara Cível)" oninput="autoUpdate()">
-            <input type="text" id="f-comarca" placeholder="Comarca" oninput="autoUpdate()">
-            <input type="text" id="f-nome" placeholder="Nome do Assistido" oninput="autoUpdate()">
+        <div class="pomo-controls">
+            <button class="btn-mode active" id="btn-25" onclick="setMode(25,'FOCO')">25 min</button>
+            <button class="btn-mode" id="btn-5" onclick="setMode(5,'PAUSA CURTA')">5 min</button>
+            <button class="btn-mode" id="btn-15" onclick="setMode(15,'PAUSA LONGA')">15 min</button>
+            <button class="btn-noise" id="noise-btn" onclick="toggleNoise()">🔊 Chuva: OFF</button>
+            <button class="btn-pomo" id="p-btn" onclick="togglePomodoro()">INICIAR</button>
         </div>
+    </div>
 
-        <div class="editor-container">
-            <div class="nav-tabs">
-                <button class="tab-btn" onclick="loadDoc('docs')">📜 Relação Única</button>
-                <button class="tab-btn" onclick="loadDoc('oficio')">📄 Ofício Automático</button>
-                <button class="tab-btn" onclick="loadDoc('especial')">⚠️ Medidas/Oitivas</button>
-            </div>
-            <textarea id="editor" placeholder="Selecione um documento ou digite aqui..."></textarea>
-            <button class="btn-copy" onclick="copyText()">Copiar para o Clipboard (Pronto para Colar)</button>
+    <div class="smart-fields">
+        <div class="field-wrap">
+            <label>VARA</label>
+            <input type="text" id="f-vara" placeholder="Ex: 1ª Vara Cível" oninput="autoUpdate()">
         </div>
-    </main>
-
-    <aside class="right-pane">
-        <div style="background:linear-gradient(135deg,#1e1e1e,#000); padding:15px; border:1px solid var(--gold); border-radius:12px; text-align:center;">
-            <h3 style="color:var(--gold); margin:0; font-size:0.9rem; letter-spacing: 1px;">🛒 GIMBA</h3>
-            <p style="font-size: 0.65rem; color: #aaa; margin: 5px 0;">SUPRIMENTOS DO MÊS</p>
-            <button onclick="window.open('https://www.gimba.com.br')" style="background:var(--gold); border:none; padding:8px 15px; margin-top:5px; cursor:pointer; font-weight:bold; border-radius:6px; width: 100%;">ABRIR SITE</button>
+        <div class="field-wrap">
+            <label>COMARCA</label>
+            <input type="text" id="f-comarca" placeholder="Ex: São Paulo" oninput="autoUpdate()">
         </div>
+        <div class="field-wrap">
+            <label>NOME DO ASSISTIDO</label>
+            <input type="text" id="f-nome" placeholder="Nome completo" oninput="autoUpdate()">
+        </div>
+    </div>
 
-        <h2 style="font-size:0.7rem; color:var(--accent); letter-spacing: 1px;">ALERTAS DE RIGOR</h2>
-        <div class="post-it p-red" contenteditable="true" id="p1" oninput="saveData()">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
-        <div class="post-it p-yellow" contenteditable="true" id="p2" oninput="saveData()">🕒 ATENDIMENTO: 09h às 12h (Limite 30 senhas/dia).</div>
-        <div class="post-it p-green" contenteditable="true" id="p3" oninput="saveData()">📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.</div>
-    </aside>
+    <div class="editor-wrap">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="loadDoc('docs', this)">📜 Relação Única</button>
+            <button class="tab-btn" onclick="loadDoc('oficio', this)">📄 Ofício Automático</button>
+            <button class="tab-btn" onclick="loadDoc('urgencia', this)">⚠️ Medidas/Oitivas</button>
+            <button class="tab-btn" onclick="loadDoc('blank', this)">✏️ Rascunho Livre</button>
+        </div>
+        <textarea class="editor-area" id="editor" placeholder="Selecione um modelo acima ou escreva aqui..."></textarea>
+        <button class="btn-copy" id="btn-copy" onclick="copyText()">⧉ COPIAR PARA O CLIPBOARD</button>
+    </div>
+</main>
 
-    <script>
-        // Configuração de Áudio (Fonte mais estável)
-        let noise = new Audio('https://actions.google.com/sounds/v1/water/rain_on_roof.ogg');
-        noise.loop = true;
+<aside class="right-pane">
+    <div class="section-title">MONITOR DE PRODUTIVIDADE</div>
+    <div class="prod-grid">
+        <div class="prod-card">
+            <span class="prod-num" id="prod-pct">0%</span>
+            <div class="prod-label">CONCLUÍDO</div>
+        </div>
+        <div class="prod-card">
+            <span class="prod-num" id="prod-ciclos">0</span>
+            <div class="prod-label">CICLOS FOCO</div>
+        </div>
+        <div class="prod-card">
+            <span class="prod-num" id="prod-tempo">0h</span>
+            <div class="prod-label">TEMPO FOCADO</div>
+        </div>
+        <div class="prod-card">
+            <span class="prod-num" id="prod-restantes">5</span>
+            <div class="prod-label">PENDENTES</div>
+        </div>
+    </div>
 
-        const vault = {
-            docs: () => `RELAÇÃO ÚNICA DE DOCUMENTOS:\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (Mês atual)\n3. Carteira de Trabalho\n4. Holerites: Trazer os 03 últimos.\n\nO assistido deve apresentar os documentos acima para triagem de qualquer caso civil/família.`,
-            oficio: () => {
-                const vara = document.getElementById('f-vara').value || "____ Vara";
-                const comarca = document.getElementById('f-comarca').value || "____";
-                const nome = document.getElementById('f-nome').value || "____";
-                return `AO JUÍZO DA ${vara.toUpperCase()} DO FÓRUM DA COMARCA DE ${comarca.toUpperCase()}.\n\nASSUNTO: ENCAMINHAMENTO DE DOCUMENTAÇÃO TÉCNICA\n\nA Subseção, no exercício de suas funções, encaminha em anexo a documentação do assistido(a) ${nome.toUpperCase()}, para a devida instrução processual.\n\nAtenciosamente,\nSecretaria Administrativa.`;
-            },
-            especial: () => `PROTOCOLOS DE URGÊNCIA:\n\n- Medida Protetiva (Lei Maria da Penha)\n- Queixa Crime\n- Oitiva de Vítimas Menores\n\nEstes casos devem ser triados com prioridade máxima e encaminhados imediatamente.`
-        };
+    <div class="section-title">LINHA DO TEMPO</div>
+    <div class="timeline" id="timeline"></div>
 
-        let currentKey = 'docs';
-        function loadDoc(k) { currentKey = k; document.getElementById('editor').value = vault[k](); }
-        function autoUpdate() { if(currentKey === 'oficio') document.getElementById('editor').value = vault.oficio(); }
-        
-        function copyText() { 
-            const e = document.getElementById('editor'); 
-            e.select(); 
-            document.execCommand('copy'); 
-            alert("SISTEMA V8: Documento copiado com sucesso!"); 
-        }
+    <div class="gimba-card">
+        <h3>🛒 GIMBA</h3>
+        <p>SUPRIMENTOS DO MÊS</p>
+        <button class="btn-gimba" onclick="window.open('https://www.gimba.com.br')">ABRIR SITE</button>
+    </div>
 
-        // POMODORO & NOISE
-        let timer, timeLeft = 25*60, running = false;
-        function togglePomodoro() {
-            const btn = document.getElementById('p-btn');
-            if(running) { 
-                clearInterval(timer); running = false; btn.innerText = "RETOMAR"; 
-            } else { 
-                running = true; btn.innerText = "PAUSAR"; timer = setInterval(updateTimer, 1000); 
+    <div class="section-title">ALERTAS DE RIGOR</div>
+    <div class="alert-card alert-red" contenteditable="true" id="p1" oninput="saveData()">🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.</div>
+    <div class="alert-card alert-yellow" contenteditable="true" id="p2" oninput="saveData()">🕒 ATENDIMENTO: 09h às 12h — Limite 30 senhas/dia.</div>
+    <div class="alert-card alert-green" contenteditable="true" id="p3" oninput="saveData()">📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.</div>
+</aside>
+
+<div class="modo-foco-overlay" id="modo-foco">
+    <div style="font-size:0.65rem; color:var(--text-dim); letter-spacing:3px;">MODO FOCO ATIVO</div>
+    <div class="foco-task-title" id="foco-task">Concentração máxima.</div>
+    <div class="foco-timer" id="foco-timer">25:00</div>
+    <div class="foco-bar"><div class="foco-fill" id="foco-fill"></div></div>
+    <button class="btn-exit-foco" onclick="fecharModoFoco()">✕ SAIR DO MODO FOCO</button>
+</div>
+
+<div class="pausa-overlay" id="pausa-overlay">
+    <div style="font-size:0.65rem; color:var(--text-dim); letter-spacing:3px;">PAUSA SENSORIAL</div>
+    <div class="pausa-title">🌿 Momento de Recuperação</div>
+    <div class="pausa-breath"></div>
+    <div class="pausa-subtitle">Acompanhe o círculo: inspire enquanto expande, expire enquanto contrai.<br>Ciclo 4 — 4 — 4.</div>
+    <div class="pausa-options">
+        <span class="pausa-opt">🧘 Alongamento</span>
+        <span class="pausa-opt">💧 Hidratação</span>
+        <span class="pausa-opt">🚶 Caminhada breve</span>
+        <span class="pausa-opt">👁 Descanso visual</span>
+    </div>
+    <div class="pausa-counter" id="pausa-counter">Retomando em 5:00...</div>
+    <button class="btn-fechar-pausa" onclick="fecharPausa()">ESTOU PRONTA</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    const frases = [
+        { t: '"Disciplina gera liberdade."', a: '— Jocko Willink' },
+        { t: '"Constância supera intensidade."', a: '— Sistema V8' },
+        { t: '"Organização reduz ansiedade."', a: '— Sistema V8' },
+        { t: '"Você está construindo estabilidade todos os dias."', a: '— Para Cássia' },
+        { t: '"Um passo por vez, uma tarefa por vez."', a: '— Sistema V8' },
+        { t: '"Clareza mental começa com clareza no ambiente."', a: '— Sistema V8' },
+    ];
+    function sortearFrase() {
+        const idx = Math.floor(Math.random() * frases.length);
+        document.getElementById('frase-texto').textContent = frases[idx].t;
+        document.getElementById('frase-autor').textContent = frases[idx].a;
+    }
+    sortearFrase();
+
+    const tlData = [
+        { hora: '08:00', nome: 'Organização inicial', dur: '20 min' },
+        { hora: '10:00', nome: 'Chegada Subseção', dur: '30 min' },
+        { hora: '10:30', nome: 'Triagem de E-mails', dur: '30 min' },
+        { hora: '11:00', nome: 'Ofício Fórum', dur: '30 min' },
+        { hora: '12:00', nome: 'Pausa Almoço', dur: '1h' },
+        { hora: '14:00', nome: 'Orçamentos Gimba', dur: '1h' },
+        { hora: '15:00', nome: 'Check Extintores/Dedetização', dur: '1h' },
+        { hora: '16:30', nome: 'Revisão do Dia', dur: '30 min' },
+    ];
+    function renderTimeline() {
+        const agora = new Date();
+        const horaAtual = agora.getHours() * 60 + agora.getMinutes();
+        const container = document.getElementById('timeline');
+        container.innerHTML = '';
+        tlData.forEach((item, i) => {
+            const [h, m] = item.hora.split(':').map(Number);
+            const itemMin = h * 60 + m;
+            const nextMin = i < tlData.length - 1
+                ? (() => { const [nh, nm] = tlData[i+1].hora.split(':').map(Number); return nh*60+nm; })()
+                : itemMin + 60;
+            let cls = '';
+            let statusHtml = `<div class="tl-status status-pending">Pendente</div>`;
+            if (horaAtual >= nextMin) {
+                cls = 'done-tl';
+                statusHtml = `<div class="tl-status status-done">✓ Concluído</div>`;
+            } else if (horaAtual >= itemMin) {
+                cls = 'current';
+                statusHtml = `<div class="tl-status status-current">● Em andamento</div>`;
             }
+            container.innerHTML += `
+            <div class="tl-item ${cls}">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                    <div class="tl-time">${item.hora}</div>
+                    <div class="tl-name">${item.nome}</div>
+                    <div class="tl-dur">${item.dur}</div>
+                    ${statusHtml}
+                </div>
+            </div>`;
+        });
+    }
+    renderTimeline();
+    setInterval(renderTimeline, 60000);
+
+    const CIRCUM = 2 * Math.PI * 24;
+    let modoSec = 25 * 60;
+    let timeLeft = modoSec;
+    let running = false;
+    let pomTimer;
+    let ciclosFoco = 0;
+    let minutosFoco = 0;
+    let minTickFoco = 0;
+
+    function setMode(min, label) {
+        clearInterval(pomTimer);
+        running = false;
+        modoSec = min * 60;
+        timeLeft = modoSec;
+        document.getElementById('p-btn').textContent = 'INICIAR';
+        document.getElementById('pomo-mode-label').textContent = label;
+        updateTimerDisplay();
+        document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + min).classList.add('active');
+    }
+
+    function togglePomodoro() {
+        const btn = document.getElementById('p-btn');
+        if (running) {
+            clearInterval(pomTimer);
+            running = false;
+            btn.textContent = 'RETOMAR';
+        } else {
+            running = true;
+            btn.textContent = 'PAUSAR';
+            pomTimer = setInterval(tickPomo, 1000);
         }
-        function updateTimer() {
-            if(timeLeft <= 0) { 
-                clearInterval(timer); alert("CICLO DE FOCO COMPLETO! Faça uma pausa."); timeLeft = 25*60; 
-                document.getElementById('p-btn').innerText = "INICIAR NOVO"; running = false;
-            } else { 
-                timeLeft--; 
-                let m = Math.floor(timeLeft/60), s = timeLeft%60; 
-                document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; 
-            }
-        }
-        function toggleNoise() {
-            const btn = document.getElementById('noise-btn');
-            if (noise.paused) {
-                noise.play();
-                btn.innerText = "🔊 RUÍDO BRANCO: ON";
-                btn.style.color = "var(--success)";
+    }
+
+    function tickPomo() {
+        if (timeLeft <= 0) {
+            clearInterval(pomTimer);
+            running = false;
+            const label = document.getElementById('pomo-mode-label').textContent;
+            if (label === 'FOCO') {
+                ciclosFoco++;
+                minutosFoco += modoSec / 60;
+                saveData();
+                showToast('Ciclo de foco completo! 🎯', 'green');
+                setTimeout(abrirPausa, 1200);
             } else {
-                noise.pause();
-                btn.innerText = "🔊 RUÍDO BRANCO: OFF";
-                btn.style.color = "#fff";
+                showToast('Pausa encerrada. Hora de focar!', '');
             }
+            timeLeft = modoSec;
+            document.getElementById('p-btn').textContent = 'INICIAR';
+            updateTimerDisplay();
+            updateProd();
+            return;
         }
-
-        // PERSISTENCIA & PROGRESSO
-        function saveData() {
-            const checks = Array.from(document.querySelectorAll('#task-list input[type="checkbox"]')).map(c => c.checked);
-            localStorage.setItem('v8_tasks', JSON.stringify(checks));
-            localStorage.setItem('v8_dump', document.getElementById('dump').value);
-            localStorage.setItem('v8_p1', document.getElementById('p1').innerText);
-            localStorage.setItem('v8_p2', document.getElementById('p2').innerText);
-            localStorage.setItem('v8_p3', document.getElementById('p3').innerText);
-            updateProgressBar();
+        timeLeft--;
+        if (document.getElementById('pomo-mode-label').textContent === 'FOCO') {
+            minTickFoco++;
+            if (minTickFoco >= 60) { minTickFoco = 0; }
         }
+        updateTimerDisplay();
+    }
 
-        function updateProgressBar() {
-            const checks = document.querySelectorAll('#task-list input[type="checkbox"]');
-            const done = Array.from(checks).filter(c => c.checked).length;
-            const pct = Math.round((done / checks.length) * 100);
-            document.getElementById('p-bar').style.width = pct + '%';
-            document.getElementById('p-text').innerText = pct + '% CONCLUÍDO';
-            
-            // Alerta de Horário (Pulsar o Ofício se não feito após 11:30)
-            const agora = new Date();
-            if(agora.getHours() >= 11 && agora.getMinutes() >= 30 && !checks[2].checked) {
-                document.getElementById('task-oficio').classList.add('pulse-alert');
-            } else {
-                document.getElementById('task-oficio').classList.remove('pulse-alert');
-            }
+    function updateTimerDisplay() {
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        const str = `${m}:${s < 10 ? '0' : ''}${s}`;
+        document.getElementById('timer').textContent = str;
+        document.getElementById('foco-timer').textContent = str;
+        const pct = timeLeft / modoSec;
+        const offset = CIRCUM * (1 - pct);
+        document.getElementById('ring-prog').style.strokeDashoffset = offset;
+        document.getElementById('foco-fill').style.width = (pct * 100) + '%';
+    }
+
+    let audioCtx = null;
+    let noiseNode = null;
+    let gainNode = null;
+    let noiseOn = false;
+
+    function initAudio() {
+        if (audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        gainNode = audioCtx.createGain();
+        gainNode.gain.value = 0.06;
+        gainNode.connect(audioCtx.destination);
+    }
+
+    function startNoise() {
+        initAudio();
+        if (noiseNode) { noiseNode.stop(); noiseNode = null; }
+        const bufSize = audioCtx.sampleRate * 2;
+        const buffer = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+        noiseNode = audioCtx.createBufferSource();
+        noiseNode.buffer = buffer;
+        noiseNode.loop = true;
+        noiseNode.connect(gainNode);
+        noiseNode.start();
+    }
+
+    function stopNoise() {
+        if (noiseNode) { noiseNode.stop(); noiseNode = null; }
+    }
+
+    function toggleNoise() {
+        const btn = document.getElementById('noise-btn');
+        if (noiseOn) {
+            stopNoise();
+            btn.textContent = '🔊 Chuva: OFF';
+            btn.classList.remove('on');
+        } else {
+            startNoise();
+            btn.textContent = '🔊 Chuva: ON';
+            btn.classList.add('on');
         }
+        noiseOn = !noiseOn;
+    }
 
-        window.onload = () => {
-            const savedTasks = JSON.parse(localStorage.getItem('v8_tasks'));
-            if(savedTasks) { document.querySelectorAll('#task-list input[type="checkbox"]').forEach((c, i) => c.checked = savedTasks[i]); }
-            document.getElementById('dump').value = localStorage.getItem('v8_dump') || "";
-            document.getElementById('p1').innerText = localStorage.getItem('v8_p1') || "🚫 NÃO ATENDEMOS: Trabalhista...";
-            document.getElementById('p2').innerText = localStorage.getItem('v8_p2') || "🕒 ATENDIMENTO: 09h às 12h...";
-            document.getElementById('p3').innerText = localStorage.getItem('v8_p3') || "📋 RELAÇÃO ÚNICA: RG, CPF...";
-            updateProgressBar();
-        };
-    </script>
+    function toggleTask(label) {
+        const cb = label.querySelector('input[type="checkbox"]');
+        cb.checked = !cb.checked;
+        label.classList.toggle('done', cb.checked);
+        updateProgress();
+        saveData();
+    }
+
+    function updateProgress() {
+        const items = document.querySelectorAll('#task-list .task-item');
+        const done = document.querySelectorAll('#task-list .task-item.done').length;
+        const total = items.length;
+        const pct = Math.round((done / total) * 100);
+        document.getElementById('prog-fill').style.width = pct + '%';
+        document.getElementById('prog-pct-top').textContent = pct + '%';
+        document.getElementById('prog-label').textContent = `${done} de ${total} tarefas`;
+        updateProd();
+        const agora = new Date();
+        const oficio = document.getElementById('task-oficio');
+        if (agora.getHours() >= 11 && agora.getMinutes() >= 30 && !oficio.classList.contains('done')) {
+            oficio.classList.add('pulse-alert');
+        } else {
+            oficio.classList.remove('pulse-alert');
+        }
+    }
+
+    function updateProd() {
+        const done = document.querySelectorAll('#task-list .task-item.done').length;
+        const total = document.querySelectorAll('#task-list .task-item').length;
+        document.getElementById('prod-pct').textContent = Math.round((done / total) * 100) + '%';
+        document.getElementById('prod-ciclos').textContent = ciclosFoco;
+        document.getElementById('prod-tempo').textContent = Math.floor(minutosFoco / 60) + 'h' + (minutosFoco % 60 > 0 ? (minutosFoco % 60) + 'm' : '');
+        document.getElementById('prod-restantes').textContent = total - done;
+    }
+
+    const vault = {
+        docs: () => `RELAÇÃO ÚNICA DE DOCUMENTOS\n\n1. RG e CPF (Original)\n2. Comprovante de Residência (mês atual)\n3. Carteira de Trabalho\n4. Holerites — últimos 03 meses\n\nO assistido deve apresentar todos os documentos acima para triagem de qualquer demanda civil ou de família.`,
+        oficio: () => {
+            const vara = document.getElementById('f-vara').value || '____';
+            const comarca = document.getElementById('f-comarca').value || '____';
+            const nome = document.getElementById('f-nome').value || '____';
+            const hoje = new Date().toLocaleDateString('pt-BR');
+            return `AO JUÍZO DA ${vara.toUpperCase()} DO FÓRUM DA COMARCA DE ${comarca.toUpperCase()}\n\nSão Paulo, ${hoje}.\n\nASSUNTO: ENCAMINHAMENTO DE DOCUMENTAÇÃO TÉCNICA\n\nA Subseção da Defensoria Pública, no exercício de suas funções institucionais, encaminha em anexo a documentação do(a) assistido(a) ${nome.toUpperCase()}, para devida instrução processual.\n\nAtenciosamente,\nSecretaria Administrativa\nDefensoria Pública do Estado de São Paulo`;
+        },
+        urgencia: () => `PROTOCOLOS DE URGÊNCIA\n\n1. Medida Protetiva (Lei Maria da Penha)\n   → Triagem imediata, encaminhar à Defensora\n\n2. Queixa Crime\n   → Registrar BO antes do atendimento\n\n3. Oitiva de Vítima Menor\n   → Sala reservada, presença obrigatória de responsável legal\n\n⚠️ Estes casos têm PRIORIDADE MÁXIMA sobre a fila regular.`,
+        blank: () => ''
+    };
+
+    let currentKey = 'docs';
+    function loadDoc(k, btn) {
+        currentKey = k;
+        document.getElementById('editor').value = vault[k]();
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+    }
+    function autoUpdate() {
+        if (currentKey === 'oficio') document.getElementById('editor').value = vault.oficio();
+    }
+
+    function copyText() {
+        const e = document.getElementById('editor');
+        e.select();
+        document.execCommand('copy');
+        const btn = document.getElementById('btn-copy');
+        btn.textContent = '✓ COPIADO COM SUCESSO';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = '⧉ COPIAR PARA O CLIPBOARD';
+            btn.classList.remove('copied');
+        }, 2000);
+    }
+
+    function abrirModoFoco() {
+        document.getElementById('modo-foco').classList.add('active');
+    }
+    function fecharModoFoco() {
+        document.getElementById('modo-foco').classList.remove('active');
+    }
+
+    let pausaTimer;
+    let pausaSec = 5 * 60;
+    function abrirPausa() {
+        pausaSec = 5 * 60;
+        document.getElementById('pausa-overlay').classList.add('active');
+        clearInterval(pausaTimer);
+        updatePausaCounter();
+        pausaTimer = setInterval(() => {
+            pausaSec--;
+            if (pausaSec <= 0) { fecharPausa(); return; }
+            updatePausaCounter();
+        }, 1000);
+    }
+    function updatePausaCounter() {
+        const m = Math.floor(pausaSec / 60);
+        const s = pausaSec % 60;
+        document.getElementById('pausa-counter').textContent = `Retomando em ${m}:${s < 10 ? '0' : ''}${s}...`;
+    }
+    function fecharPausa() {
+        clearInterval(pausaTimer);
+        document.getElementById('pausa-overlay').classList.remove('active');
+    }
+
+    function showToast(msg, type) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast show ' + type;
+        setTimeout(() => t.className = 'toast', 3000);
+    }
+
+    function saveData() {
+        const checks = Array.from(document.querySelectorAll('#task-list .task-item')).map(l => l.classList.contains('done'));
+        localStorage.setItem('v8_tasks', JSON.stringify(checks));
+        localStorage.setItem('v8_dump', document.getElementById('dump').value);
+        localStorage.setItem('v8_p1', document.getElementById('p1').innerText);
+        localStorage.setItem('v8_p2', document.getElementById('p2').innerText);
+        localStorage.setItem('v8_p3', document.getElementById('p3').innerText);
+        localStorage.setItem('v8_ciclos', ciclosFoco);
+        localStorage.setItem('v8_minutos', minutosFoco);
+    }
+
+    window.onload = () => {
+        const tasks = JSON.parse(localStorage.getItem('v8_tasks') || '[]');
+        document.querySelectorAll('#task-list .task-item').forEach((l, i) => {
+            if (tasks[i]) l.classList.add('done');
+            const cb = l.querySelector('input[type="checkbox"]');
+            if (tasks[i]) cb.checked = true;
+        });
+        document.getElementById('dump').value = localStorage.getItem('v8_dump') || '';
+        document.getElementById('p1').innerText = localStorage.getItem('v8_p1') || '🚫 NÃO ATENDEMOS: Trabalhista, Previdenciário e Criminal Comum.';
+        document.getElementById('p2').innerText = localStorage.getItem('v8_p2') || '🕒 ATENDIMENTO: 09h às 12h — Limite 30 senhas/dia.';
+        document.getElementById('p3').innerText = localStorage.getItem('v8_p3') || '📋 DOCS: RG, CPF, Residência, Carteira de Trabalho e Holerite.';
+        ciclosFoco = parseInt(localStorage.getItem('v8_ciclos') || 0);
+        minutosFoco = parseInt(localStorage.getItem('v8_minutos') || 0);
+        updateProgress();
+        loadDoc('docs', document.querySelector('.tab-btn'));
+        setInterval(updateProgress, 30000);
+    };
+</script>
 </body>
 </html>
